@@ -1,0 +1,196 @@
+// Theme button system (.btn sizes/variants, .vh-btn arrow buttons used
+// site-wide, .cpn-btns banner download buttons); loaded on every page via
+// assets/css/style.scss; extracted (pruned of unused rules) from style.css
+// section "03.02 Buttons".
+
+// ---- .vh-btn base ----
+.vh-btn {
+  position: relative;
+  border-width: 2px;
+  border-style: solid;
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+  padding: 8px 15px;
+  text-align: center;
+  color: #fff;
+  min-width: 120px;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: all 0.5s;
+  position: relative;
+  border-radius: 5px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: var(--bs-border-radius-pill);
+  outline: none !important;
+
+  &.icon {
+    color: inherit;
+  }
+
+  &:hover, &:focus {
+    color: #fff !important;
+  }
+
+  &:hover, &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &.icon + span {
+    margin-left: 10px;
+  }
+
+  &.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+
+  // Without this a disabled .vh-btn looked and hovered exactly like a live one
+  // (first needed by the contact form's "Sending…" and outage states).
+  // Same opacity as Bootstrap's disabled .btn.
+  &:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ---- size modifiers ----
+.btn-md {
+  font-size: 12px;
+  line-height: 24px;
+  padding: 10px 26px;
+}
+
+.btn-auto {
+  min-width: 44px !important;
+}
+
+.btn-brand-equal {
+  min-width: 185px;
+}
+
+// ---- outline variant ----
+.vh-btn-outline {
+  &:not(:hover), &:not(:focus) {
+    color: var(--blue-400);
+    background-color: transparent !important;
+  }
+
+  &:before {
+    background-image: none;
+    background-color: #fff;
+    opacity: 1;
+    margin: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+  }
+
+  &:hover, &:focus {
+    color: #fff !important;
+  }
+
+  &:hover:before, &:focus:before {
+    opacity: 0;
+  }
+}
+
+// ---- color variants ----
+// #1565c0 on white text = 5.22:1 (WCAG AA pass for all text sizes)
+.btn-blue-100 {
+  background-color: #1565c0;
+  border-color: #1565c0;
+
+  &:hover, &:focus {
+    background-color: var(--green-300);
+    border-color: var(--green-300);
+  }
+
+  &:hover:focus, &:focus:focus {
+    color: #fff !important;
+  }
+}
+
+.tc-light .btn-blue-100:hover, .tc-light .btn-blue-100:focus {
+  background-color: var(--green-300);
+  border-color: var(--green-300);
+  color: #fff !important;
+}
+
+.btn-blue-100.vh-btn-outline:hover, .btn-blue-100.vh-btn-outline:focus {
+  background-color: #1565c0 !important;
+  border-color: #1565c0;
+  color: #fff !important;
+}
+
+.btn-green-300 {
+  background-color: var(--green-400); // accessible green — white label needs 4.5:1
+  border-color: var(--green-400);
+
+  &:hover, &:focus {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    color: white;
+  }
+
+  &.vh-btn-outline {
+    border-width: 2px;
+    border-style: solid;
+
+    &:hover, &:focus {
+      background-color: var(--green-300) !important;
+      border-color: var(--green-300);
+    }
+  }
+}
+
+// ---- responsive sizing ----
+@media (min-width: 576px) {
+  .vh-btn {
+    font-size: 16px;
+    line-height: 25px;
+    padding: 12px 30px;
+    min-width: 120px;
+  }
+  .btn-lg {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 15px 40px;
+    min-width: 190px;
+  }
+  .btn-md {
+    font-size: 14px;
+    line-height: 24px;
+    padding: 8px 20px;
+    min-width: 160px;
+  }
+}
+
+// ---- badge pill ----
+.badge {
+  color: #fff;
+  background-color: var(--blue-100);
+  display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 34px;
+  padding: 5px 16px;
+  font-size: 13px;
+  line-height: 24px;
+  border: 1px solid transparent;
+}
+
+// :not(.badge-outline) — no element carries .badge-outline today, so this
+// always applies; kept because the cascade relies on it beating later rules.
+.badge:not(.badge-outline) {
+  color: #fff;
+}

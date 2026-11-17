@@ -1,0 +1,118 @@
+# Single source of truth for /providers/seerbit/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/seerbit/index.html.
+
+name: SeerBit
+slug: seerbit
+status: live
+category: regional
+region: Africa
+logo: /assets/images/home/providers-icon/seerbit-light.webp
+accent: "#00629b"
+accent_rgb: "0,98,155"
+accent_text: "#00629b"   # computed: 6.52 on white, 6.19 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  SeerBit is a pan-African payment gateway covering West, East and Southern Africa, with local
+  acquiring in several markets. It accepts cards, USSD, bank transfer and direct debit through
+  one integration, which suits merchants selling across more than one African country from a
+  single storefront.
+
+countries:
+  - Nigeria
+  - Ghana
+  - Kenya
+  - Uganda
+  - Benin
+  - Senegal
+  - Côte d'Ivoire
+  - South Africa
+
+currencies: [NGN, GHS, KES, UGX, XOF, ZAR, USD]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Verve, Visa and Mastercard
+  - label: USSD
+    icon: ussd
+    detail: Bank shortcode payment
+  - label: Bank transfer
+    icon: bank
+    detail: Transfer confirmed against the order
+  - label: Direct debit
+    icon: recurring
+    detail: Authorised recurring debit from the customer's account
+  - label: Mobile money
+    icon: mobile
+    detail: Regional wallets in the markets where SeerBit operates
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://www.seerbit.com/
+  docs: https://doc.seerbit.com/
+  pricing: https://www.seerbit.com/
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: Public and secret keys exchanged for a bearer token, held server-side in InfyniPay
+  webhook: Signed transaction notification, validated before an order is released
+  verification: Server-side transaction query against the SeerBit API before fulfilment
+
+faqs:
+  - q: Which African markets does SeerBit cover?
+    a: >-
+      Nigeria, Ghana, Kenya, Uganda, Benin, Senegal, Côte d'Ivoire and South Africa. The
+      Francophone West African coverage is less common among Nigerian-origin gateways and is a
+      genuine reason to pick it.
+  - q: SeerBit or a single-country provider?
+    a: >-
+      If you sell into one market, a local specialist usually offers deeper method coverage there.
+      SeerBit earns its place when you sell into several African countries and want one contract
+      instead of five.
+  - q: Does it support recurring billing?
+    a: >-
+      Direct debit is supported for authorised recurring collection. Confirm the mandate rules for
+      your specific market with SeerBit before building a subscription product on it.
+  - q: Does InfyniPay charge extra on top of SeerBit?
+    a: >-
+      No. InfyniPay adds nothing to what SeerBit charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. SeerBit bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://www.seerbit.com/
+    - https://www.seerbit.com/local-acquiring-in-africa
+    - https://support.wix.com/en/article/connecting-seerbit-as-a-payment-provider

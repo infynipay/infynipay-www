@@ -1,0 +1,173 @@
+# Single source of truth for /providers/ccbill/.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# RULE: every factual claim rendered on the provider page comes from this file.
+# Nothing is written from memory, and no number appears here without a URL in
+# `verification.sources` that a human has actually opened.
+#
+# `fees` is deliberately absent from this schema. Provider pricing changes
+# without notice and a wrong fee is the fastest way to lose merchant trust —
+# the template links to the provider's own pricing page instead.
+#
+# Signed off 2026-08-15 — see `verification.verified_by` at the bottom for the
+# exact scope. providers/ccbill/index.html carries no `noindex`/`sitemap: false`,
+# so the page is indexable.
+#
+# ONE THING IS STILL OPEN — the `accent` value, which was sampled from the old
+# logo's background and needs re-sampling from the replacement wordmark; see the
+# note above `accent:`. The artwork itself is fixed, and the `integration:` block
+# is verified against the CCBill provider implementation.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: CCBill
+slug: ccbill
+status: live                 # live | development — only `live` may be published
+category: global
+region: Global
+
+# Artwork replaced 2026-08-15. The previous asset was a 978x652 progressive JPEG
+# (named .png) showing a white mark on a solid blue block, which read as a
+# different shape and treatment from every other card. This one is a real PNG at
+# 432x119 — the sibling scale, see paystack-light.png at 481x86 — carrying the
+# blue CCBill wordmark.
+#
+# One difference remains and it is minor: siblings carry a tRNS chunk, this file
+# does not, so its white background is opaque rather than transparent. Invisible
+# on the white card, and at most a faint rectangle on .bg-light (#f8f9fa).
+logo: /assets/images/home/providers-icon/ccbill-light.webp
+
+# RE-SAMPLE THIS. #0073ac was taken from the OLD artwork's blue background block,
+# which no longer exists — the replacement is a blue wordmark on white, and its
+# blue reads brighter than this value. The contrast figures below are correct for
+# #0073ac itself, so if the mark's true blue is used instead, recompute them
+# against #ffffff and #f8f9fa before changing `accent_text`.
+# Contrast computed, per _sass/components/_provider.scss:
+#   #0073ac — 5.19:1 on #ffffff, 4.92:1 on #f8f9fa  (fills, gradients)
+#   #006292 — 6.64:1 on #ffffff, 6.30:1 on #f8f9fa  (text and small icons)
+accent: "#0073ac"
+accent_rgb: "0,115,172"
+accent_text: "#006292"   # WCAG AA on white and .bg-light; see _sass/components/_provider.scss
+
+# Lead paragraph. Written to be lifted verbatim as a featured snippet or an LLM
+# citation: direct definition first, no marketing wind-up.
+summary: >-
+  CCBill is a payment facilitator for subscription and high-risk businesses. Merchants are
+  onboarded as sub-merchants under CCBill's own acquiring relationships rather than opening a
+  direct merchant account, which is how it accepts verticals that mainstream processors
+  commonly decline: dating, streaming media, content-creator platforms and adult among them.
+  Its billing engine is built around recurring charges rather than one-off payments.
+
+# No `countries` list: card acceptance is worldwide, so chips would misrepresent
+# it. The template falls back to this sentence — the two fields are exclusive.
+coverage: >-
+  Card payments are accepted worldwide, but in a fixed set of currencies rather than a broad
+  list, so the currency you can charge in matters more here than the country you sell into.
+  ACH is the exception and is limited to the United States and some Canadian customers.
+  Which businesses can onboard is decided by CCBill's own underwriting, which is where the
+  high-risk vertical support actually lives.
+coverage_short: "Global"
+
+currencies: [USD, EUR, GBP, CAD, AUD, JPY]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Credit and debit cards accepted worldwide, CCBill's most widely used method
+  - label: CCBill Pay
+    icon: wallet
+    detail: CCBill's stored-payment checkout; supported only on English-language FlexForms
+  - label: ACH
+    icon: bank
+    detail: US customers and a small portion of Canadian customers, in USD only
+  - label: Recurring billing
+    icon: recurring
+    detail: Subscription rebills, with renewal, cancellation and expiry events raised per subscriber
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://ccbill.com/
+  docs: https://ccbill.com/doc/
+  pricing: https://ccbill.com/pricing
+  methods: https://ccbill.com/doc/accepted-payment-methods
+
+# What InfyniPay handles on the merchant's behalf. Keep these accurate to the
+# actual InfyniPay.Services provider implementation, not to the provider's docs.
+#
+# Verified 2026-08-15 against payment-service/Payment.Provider/Providers/CCBill.
+# The three lines below previously described OAuth, IP-allowlisted webhooks and
+# server-side API re-verification. None of those matched the implementation — it
+# is FlexForms with a shared salt, a digest-signed webhook, and no polling API at
+# all. Re-read CCBillProvider.cs and CCBillHelpers.cs before editing these again.
+integration:
+  auth: CCBill FlexForms with a shared salt held server-side in InfyniPay and never exposed to the storefront; each redirect carries a form digest over the price, period and currency
+  webhook: CCBill signs its approval post with a digest over the subscription id and approval flag; InfyniPay recomputes it from the salt and rejects any webhook that fails a constant-time comparison
+  verification: CCBill FlexForms has no fetch-by-reference API, so the digest-verified webhook is the authorisation; there is no polling fallback, and a webhook that fails verification never reaches fulfilment
+
+faqs:
+  - q: What kind of businesses is CCBill for?
+    a: >-
+      CCBill is a payment facilitator built around subscription billing and the high-risk
+      verticals that mainstream processors often decline. Its own published list includes
+      dating, streaming media, content-creator platforms, CBD and adult. You are onboarded
+      as a sub-merchant under CCBill's acquiring relationships rather than opening a direct
+      merchant account, so approval is decided by CCBill's underwriting.
+  - q: Which currencies does CCBill support?
+    a: >-
+      US Dollar (USD), Euro (EUR), British Pound (GBP), Canadian Dollar (CAD), Australian
+      Dollar (AUD) and Japanese Yen (JPY). Cards are accepted worldwide within those
+      currencies; ACH is the exception, limited to US customers and a small portion of
+      Canadian customers, in USD only.
+  - q: Does CCBill handle subscriptions and recurring payments?
+    a: >-
+      Yes. Recurring billing is what the platform is built around rather than an add-on.
+      CCBill raises separate events for successful and failed renewals, cancellations,
+      expiries and billing-date changes, so a subscription's whole lifecycle is visible to
+      your store rather than just the first sale.
+  - q: How are CCBill webhooks secured?
+    a: >-
+      CCBill signs its FlexForms approval post with a validation digest computed over the
+      subscription id, the approval flag and a salt that only CCBill and InfyniPay hold.
+      InfyniPay recomputes that digest on every inbound callback and compares it in constant
+      time; a webhook with a missing or mismatched digest is rejected before it can touch the
+      order. This matters more here than with most providers, because CCBill FlexForms has no
+      fetch-by-reference API to re-query: the verified webhook <em>is</em> the authorisation,
+      with no polling fallback behind it, so a forged or replayed callback cannot complete an
+      order.
+  - q: Does InfyniPay charge extra on top of CCBill's fees?
+    a: >-
+      No. InfyniPay adds nothing to what CCBill charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. CCBill bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html" class="txt-blue-100">InfyniPay pricing</a> and <a
+      href="https://ccbill.com/pricing" target="_blank" rel="noopener">CCBill's pricing
+      page<span class="visually-hidden"> (opens in new tab)</span></a>.
+  - q: Can I switch from CCBill to another provider later?
+    a: >-
+      Yes. Your store talks to InfyniPay, not to CCBill, so switching provider is a change in
+      the InfyniPay dashboard. No plugin update, no code change and no second checkout
+      integration. Active subscriptions are the one thing to plan for, since those live with
+      the provider that created them.
+
+verification:
+  verified_on: 2026-08-15
+  verified_by: >-
+    Site owner, 2026-08-15. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there: the `integration:` block was checked
+    line by line against the actual implementation in
+    payment-service/Payment.Provider/Providers/CCBill (CCBillProvider.cs,
+    CCBillHelpers.cs) and rewritten — the previous OAuth / IP-allowlist /
+    API-re-verification description was inferred and wrong. Provider facts and
+    links come from the `sources` below. The logo artwork was replaced on the same
+    day with a real PNG at the sibling scale, so the earlier mismatch is resolved.
+    NOT covered by this sign-off: the `accent` value, which was sampled from the
+    old artwork's blue background block and has not been re-sampled from the new
+    wordmark — see the note above `accent:`.
+  sources:
+    - https://ccbill.com/
+    - https://ccbill.com/doc/
+    - https://ccbill.com/doc/accepted-payment-methods
+    - https://ccbill.com/doc/supported-languages-flexforms
+    - https://ccbill.com/doc/ccbill-restful-transaction-api/
+    - https://ccbill.com/doc/webhooks-user-guide/

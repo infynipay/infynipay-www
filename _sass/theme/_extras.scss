@@ -1,0 +1,601 @@
+// Late-cascade page extras (home transaction-control cards, home screenshot
+// slider); extracted (pruned) from the tail of style.css.
+
+// ---- site footer ----
+
+// A solid deep-blue band that closes every page, in the same family as the hero
+// gradient (_home-hero.scss). The section carries .tc-light, so the theme's
+// light-on-dark rules colour the widget titles and links; only the brand
+// column's own text is set here. (A pale footer was tried in the 2026-11
+// rebrand and rejected by the owner as washed out.)
+.site-footer {
+  background:
+    radial-gradient(50% 120% at 100% 0%, rgba(120, 160, 230, .08) 0%, rgba(120, 160, 230, .00) 60%),
+    linear-gradient(135deg, #0a1a40 0%, #0f2557 55%, var(--blue-200) 100%);
+  color: rgba(255, 255, 255, .78);
+
+  .wgs-text p { color: rgba(255, 255, 255, .78); }
+
+  // .tc-light .wgs-title paints the column titles in the accent blue, which
+  // disappears on this band.
+  .wgs-title { color: #fff; }
+}
+
+// ---- home trust bar ----
+
+// Icon disc beside each item in the trust bar under the provider logos.
+.trust-bar-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(var(--blue-100-rgb), .1);
+  color: var(--blue-100);
+}
+
+// ---- skip link (WCAG 2.4.1 Bypass Blocks) ----
+
+// Pairs with Bootstrap's .visually-hidden-focusable, which un-clips the link
+// the moment it takes focus. Fixed positioning means revealing it never shifts
+// the header layout, and the z-index clears both .header-main (49) and the
+// mobile offcanvas nav (1045).
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 2000;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--blue-200);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(var(--blue-600-rgb), .25);
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+// ---- click-to-load video facade ----
+
+// Lives in the theme, not components.css, because the home page deliberately
+// does not load components.css (see CLAUDE.md).
+// The box holds its 16:9 shape before the poster decodes, so revealing the
+// player never shifts the page (no CLS).
+.video-facade {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--blue-600);
+  box-shadow: 0 24px 60px rgba(var(--blue-600-rgb), .22);
+}
+
+.video-facade-poster,
+.video-facade-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.video-facade-poster { object-fit: cover; }
+
+.video-facade-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(var(--blue-600-rgb), .28);
+  cursor: pointer;
+  transition: background-color .25s;
+
+  &:hover { background: rgba(var(--blue-600-rgb), .12); }
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -6px;
+  }
+}
+
+// The YouTube play button, so a visitor recognises what the click will load.
+// The red is YouTube's own, hard-coded on purpose (it must not follow the
+// theme or the dark palette); the triangle is white inside the SVG.
+.video-facade-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 48px;
+  color: #f00;
+  filter: drop-shadow(0 6px 16px rgba(var(--blue-600-rgb), .45));
+  transition: transform .25s, color .25s;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-facade-play:hover & {
+    transform: scale(1.08);
+    color: #cc0000;
+  }
+}
+
+// ---- cookie consent banner ----
+
+// Sits above the chat launcher (9999) because it gates analytics and should be
+// the first thing a visitor resolves. Translated off-screen until .is-open so
+// revealing it costs a transform, not a layout.
+.ip-consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  padding: 16px;
+  transform: translateY(110%);
+  transition: transform .35s cubic-bezier(.22, .61, .36, 1);
+
+  &.is-open { transform: translateY(0); }
+}
+
+.ip-consent-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: var(--blue-600);
+  box-shadow: 0 18px 50px rgba(6, 10, 30, .45);
+}
+
+.ip-consent-title {
+  margin: 0 0 4px;
+  font-size: .98rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ip-consent-text {
+  margin: 0;
+  font-size: .84rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .75);
+
+  a {
+    color: #7cc6ff;
+    text-decoration: underline;
+
+    &:hover { color: #a8dbff; }
+  }
+}
+
+.ip-consent-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.ip-consent-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: .86rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+
+.ip-consent-btn--accept {
+  background: var(--green-400);
+  color: #fff;
+
+  &:hover { background: var(--green-300); }
+}
+
+.ip-consent-btn--ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, .35);
+  color: #fff;
+
+  &:hover { border-color: #fff; background: rgba(255, 255, 255, .08); }
+}
+
+@media (max-width: 767px) {
+  .ip-consent-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .ip-consent-actions .ip-consent-btn { flex: 1 1 0; }
+}
+
+// ---- chat email gate widget ----
+
+// Fastbots injects its own floating button (#chat-widget-push-to-talk) — we
+// use #ip-chat-launcher instead, so keep the Fastbots button visually hidden.
+// Its inline style.visibility is still set by Fastbots' iframe onload, which
+// we read in JS as a readiness signal before calling .click() programmatically.
+#chat-widget-push-to-talk {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#ip-chat-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-100) 0%, var(--blue-200) 100%);
+  box-shadow: 0 4px 20px rgba(var(--blue-200-rgb), 0.45);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  svg { width: 26px; height: 26px; fill: #fff; }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(var(--blue-200-rgb), 0.55);
+  }
+
+  // Fastbots can take several seconds to boot; spin the icon so a click
+  // always gives immediate feedback instead of the button just vanishing.
+  &.loading {
+    cursor: wait;
+    svg { animation: ip-chat-spin 0.8s linear infinite; }
+  }
+}
+
+@keyframes ip-chat-spin {
+  to { transform: rotate(360deg); }
+}
+
+#ip-email-gate {
+  position: fixed;
+  bottom: 94px;
+  right: 24px;
+  z-index: 9998;
+  width: 320px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  padding: 1.5rem;
+  transform: scale(0.85) translateY(16px);
+  transform-origin: bottom right;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+
+  &.open {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+
+  .ipeg-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+
+    .ipeg-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-100), var(--blue-200));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      svg { width: 18px; height: 18px; fill: #fff; }
+    }
+
+    .ipeg-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--blue-600);
+      line-height: 1.2;
+    }
+
+    .ipeg-sub {
+      font-size: 0.75rem;
+      color: var(--blue-400);
+    }
+  }
+
+  .ipeg-msg {
+    font-size: 0.85rem;
+    color: #374151;
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+
+  .ipeg-input {
+    width: 100%;
+    padding: 0.6rem 0.875rem;
+    border: 1px solid var(--blue-100);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #111;
+    outline: none;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.18s ease;
+
+    &:focus { border-color: var(--blue-100); }
+    &::placeholder { color: #9ca3af; }
+  }
+
+  .ipeg-submit {
+    width: 100%;
+    padding: 0.65rem;
+    background: linear-gradient(135deg, var(--blue-100) 0%, var(--blue-200) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.18s ease;
+
+    &:hover { opacity: 0.9; }
+  }
+
+  .ipeg-privacy {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 0.625rem;
+  }
+
+  .ipeg-error-msg {
+    font-size: 0.8rem;
+    color: #374151;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+}
+
+// ---- transaction-control cards ----
+#transactionControl {
+  background: url("../images/home/globe-particle.webp") no-repeat center 107%;
+  background-size: 90%;
+}
+
+.transaction-card {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 35px 25px 110px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 5px 30px rgba(var(--blue-200-rgb), 0.14);
+  height: 100%;
+}
+
+.transaction-icon {
+  position: absolute;
+  width: 121px;
+  height: 121px;
+  margin: 0;
+  right: -15px;
+  bottom: -15px;
+  background: rgba(var(--blue-100-rgb), 0.15);
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 10px rgba(var(--blue-100-rgb), 0.06);
+  text-align: center;
+  line-height: 112px;
+
+  img {
+    max-width: 60px;
+    display: inline-block !important;
+  }
+}
+
+// ---- home mobile inline CTA ----
+// "Start Free" repeated at the top of select sections on small screens
+// only (markup carries .d-lg-none — below 992px the header CTA lives in the
+// off-canvas nav). A script in index.html observes each one and adds
+// .is-suppressed so only the topmost CTA in the viewport stays visible —
+// never two at once in a single screen.
+.home-mcta {
+  text-align: center;
+  margin-top: -2.5rem; // pull up into the section's top padding (mobile-only element)
+  margin-bottom: 2rem;
+  transition: opacity 0.2s ease;
+}
+
+.home-mcta.is-suppressed {
+  visibility: hidden;
+  opacity: 0;
+}
+
+// ---- customer logo cards ----
+// .customer-card is an <a> since 2026-08-15 — every logo links out to the customer's own
+// site, so a reader can check it. Keep the colour rules below independent of :link/:visited
+// or the names will change colour once a visitor has been there.
+.customer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border: 1px solid var(--blue-100);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(var(--blue-200-rgb), 0.10);
+    border-color: var(--blue-200);
+  }
+}
+
+.customer-logo-wrap {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer-logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.customer-logo--wide {
+  height: 36px;
+  max-width: 180px;
+}
+
+.customer-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.customer-text-logo {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #4a5568;
+  letter-spacing: -0.03em;
+
+  .clt-bit {
+    color: #1a5fcc;
+    font-style: italic;
+  }
+}
+
+// ---- screenshot slider ----
+.linear-slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  mask-image: linear-gradient(90deg, transparent 0, #ffffff 20%, #ffffff 80%, transparent);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#screenshotSlider > .linear-slider-items {
+  gap: 5rem;
+
+  // The logos carry intrinsic width/height attributes so the browser can
+  // reserve space (no layout shift). Several also set an inline height, so
+  // width must stay proportional — otherwise the width attribute is taken
+  // verbatim and squashes them.
+  img { width: auto; }
+}
+
+// ---- provider logo mosaic (home "Payment Providers" section) ----
+// Replaces the old illustration: the real provider logos are the proof, so
+// they double as the section's artwork. Lives here (not components.scss)
+// because the home page only loads style.css.
+.provider-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 74px;
+    padding: 0.9rem 1rem;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(var(--blue-200-rgb), 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue-100);
+      box-shadow: 0 12px 26px rgba(var(--blue-200-rgb), 0.1);
+    }
+  }
+
+  img {
+    max-height: 28px;
+    max-width: 100%;
+    // Intrinsic width/height attributes are on the markup for CLS; height is
+    // driven here, so width must stay proportional or the attribute squashes it.
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.provider-mosaic-more {
+  border-style: dashed !important;
+  border-color: var(--blue-100) !important;
+  background: var(--blue-30) !important;
+  box-shadow: none !important;
+
+  a {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--blue-200);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 575px) {
+  .provider-mosaic {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ---- footer social icons ----
+.footer-social {
+  margin-top: 0.65rem;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  svg { width: 15px; height: 15px; fill: var(--blue-200); transition: fill 0.25s ease; }
+
+  &:hover, &:focus-visible {
+    background: linear-gradient(135deg, var(--blue-100) 0%, var(--blue-200) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+
+    svg { fill: #fff; }
+  }
+}

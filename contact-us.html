@@ -1,0 +1,213 @@
+---
+layout: none
+title: Contact Us
+description: Any question? Reach out to us and we'll get back to you shortly.
+nav_active: contact
+redirect_from: /company/contact/
+# Outage switch for the contact form. true = show a "temporarily unavailable" notice with the
+# email addresses and disable every control. Flip it whenever the form provider is down.
+contact_form_down: false
+---
+
+{% include header-secondary.html %}
+
+<style>
+  .bg-green-300 {
+    background-color: var(--green-300);
+  }
+</style>
+
+
+<main id="main-content">
+  <div class="container">
+    <div class="row py-5 my-5">
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <div
+          class="section-head section-head-sm section-head-s7 wide-auto-sm text-lg-start text-center animated"
+          data-animate="fadeInLeft"
+          data-delay=".1"
+        >
+          <h2 class="title-thin txt-blue-600">Get In Touch</h2>
+          <p class="txt-blue-300">
+            Any question? Reach out to us and we'll get back to you shortly
+          </p>
+        </div>
+        
+        <!-- Contact Info Cards -->
+        <div>
+          <div class="card p-4 mb-3 animated" data-animate="fadeInLeft" data-delay=".2">
+            <div class="d-flex align-items-center gap-3">
+              <div class="d-flex align-items-center justify-content-center bg-blue-200 rounded-circle" 
+                   style="width: 50px; height: 50px; min-width: 50px;">
+                <em class="fas fa-envelope text-white" style="font-size: 20px;"></em>
+              </div>
+              <div>
+                <h3 class="txt-blue-600 mb-1 fw-semibold h6">Sales Inquiries</h3>
+                <a href="mailto:sales@infynipay.com" class="txt-blue-400 text-decoration-none">
+                  sales@infynipay.com
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-4 mb-4 animated" data-animate="fadeInLeft" data-delay=".3">
+            <div class="d-flex align-items-center gap-3">
+              <div class="d-flex align-items-center justify-content-center bg-green-300 rounded-circle" 
+                   style="width: 50px; height: 50px; min-width: 50px;">
+                <em class="fas fa-headset text-white" style="font-size: 20px;"></em>
+              </div>
+              <div>
+                <h3 class="txt-blue-600 mb-1 fw-semibold h6">Customer Support</h3>
+                <a href="mailto:support@infynipay.com" class="txt-blue-400 text-decoration-none">
+                  support@infynipay.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="bg-blue-30 p-4 rounded animated" data-animate="fadeInLeft" data-delay=".4">
+          <div class="d-flex align-items-start gap-3">
+            <em class="fas fa-info-circle txt-blue-200 mt-1" style="font-size: 24px;"></em>
+            <div>
+              <h3 class="txt-blue-600 mb-2 h6">Response Time</h3>
+              <p class="txt-blue-400 mb-0 small">
+                We typically respond within 24 hours during business days. 
+                For urgent matters, please specify in your message.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="bg-blue-30 p-4 p-md-5 rounded animated" data-animate="fadeInRight" data-delay=".2">
+          {%- comment -%}
+            Posts to Formspree (dashboard form "Contact", account support@infynipay.com),
+            which mails every submission to support@infynipay.com. Moved here from
+            formsubmit.co on 2026-09-30, after FormSubmit's endpoint returned 500 for every
+            address and messages were being lost without anyone knowing.
+
+            assets/js/contact-form.js sends it in the background:
+              - success goes to /thank-you.html. Keep that exact path: the GTM generate_lead
+                conversion fires on a page view of it.
+              - any failure shows #contact-error, with everything the visitor typed still in
+                the form, a pre-filled email link and a copy button.
+            If reCAPTCHA is switched on in the Formspree form settings, Formspree refuses
+            background submissions (403). The script then falls back to a normal post:
+            Formspree's captcha page, then Formspree's own confirmation page. On the free plan
+            that page cannot redirect to /thank-you.html, so the conversion is not counted.
+            If that script fails to load, the form still posts normally and Formspree shows its
+            own confirmation page. (With JavaScript off entirely the theme's .animated wrappers
+            never become visible, so the whole form is hidden; that is site-wide, not this form.)
+
+            Spam defence: the `_gotcha` honeypot below (Formspree silently drops any
+            submission that fills it) plus Formspree's own filtering.
+
+            page.contact_form_down (front matter) is the outage switch: it shows a notice
+            with the email addresses and disables every control, so nobody writes a message
+            into a form that cannot deliver it.
+          {%- endcomment -%}
+          {%- if page.contact_form_down %}
+          <div class="warning-box mt-0 mb-4" role="status">
+            <em class="fas fa-exclamation-triangle me-2" aria-hidden="true"></em>
+            <strong>Our contact form is temporarily unavailable.</strong>
+            Please email <a href="mailto:support@infynipay.com" class="txt-blue-200 fw-semibold">support@infynipay.com</a>
+            for support or <a href="mailto:sales@infynipay.com" class="txt-blue-200 fw-semibold">sales@infynipay.com</a> for sales,
+            and we'll get back to you as usual.
+          </div>
+          {%- endif %}
+          <form id="contact-form" action="https://formspree.io/f/xrpbjjrk" method="POST">
+            <fieldset{% if page.contact_form_down %} disabled{% endif %}>
+            <!-- Name Field -->
+            <div class="mb-4 animated" data-animate="fadeInUp" data-delay=".3">
+              <label for="name" class="form-label txt-blue-600 fw-semibold mb-2">
+                <em class="fas fa-user me-2 txt-blue-200"></em>Full Name
+              </label>
+              <input 
+                type="text" 
+                id="name"
+                name="name" 
+                class="form-control form-control-lg" 
+                placeholder="Enter your full name" 
+                required 
+              />
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-4 animated" data-animate="fadeInUp" data-delay=".4">
+              <label for="email" class="form-label txt-blue-600 fw-semibold mb-2">
+                <em class="fas fa-envelope me-2 txt-blue-200"></em>Email Address
+              </label>
+              <input 
+                type="email" 
+                id="email"
+                name="email" 
+                class="form-control form-control-lg" 
+                placeholder="your.email@example.com" 
+                required 
+              />
+            </div>
+
+            <!-- Message Field -->
+            <div class="mb-4 animated" data-animate="fadeInUp" data-delay=".6">
+              <label for="message" class="form-label txt-blue-600 fw-semibold mb-2">
+                <em class="fas fa-comment-dots me-2 txt-blue-200"></em>Message
+              </label>
+              <textarea 
+                id="message"
+                name="message" 
+                class="form-control form-control-lg" 
+                rows="6" 
+                placeholder="Tell us more about your inquiry..." 
+                required
+              ></textarea>
+            </div>
+
+            <!-- Honeypot. Hidden from people, filled in by bots; Formspree silently drops any
+                 submission that carries a value here. Not type="hidden": bots skip those. -->
+            <div class="visually-hidden" aria-hidden="true">
+              <label for="_gotcha">Website</label>
+              <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <!-- Subject line of the email Formspree sends to support@. -->
+            <input type="hidden" name="_subject" value="New contact form message – infynipay.com" />
+
+            <!-- Send failure. Shown by contact-form.js; the fields above keep their text. -->
+            <div id="contact-error" class="warning-box mt-0 mb-4 d-none" role="alert" tabindex="-1">
+              <p class="fw-semibold mb-1">
+                <em class="fas fa-exclamation-triangle me-2" aria-hidden="true"></em>Your message wasn't sent.
+              </p>
+              <p id="contact-error-detail" class="small mb-2"></p>
+              <div class="d-flex flex-wrap gap-3 small">
+                <a id="contact-error-mail" href="mailto:support@infynipay.com" class="txt-blue-200 fw-semibold">
+                  <em class="fas fa-envelope me-1" aria-hidden="true"></em>Email it to support@infynipay.com
+                </a>
+                <button type="button" id="contact-copy" class="bg-transparent border-0 p-0 txt-blue-200 fw-semibold">
+                  <em class="fas fa-copy me-1" aria-hidden="true"></em><span>Copy my message</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-end animated" data-animate="fadeInUp" data-delay=".7">
+              <button type="submit" id="contact-submit" class="vh-btn btn-blue-300 border-0 btn-lg px-5 py-3">
+                <em class="fas fa-paper-plane me-2"></em>Send Message
+              </button>
+            </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include chat-widget.html %}
+
+{%- unless page.contact_form_down %}
+<script defer src="{{ '/assets/js/contact-form.js' | relative_url }}?ver=1"></script>
+{%- endunless %}
+
+{% include footer.html %}

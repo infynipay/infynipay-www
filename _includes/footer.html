@@ -1,0 +1,125 @@
+<!-- Footer -->
+<footer class="nk-footer site-footer">
+    <section class="section section-m section-footer tc-light bg-transparent ov-h">
+        <div class="container">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-sm-4">
+                    <div class="wgs wgs-text mb-0 animated" data-animate="fadeInUp" data-delay=".1">
+                        <div class="wgs-body">
+                            <a href="{{ '/' | relative_url }}" class="wgs-logo">
+                                <img src="{{ '/assets/images/logos/logo-white.svg' | relative_url }}" width="176" height="40" alt="InfyniPay home">
+                            </a>
+                            <p class="mb-1">© {{ "now" | date: "%Y" }} InfyniPay. All rights reserved.</p>
+                            <p class="mb-0 small">Based in the Netherlands.</p>
+                            <ul class="footer-social d-flex align-items-center gap-2 list-unstyled mb-0">
+                                <li>
+                                    <a href="https://www.linkedin.com/company/infynipay/" class="footer-social-link" target="_blank" rel="noopener" aria-label="InfyniPay on LinkedIn (opens in new tab)">
+                                        <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.114 20.452H3.558V9h3.556v11.452z"/></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="wgs wgs-menu mb-0 animated" data-animate="fadeInUp" data-delay=".2">
+                        <div class="wgs-title wgs-title-s3 t-cap">Quick Access</div>
+                        <div class="wgs-body">
+                            <ul class="wgs-links">
+                                {%- comment -%}
+                                  Providers is listed first: it is the hub for every provider page on the
+                                  site, and a site-wide footer link is what gives those pages internal
+                                  reach from anywhere, not just from the home page.
+                                {%- endcomment -%}
+                                <li><a href="/providers.html">Payment Providers</a></li>
+                                <li><a href="/integrations/">Integrations</a></li>
+                                <li><a href="/trust-center/">Security</a></li>
+                                <li><a href="/pricing.html">Pricing</a></li>
+                                <li><a href="https://docs.infynipay.com/" target="_blank" rel="noopener">Documentation<span class="visually-hidden"> (opens in new tab)</span></a></li>
+                                <li><a href="/blog/">Blog</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="wgs wgs-menu mb-0 animated" data-animate="fadeInUp" data-delay=".3">
+                        <div class="wgs-title wgs-title-s3 t-cap">Legal</div>
+                        <div class="wgs-body">
+                            <ul class="wgs-links">
+                                <li><a href="/terms.html">Terms of Use</a></li>
+                                <li><a href="/privacy.html">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="wgs wgs-menu mb-0 animated" data-animate="fadeInUp" data-delay=".2">
+                        <div class="wgs-title wgs-title-s3 t-cap">Company</div>
+                        <div class="wgs-body">
+                            <ul class="wgs-links">
+                                <li><a href="/about/">About Us</a></li>
+                                <li><a href="/contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>
+<!-- JavaScript -->
+<script defer src="{{ '/assets/js/bootstrap.bundle.min.js' | relative_url }}?ver=522"></script>
+<script defer src="{{ '/assets/js/scripts.js' | relative_url }}?ver=301"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carouselContainer = document.querySelectorAll('.linear-slider-items');
+        if (!carouselContainer.length) return;
+
+        carouselContainer.forEach(container => {
+            // Geometry is read BEFORE the clone, for two reasons.
+            //
+            // 1. Reading scrollWidth straight after `innerHTML +=` forced a
+            //    synchronous layout - the exact write-then-read pair Chrome's
+            //    "forced reflow" insight flags. Reading first means the layout
+            //    the browser already has to do is enough.
+            // 2. scrollWidth/2 was also wrong. A flex gap sits BETWEEN items, so
+            //    appending a copy adds one extra gap: the width goes to 2W + gap,
+            //    and half of that is 40px short of where the pattern actually
+            //    repeats (measured: half=2518 vs true repeat=2558, gap=80).
+            //    The loop reset therefore jumped 40px on every cycle.
+            //
+            // The pattern repeats every (original width + one gap).
+            const gap = parseFloat(getComputedStyle(container).columnGap) || 0;
+            const halfWidth = container.scrollWidth + gap;
+
+            // Clone the carousel content to create a continuous loop
+            const carouselItems = container.innerHTML;
+            container.innerHTML += carouselItems;
+
+            // Set up animation
+            let scrollLeft = 0;
+            const scrollSpeed = 3; // Adjust the scroll speed as needed
+
+            function animateCarousel(timestamp) {
+                if (!lastTimestamp) {
+                    lastTimestamp = timestamp;
+                }
+
+                const deltaTime = timestamp - lastTimestamp;
+                lastTimestamp = timestamp;
+
+                scrollLeft += scrollSpeed * deltaTime / 60; // Normalize speed
+                if (scrollLeft >= halfWidth) {
+                    scrollLeft = 0;
+                }
+                container.style.transform = `translateX(-${scrollLeft}px)`;
+                requestAnimationFrame(animateCarousel);
+            }
+
+            let lastTimestamp = null;
+            requestAnimationFrame(animateCarousel);
+        });
+    });
+</script>
+</body>
+</html>

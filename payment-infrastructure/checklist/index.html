@@ -1,0 +1,260 @@
+---
+layout: none
+title: "Payment Integration Launch Checklist"
+description: "Thirty-one checks for a payment integration going into production: idempotency, webhook signatures, unknown states, refunds and the paths nobody tests."
+---
+{% comment %}
+  Commercial page under the /payment-infrastructure/ pillar. Built as a
+  reference checklist because that is a format people bookmark and link to.
+
+  OWNERSHIP (see .docs/seo-page-ownership.md): this is the ENGINEERING list, for
+  whoever wrote the integration. /blog/test-your-checkout-before-you-go-live/ is
+  the MERCHANT list, for whoever runs the store - test a decline, check the order
+  status, refund it, watch the emails, then do one for real. They cover the same
+  event from two jobs and must not converge; each links to the other exactly once.
+
+  Every item here is verifiable against something InfyniPay actually does or a
+  documented provider behaviour. Do not add an item that only makes sense as a
+  product pitch - the page earns links by being usable against any payment
+  stack, including one that never becomes a customer.
+{% endcomment %}
+{% include header-secondary.html %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+
+<main id="main-content" class="overflow-hidden">
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head wide text-center">
+        <span class="animated" data-animate="fadeInUp" data-delay=".1">Pre-Launch</span>
+        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">The checks that only matter after you have real customers</h2>
+        <p class="lead animated" data-animate="fadeInUp" data-delay=".3">
+          A payment integration that works is easy to build. One that behaves correctly when the
+          network does not, when a webhook arrives twice, or when a provider succeeds and forgets to
+          mention it. That is the part discovered in production, usually by a customer. This is the
+          list for whoever wrote the code. If you are checking the store rather than the integration,
+          <a href="/blog/test-your-checkout-before-you-go-live/">test your checkout before you go
+          live</a> is the version for that job.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+          <div class="section-head">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">1. Before the first line of code</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>You can name the currencies you will charge in, and have confirmed each provider processes them.</li>
+            <li>You know which payment methods your largest markets actually use, rather than assuming cards.</li>
+            <li>You know whether your business category attracts holds or reserves at your provider.</li>
+            <li>You have decided whether card data will ever touch your server, and if the answer is anything but "no", you have read <a href="/blog/do-you-need-pci-compliance-to-accept-payments/">how PCI scope works</a> first.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">2. Creating a charge</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>Every charge carries an idempotency key.</li>
+            <li>The key is derived from the <strong>order</strong>, not generated per HTTP request: you can reproduce it from data you already store.</li>
+            <li>The key is stored with the order before the request is sent, not after the response comes back.</li>
+            <li>You have tested that sending the same charge twice produces one payment.</li>
+            <li>Amounts are handled in a type that cannot round, with no floats anywhere between the cart and the provider.</li>
+            <li>The amount sent matches the amount displayed, in the unit the provider expects. (Major units and minor units are both common, and the mismatch is a factor of one hundred.)</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">3. Confirming the payment</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>Orders are marked paid from a server-side confirmation, never from the browser redirect.</li>
+            <li>Your success URL does nothing but show a page: no state changes, no fulfilment.</li>
+            <li>Every inbound webhook signature is verified before the payload is trusted.</li>
+            <li>Signature comparison is constant-time.</li>
+            <li>A webhook that fails verification is rejected, not logged and processed anyway.</li>
+            <li>You have confirmed you are verifying against the <strong>raw request body</strong>, because parsing and re-serialising the JSON first breaks the signature for every provider.</li>
+            <li>Webhook handlers are idempotent: the same event delivered twice changes nothing the second time.</li>
+            <li>Handlers tolerate out-of-order delivery and never move an order backwards from a later state.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">4. When things fail</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>You distinguish technical failures from hard declines from soft declines, and treat them differently. The three categories are in <a href="/blog/why-payments-fail/">why payments fail</a>.</li>
+            <li>A hard decline is never retried through another provider.</li>
+            <li>A timeout triggers a <em>status query</em>, not a blind retry.</li>
+            <li>There is a defined maximum time an order may sit in an unknown state before a human sees it.</li>
+            <li>You have deliberately tested the case where the provider charged the card and the response never arrived. <strong>This is the single most valuable test on this page.</strong></li>
+            <li>Your failover path, if you have one, carries the original idempotency key. If it does not, it is a double-charge generator; see <a href="/payment-infrastructure/failover/">how failover is actually built</a>.</li>
+            <li>The customer sees a message that tells them what to do next, not a raw provider error code.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">5. Money correctness</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>Refunds work end to end, and the money is visible as returned on the provider's side too.</li>
+            <li>Partial refunds and partial captures behave, if you support them.</li>
+            <li>A refund issued at the provider rather than in your system still reaches your order state.</li>
+            <li>Disputes and chargebacks land somewhere a human will look.</li>
+            <li>You can answer "what did we take yesterday" across every provider without a spreadsheet merge. <a href="/blog/payment-reconciliation-across-multiple-providers/">Reconciliation across providers</a> is what this looks like when it is missing.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">6. Risk and abuse</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>There is a limit on payment attempts per customer in a window.</li>
+            <li>There is a limit on distinct cards from one customer or one address.</li>
+            <li>Repeated provider rejections trigger something automatically rather than waiting for a report. The pattern is described in <a href="/blog/card-testing-fraud-signup-forms/">card testing on signup forms</a>.</li>
+            <li>You know what your provider's decline rate threshold is, and you monitor against it.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">7. Operations</h2>
+          </div>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>API keys live in a secret store, not in configuration files or environment dumps.</li>
+            <li>Payment logs contain no card data, no full tokens and no webhook secrets.</li>
+            <li>There is an alert on payment failure rate, not just on server errors, because a provider outage often produces perfectly healthy 200s from your own stack.</li>
+            <li>One person other than the author can find the payment logs and explain what a stuck order means.</li>
+            <li>You have done one real payment with live keys, for the smallest amount possible, and refunded it.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">8. Multi-provider readiness</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Skip this section entirely if you run one provider and intend to keep it that way.
+            That is a legitimate position and most of what follows is cost without benefit. It
+            becomes relevant the moment a second provider is taking real money, or the moment you
+            write a conditional in application code that chooses between providers.
+          </p>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>The routing decision is configuration you can change without a deployment, not a branch in a checkout controller.</li>
+            <li>A retry that moves to a second provider keeps an identity your own system owns: a provider's idempotency key is scoped to that provider and does not travel.</li>
+            <li>Provider health is tracked per provider, over a rolling window, counting technical failures only. A decline is the provider working correctly and must never mark it unhealthy.</li>
+            <li>An unhealthy provider is re-tested after a cooldown rather than being written off permanently by a fifteen-minute incident.</li>
+            <li>Every transaction carries one internal identifier assigned at capture, with the provider's own reference stored alongside rather than instead. <a href="/payment-infrastructure/failover/">How failover is actually built</a> covers why this is load-bearing.</li>
+            <li>You know that stored payment methods do not transfer between providers, and your renewal flow does not silently depend on them doing so.</li>
+            <li>Your second provider has taken a real payment. An account you opened but never used is not a fallback.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">9. Measurement</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Everything above is correctness. This section is how you find out that something has
+            drifted, which is the failure mode that costs the most over time because nothing alerts
+            on it.
+          </p>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>Approval rate is reported split by country, by payment method and by provider, not as one blended figure that averages a healthy market with a broken one.</li>
+            <li>First payments and renewals are counted separately. They have different approval rates and different failure modes, and combining them hides the one that costs existing revenue.</li>
+            <li>The <em>mix</em> of decline reasons is tracked over time, not just the total. A shift in the mix is a signal well before the aggregate moves. <a href="/blog/why-payments-fail/">Why payments fail</a> has the taxonomy.</li>
+            <li>Technical failure rate is alerted on separately from declines. It is the only one of the two that is yours to fix.</li>
+            <li>You can state how many cancellations last month began as a failed charge rather than a customer decision.</li>
+            <li>Someone looks at these numbers on a schedule. A dashboard nobody opens is not measurement.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">How to use this without stopping everything</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            A checklist this long invites two bad responses: doing all of it before shipping
+            anything, or filing it and doing none of it. Neither is necessary, because the items
+            are not equally urgent and they do not all become relevant at the same stage.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Sections 3 and 4 are correctness and never wait.</strong> Confirming payments
+            server-side, verifying webhook signatures and carrying an idempotency key are wrong to
+            omit on day one, not at scale. Each is a defect that is merely waiting for enough
+            traffic to become an incident, and all three are cheap while there is one code path.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Section 6 becomes urgent the week a signup form is findable</strong>, usually
+            faster than teams expect, and typically before any other item on this list.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Sections 5 and 9 arrive with the second provider</strong>, and are usually
+            noticed a quarter after they arrived. <strong>Section 8 is only relevant once there is
+            a second provider at all</strong>. Attempting it earlier is building for a problem you
+            do not have.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The practical way through it is a single pass, marking each item yes, no, or not yet
+            relevant, and resisting the urge to fix anything during that pass. What matters is the
+            resulting list of "no" answers in sections 3 and 4, which is almost always short and
+            almost always contains something worth doing this week. The reasoning behind why these
+            jobs exist at all is in <a href="/payment-infrastructure/">what payment infrastructure
+            has to do</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Explore each part of the stack</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Each section above has a page behind it that explains the reasoning rather than just
+            the check:
+          </p>
+          <ul class="check-list list-unstyled p-0 mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <li><a href="/payment-infrastructure/failover/">Payment failover</a>: detecting an unhealthy provider, rerouting, and why the retry must keep its identity.</li>
+            <li><a href="/payment-infrastructure/orchestration-vs-single-gateway/">Orchestration versus a single gateway</a>: whether you need any of this yet, and what the honest alternatives are.</li>
+            <li><a href="/payment-infrastructure/global-payments/">Accepting global payments</a>: method, currency and settlement as three separate problems.</li>
+            <li><a href="/integrations/hosting/">Payments for hosting and web companies</a>: what changes when revenue is mostly unattended renewals.</li>
+            <li><a href="/payment-infrastructure/">The full infrastructure guide</a>: all of the jobs above in one place.</li>
+          </ul>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">How InfyniPay fits</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Sections 2 and 3 are the ones teams most often get partly right, and they are the ones
+            <a href="/">InfyniPay</a> handles centrally. Charge creation is idempotent on your own
+            order reference, checked before any provider is contacted. Provider webhook signatures are
+            verified in the layer rather than by each integration. Orders are confirmed server-side
+            against the provider, and the webhooks InfyniPay sends you are themselves signed with
+            HMAC-SHA256 over a timestamped payload, so your own handler can verify them the same way.
+            The scheme and sample verification code are in the
+            <a href="https://docs.infynipay.com/webhooks/signing/" target="_blank" rel="noopener">API
+            documentation<span class="visually-hidden"> (opens in new tab)</span></a>.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Sections 5 through 7 stay yours, as they should, because they are about your business, not your
+            payment layer. What changes is that you do the work once instead of once per provider.
+          </p>
+
+          <!-- CTA -->
+          <div class="text-center mt-5 pt-5 animated" data-animate="fadeInUp" data-delay=".3">
+            <h3 class="txt-blue-600 mb-3">Start from a layer that already passes sections 2 and 3</h3>
+            <p class="lead mb-4">Create a free account and take a sandbox payment. The idempotency, signature verification and server-side confirmation are already in place.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <a href="{{ site.signup_url }}" class="vh-btn btn-lg btn-blue-100">
+                <span>Create Your Free Account</span>
+                <em class="ti ti-arrow-right ps-2"></em>
+              </a>
+              <a href="https://docs.infynipay.com/" class="vh-btn btn-lg btn-green-300 vh-btn-outline" target="_blank" rel="noopener">
+                <span>Read the API docs<span class="visually-hidden"> (opens in new tab)</span></span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include faq.html items=site.data.launch_checklist.faqs eyebrow="Checklist FAQ" %}
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

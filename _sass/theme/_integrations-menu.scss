@@ -1,0 +1,305 @@
+// Integrations mega-menu in the navbar (dark logo-forward card on desktop,
+// stacked list inside mobile off-canvas nav); used by _includes/header.html.
+//
+// Desktop (>=992px): a wide card anchored to the navbar with the plugins in a
+// two-column grid ("View all" fills the sixth cell).
+// Mobile (<992px): the same markup slide-toggles inside the off-canvas nav as
+// a stacked list, like a regular submenu.
+// Self-contained dark card so it stands out on white sections, the dark hero,
+// and the (white) mobile nav panel alike.
+
+// ---- dark card shell ----
+.integrations-menu {
+  list-style: none;
+  background: #0f1f71;
+  border-radius: 14px;
+
+  .menu-item {
+    border: none;
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+}
+
+.integrations-menu-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.integrations-menu-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+  padding: 14px 16px 8px;
+}
+
+// ---- plugin rows ----
+.integration-link {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 12px !important;
+  border-radius: 10px;
+  transition: background .2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, .08);
+  }
+}
+
+// White tile keeps every brand logo readable on the dark card
+.integration-logo {
+  flex: 0 0 auto;
+  width: 148px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  overflow: hidden;
+
+  img {
+    max-height: 50px;
+    max-width: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+
+    // Phoca Cart's source PNG has heavy vertical whitespace — size it by
+    // width and let the tile clip the empty padding so the mark reads large.
+    &[alt="Phoca Cart"] {
+      max-height: 100px;
+      max-width: 124px;
+    }
+
+    // J2Commerce is a horizontal wordmark — size it by width like the others.
+    &[alt="J2Commerce"] {
+      max-height: 44px;
+      max-width: 130px;
+    }
+  }
+}
+
+.integration-desc {
+  flex: 1 1 auto;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, .72);
+}
+
+.integration-arrow {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 15px;
+  color: var(--blue-100);
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.integration-link:hover .integration-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+// ---- "View all plugins" footer link ----
+.integrations-menu-foot {
+  margin-top: 6px;
+  padding: 14px 16px 4px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue-100);
+    transition: gap .2s ease;
+
+    &:hover {
+      gap: 10px;
+      color: var(--blue-100);
+    }
+  }
+}
+
+// ---- mobile off-canvas nav ----
+// The dark desktop card would drop a jarring blue block into the white drawer,
+// so on mobile the submenu blends into the drawer instead: no card, the brand
+// logos sit directly on the white (they're designed for it), and each plugin is
+// a plain list row with the same hairline dividers as the rest of the mobile
+// menu. Descriptions are dropped — the wordmark logos are the label.
+@media (max-width: 991px) {
+  .integrations-menu {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .integrations-menu-head {
+    color: rgba(65, 80, 118, .55);
+    padding: 14px 4px 4px;
+  }
+
+  .integration-link {
+    justify-content: flex-start;
+    gap: 0;
+    padding: 13px 4px !important;
+    border-radius: 0;
+    border-top: 1px solid rgba(219, 228, 247, .75);
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  // First plugin row sits under the eyebrow with no double rule.
+  .integrations-menu-grid .menu-item:first-child .integration-link {
+    border-top: 0;
+  }
+
+  .integration-desc {
+    display: none;
+  }
+
+  // Logos shown directly on the white drawer — transparent clipping window,
+  // left-aligned, normalized to one height so the list reads evenly.
+  .integration-logo {
+    flex: 0 0 auto;
+    width: auto;
+    height: 30px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    justify-content: flex-start;
+
+    img {
+      max-height: 22px;
+      max-width: 132px;
+
+      // Phoca Cart's PNG has heavy vertical whitespace — size it larger than
+      // the 30px window so the clip trims the padding and the mark reads even.
+      &[alt="Phoca Cart"] {
+        max-height: 46px;
+        max-width: 46px;
+      }
+
+      &[alt="J2Commerce"] {
+        max-height: 22px;
+        max-width: 120px;
+      }
+    }
+  }
+
+  // Muted chevron, always visible (no hover on touch) — signals each row taps
+  // through to its plugin page.
+  .integration-arrow {
+    margin-left: auto;
+    color: rgba(65, 80, 118, .4);
+    opacity: 1;
+    transform: none;
+  }
+
+  // "View all" reads as the closing list row, not a floating CTA.
+  .integrations-menu-foot {
+    margin-top: 0;
+    padding: 13px 4px 4px;
+    border-top: 1px solid rgba(219, 228, 247, .75);
+
+    a {
+      font-size: 13.5px;
+      color: var(--blue-100);
+
+      &:hover {
+        color: var(--blue-100);
+      }
+    }
+  }
+}
+
+// ---- desktop mega-menu card ----
+@media (min-width: 992px) {
+  // Anchor the panel to the navbar (position: relative at this width)
+  // instead of the menu item, so the wide card right-aligns with the
+  // header and can never overflow the viewport.
+  .menu-item.has-mega {
+    position: static;
+  }
+
+  .menu-sub.integrations-menu {
+    min-width: 680px;
+    max-width: 680px;
+    left: auto;
+    right: 0;
+    transform: translateY(-8px);
+    padding: 10px;
+    background: #0f1f71;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    box-shadow: 0 26px 60px -16px rgba(8, 12, 45, .55), 0 10px 24px rgba(8, 12, 45, .28);
+  }
+
+  .menu-item.has-mega:hover > .integrations-menu {
+    transform: translateY(0);
+  }
+
+  .integrations-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 12px;
+  }
+
+  // "View all plugins" becomes the sixth grid cell — a CTA tile sized by
+  // the row, so the 5 plugins + link fill the grid exactly. Filled like the
+  // hovered plugin rows so it reads as a real action, not an empty slot.
+  .integrations-menu-foot {
+    margin-top: 0;
+    padding: 0;
+    border-top: 0;
+
+    a {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      padding: 12px;
+      font-size: 13.5px;
+      color: #fff;
+      background: rgba(255, 255, 255, .06);
+      border-radius: 10px;
+      transition: background .2s ease, gap .2s ease;
+
+      em {
+        color: var(--blue-100);
+      }
+
+      &:hover {
+        color: #fff;
+        background: rgba(var(--blue-100-rgb), .22);
+      }
+    }
+  }
+
+  .menu-sub.integrations-menu:before {
+    display: none;
+  }
+}
+
+// From 1200px the header fits on one row and the navbar spans wider,
+// so the panel can open out to its full size.
+@media (min-width: 1200px) {
+  .menu-sub.integrations-menu {
+    min-width: 820px;
+    max-width: 820px;
+  }
+}

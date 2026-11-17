@@ -1,0 +1,18 @@
+---
+# Blog listing page (/blog/) — compiled to /assets/css/blog.css.
+# The article card itself (.blog-card*) lives in _sass/components/_blog-card.scss
+# because post pages reuse it; only listing-only rules stay here.
+---
+
+// ── Load More ─────────────────────────────────────────────────────────────────
+// Both rules are gated on .js-paged, which the page script adds. Without it the
+// overflow cards stay on screen and the button stays hidden, so no article is
+// ever stranded behind a button that cannot be pressed.
+.js-paged .blog-card.is-hidden {
+  display: none;
+}
+
+.blog-more {
+  margin-top: 2.25rem;
+  text-align: center;
+}

@@ -1,0 +1,511 @@
+---
+layout: none
+title: "Payment Infrastructure for SaaS: Routing & Failover"
+description: "What the payment layer of a SaaS product has to do: pick a provider, survive an outage, never double-charge, and prove the money actually arrived."
+---
+{% comment %}
+  Pillar page for the payment-infrastructure cluster (C2, C3, C4, I5 sit under it).
+
+  OWNERSHIP (see .docs/seo-page-ownership.md). This site now has two capability
+  hubs and they are NOT interchangeable:
+    - /payment-orchestration/  -> the PRODUCT capability, conversion intent.
+      Owns "payment orchestration", "smart routing payments".
+    - this page                -> the ARCHITECTURE topic for product and
+      engineering teams. Owns "payment infrastructure", "payment stack",
+      "payment infrastructure for saas".
+  The split is product noun vs practice noun. Each links to the other once; do
+  not let either grow a section that restates the other.
+
+  The boundary section is deliberate and load-bearing: InfyniPay has no
+  metering, plans, proration, dunning, invoicing or tax, and this page says so
+  out loud. That is positioning, not a gap - it is what makes the page credible
+  to the exact reader who has already been sold a "billing platform" that turned
+  out to be a payments platform, or the reverse.
+{% endcomment %}
+{% include header-secondary.html %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+
+<main id="main-content" class="overflow-hidden">
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head wide text-center">
+        <span class="animated" data-animate="fadeInUp" data-delay=".1">Payment Infrastructure</span>
+        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">The part of your product that turns intent into money</h2>
+        <p class="lead animated" data-animate="fadeInUp" data-delay=".3">
+          <strong>Payment infrastructure is the layer that takes a customer's intent to pay and turns
+          it into money you can rely on</strong>: choosing a provider, handling the attempt,
+          confirming what happened, and recording it exactly once. For most SaaS products it starts as
+          twenty lines against one provider's SDK and stays that way until the first time it is not
+          enough. This page is about what it eventually has to do, and how to tell which parts you
+          actually need.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The boundary -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="section-head">
+            <span class="animated" data-animate="fadeInUp" data-delay=".1">First, a boundary</span>
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Billing decides what to charge. Payments decide how to take it.</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Almost every confused payments project starts by treating these as one system. They are
+            two, they fail differently, and vendors on both sides of the line are happy to let you
+            assume otherwise.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            A <strong>billing engine</strong> answers <em>what does this customer owe?</em> That covers plans and
+            price books, metered usage, seats, proration when someone upgrades mid-cycle, invoices,
+            dunning schedules, sales tax and VAT. When it breaks you invoice the wrong amount.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Payment infrastructure</strong> answers <em>how do we actually collect it, and how
+            do we know we did?</em> That covers which provider takes this payment, what happens when that
+            provider is unavailable, how a retry avoids charging twice, how the result is verified,
+            and how five providers become one set of numbers. When it breaks you lose the sale, or
+            take it twice, or ship something nobody paid for.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Knowing which of the two is hurting is most of the diagnosis. If your revenue numbers are
+            wrong, look at billing. If money is arriving late, twice, or not at all, look here.
+          </p>
+          <div class="bg-blue-200 tc-light rounded-4 p-4 p-md-5 mt-4 animated" data-animate="fadeInUp" data-delay=".2">
+            <p class="lead mb-0 txt-blue-50">
+              InfyniPay sits on the payments side of that line, and only there. It does not meter
+              usage, run plans or proration, issue invoices, manage dunning, or calculate tax. You
+              keep whatever you already use for those. What it changes is that <em>how</em> you take
+              the money stops being hard-wired to a single provider.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The five jobs -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head wide text-center">
+        <span class="animated" data-animate="fadeInUp" data-delay=".1">The work</span>
+        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Five jobs the payment layer has to do</h2>
+        <p class="animated" data-animate="fadeInUp" data-delay=".3">One provider gives you the first for free and leaves you the other four. That asymmetry is why payment code grows.</p>
+      </div>
+      <div class="feature-grid animated" data-animate="fadeInUp" data-delay=".3">
+        <div class="feat-card"><div class="feat-card-icon navy">🧭</div><h3 class="h4">Routing</h3><p>Deciding which provider takes this payment, from currency, country, method and amount. With one provider there is no decision, which is exactly what limits you at the second market.</p></div>
+        <div class="feat-card"><div class="feat-card-icon blue">🔁</div><h3 class="h4">Failover</h3><p>Completing the payment when the first attempt fails for a technical reason, without treating a declined card as an outage and without charging anyone twice.</p></div>
+        <div class="feat-card"><div class="feat-card-icon orange">🔑</div><h3 class="h4">Idempotency</h3><p>One payment attempt keeps one identity, so a timeout, a double-click or a retry returns the original result instead of creating a second charge.</p></div>
+        <div class="feat-card"><div class="feat-card-icon teal">🛡️</div><h3 class="h4">Verification</h3><p>Believing the provider, not the browser. Signed webhooks checked properly, and an order marked paid only when your server confirms the capture.</p></div>
+        <div class="feat-card"><div class="feat-card-icon indigo">📒</div><h3 class="h4">Reconciliation</h3><p>Several providers, several settlement formats, one ledger, so finance answers "what did we take yesterday" with a query rather than a spreadsheet merge.</p></div>
+        <div class="feat-card"><div class="feat-card-icon green">🚦</div><h3 class="h4">Risk controls</h3><p>Rules that stop the traffic you do not want: velocity limits, repeated failures from one customer, distinct cards in a window, blocked regions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep dive -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+          <div class="section-head">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Routing: the first thing one provider cannot do</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            A single-provider integration has no routing decision to make, and for one country in one
+            currency that is a feature. It stops being one the moment your customers are somewhere your
+            provider is weak: a currency it will not settle, a method it does not offer, an acquirer
+            with no local presence and therefore a worse approval rate on exactly the cards you want to
+            accept.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The mistake is treating that as a provider-selection problem and re-running the evaluation.
+            It is a structural problem: any single provider is the wrong answer somewhere. Routing turns
+            "which provider" from a decision baked into your checkout into a rule you can change, which
+            is what makes <a href="/payment-infrastructure/global-payments/">accepting payments across
+            several markets</a> a configuration exercise instead of a rebuild per country.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Failover and idempotency: two halves of one problem</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            These are usually planned as separate tickets and that is the error. Failover without
+            idempotency is not a safety feature. It is an automated way to charge customers twice,
+            because the failure it most often reacts to is a timeout, and a timeout means you do not
+            know whether the first charge succeeded.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The requirement that falls out of that: the identity of a payment attempt has to live above
+            the providers, not inside one of them, because a provider's own idempotency key is
+            meaningless to the next provider. This is the single most common gap in a home-built
+            payment layer, and it is unpacked properly in
+            <a href="/payment-infrastructure/failover/">how payment failover is actually built</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Verification: the two habits that separate robust from lucky</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            First, never mark an order paid because a browser arrived at your success URL. That redirect
+            is attacker-controllable and it is also just unreliable: customers close tabs. The payment
+            is real when your server asks the provider and the provider confirms the capture, which is
+            why <a href="/blog/payment-successful-order-still-pending/">orders get stuck between paid
+            and pending</a> in systems that trust the redirect.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Second, verify every webhook signature. Each provider signs differently (an HMAC digest in
+            a header here, a form-encoded signature plus a source-IP check there), and an unverified
+            callback endpoint is an open invitation to forge a "payment succeeded" event and take goods
+            without paying. Implemented once centrally this is a solved problem; implemented per
+            provider by whoever added that provider, it is a lottery. The mechanics are in
+            <a href="/blog/webhook-verification-reconciliation/">webhooks for payment events</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Risk: the rules that pay for themselves early</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Most SaaS products do not have a fraud problem until they have a signup form and a
+            $1 plan, and then they have one immediately. The traffic is not trying to buy your product.
+            It is validating stolen cards against anything that will take a small charge, which leaves
+            you with the declines, the fees and eventually the account review. What stops it is dull and
+            effective: limits on attempts per customer per window, limits on distinct cards, and a rule
+            that reacts to repeated provider rejections rather than waiting for a human.
+            <a href="/blog/card-testing-fraud-signup-forms/">Card testing on signup forms</a> covers
+            what the pattern looks like and which controls actually bite.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Reconciliation: the job that only exists once there are two</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            With one provider, reconciliation is barely a task. The provider's dashboard is the
+            ledger, its settlement report is the source of truth, and finance works directly from it.
+            The moment a second provider takes real money that arrangement quietly stops working, and
+            the failure is not loud enough to force anyone to fix it.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Each provider reports in its own shape: different field names for the same amount,
+            different treatment of fees (deducted per transaction by some, netted at payout by
+            others), different timing between capture and settlement, different currencies at
+            different conversion points, and different identifiers for what your system considers one
+            order. None of these are errors. They are simply not the same schema, and nothing
+            reconciles them by default.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            What happens in practice is a monthly spreadsheet merge that someone owns personally,
+            takes a day, and gets less reliable as volume grows. Refunds and chargebacks land in it
+            late and out of order. The question "what did we take yesterday, net of fees, across
+            everything" becomes a research project rather than a query, and the answer arrives too
+            slowly to act on.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The architectural fix is to normalise at the point of capture rather than at the point of
+            reporting. Every transaction gets one internal identity and one internal shape when it
+            happens, whichever provider handled it, and the provider's own reference is stored
+            alongside rather than instead. Reconciliation then becomes a comparison between two
+            records that already describe the same thing, instead of an attempt to reconstruct that
+            relationship a month later from two reports that were never designed to be compared.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">One gateway, two gateways, or a layer: an honest comparison</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            There are three arrangements in common use, and the middle one is the one most teams end
+            up in by accident rather than by choice.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>A single gateway</strong> is the right answer far more often than the payments
+            industry likes to admit. One integration, one dashboard, one settlement report, one
+            support relationship, one set of webhooks to verify. If you sell in one country, in one
+            currency, and your volume is small enough that a provider outage is an annoying afternoon
+            rather than a material loss, adding anything to this is cost without benefit. The honest
+            test is whether you have already written a conditional in your checkout that chooses
+            between providers. If not, you probably do not need a layer yet.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Two gateways wired in directly</strong> is where the trouble starts, because it
+            looks like the cheap version of the third option and behaves like the expensive one. Each
+            provider brings its own SDK, its own webhook format and signature scheme, its own error
+            vocabulary, and its own idea of what an order identifier is. The routing decision ends up
+            in application code, so changing it is a deployment. The two reconciliations are done by
+            hand. Nothing is shared, so every fix has to be made twice, and the second implementation
+            is always the less careful one because it was written under deadline to unblock a market.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>An orchestration layer</strong> is the same set of providers with the shared
+            concerns extracted: one interface for your application, routing as configuration, one
+            webhook verification path, one idempotency scheme, one normalised ledger. The cost is a
+            dependency between your checkout and something else, plus a small amount of latency, plus
+            the discipline of not putting business logic in two places.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The choice between the second and third is not really about features. Anything a layer
+            does can be built. It is about where the work accumulates. Direct integrations put a fixed
+            cost on every provider you will ever add, forever; a layer pays that cost once and makes
+            the next provider approximately free. That trade only makes sense if there will be a next
+            provider, which is why the honest recommendation for a single-market business is to stay
+            where you are. The comparison in full, including when not to move, is in
+            <a href="/payment-infrastructure/orchestration-vs-single-gateway/">orchestration versus a
+            single gateway</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Scope: the cheapest security decision available</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The most effective thing a payment layer can do about card data security is never receive
+            any. If card details go from the customer's browser to the provider directly (through a
+            hosted field, a redirect or a provider-hosted checkout) and what comes back to you is a
+            token, then the sensitive data never touches your servers, never enters your logs, never
+            appears in a database backup and never sits in an error tracker.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            This is worth stating as architecture rather than compliance, because it changes what a
+            breach of your systems can cost. A token is bound to one provider and one merchant, so an
+            attacker who takes your whole database has taken a set of references that are worthless
+            anywhere else. The alternative, accepting raw card numbers to feel in control of the
+            checkout experience, pulls your entire application into the compliance scope of the card
+            networks and turns every server that has ever touched the request into something you must
+            defend at a much higher standard.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The related design point is where tokens live. A token issued by a provider belongs to
+            that provider, which has a consequence people meet at the worst moment: it does not
+            transfer. Switching providers does not move stored payment methods with you, and a
+            failover that reroutes a payment cannot reuse the first provider's token at the second.
+            Plan for that before it is urgent, rather than discovering it during a migration.
+            <a href="/blog/do-you-need-pci-compliance-to-accept-payments/">What PCI scope actually
+            means</a> covers the compliance side in plain terms.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Testing a payment layer without taking real money</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Payment code is unusually hard to test well, because the interesting paths are the ones
+            that are inconvenient to produce. Everyone tests a successful card. Almost nobody tests
+            the timeout, and the timeout is where the double charges live.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Provider sandboxes cover the first category well: specific test cards produce specific
+            declines, so hard declines, soft declines and expired cards are all straightforward to
+            exercise. What sandboxes generally will not do is fail in the ways that actually break
+            systems: hang and never respond, accept a charge and never deliver the webhook, deliver
+            the same webhook three times, or deliver events out of order. Those have to be simulated
+            at your own boundary.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Four tests are worth having before a payment layer carries meaningful volume: send the
+            same webhook twice and confirm one effect; kill the connection mid-charge and confirm the
+            system reaches a resolved state without a second charge; deliver a webhook out of order
+            and confirm an order never moves backwards from paid to pending; and send a webhook with
+            a deliberately invalid signature and confirm it is rejected rather than logged and
+            processed. Each one takes an afternoon and each corresponds to an incident that is
+            otherwise inevitable. There is a broader pre-launch list in
+            <a href="/blog/test-your-checkout-before-you-go-live/">test your checkout before you go
+            live</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">The states a payment can be in, and the one that hurts</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Most payment bugs are not arithmetic. They are a system that models fewer states than
+            reality contains. The comfortable model has two: a payment succeeded, or it failed. Real
+            payments have at least four, and the fourth is the one that produces the support tickets.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Succeeded</strong> and <strong>failed</strong> are answers: the provider told you
+            something definite, and you can act on it. <strong>Pending</strong> is also an answer: the
+            provider has accepted the payment and will resolve it later, which is normal for bank
+            transfers and several local methods, and requires only that your system can wait without
+            treating the delay as a failure.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Unknown</strong> is not an answer. A request timed out, a connection reset, a
+            response never arrived. The charge may have succeeded, may have failed, or may still be in
+            flight, and no amount of inspection at your end will tell you which. A system that has no
+            representation for this state must map it onto one of the other three, and both choices
+            are wrong: call it failed and you may retry a payment that already went through; call it
+            succeeded and you may deliver goods nobody paid for.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            This single omission is the root of most double charges. It is also why idempotency and
+            server-side confirmation are not two separate features but two halves of the same answer:
+            the key lets you ask again safely, and the confirmation is how you find out what actually
+            happened. A payment layer that models "unknown" explicitly, and resolves it by asking the
+            provider rather than guessing, avoids an entire class of incident that otherwise recurs
+            forever.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">When each job actually becomes necessary</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            None of this needs to exist on day one, and building it all before you have customers is
+            its own mistake. The jobs arrive in a fairly predictable order, and the useful skill is
+            recognising which one you have just reached rather than either building ahead or
+            discovering it during an incident.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>One provider, one market.</strong> Verification matters immediately (trusting the
+            redirect is wrong on day one, not at scale), and idempotency costs almost nothing to add
+            while there is one code path. Everything else is premature.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>The first signup form with a cheap plan.</strong> Risk controls become urgent
+            faster than anything else on this list, usually within days of the form being findable.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>The second market.</strong> Routing appears, whether or not you call it that. The
+            moment a currency or country decides which provider should take a payment, that decision
+            exists somewhere. The only question is whether it is a rule you can change or an
+            <code>if</code> statement in a checkout controller.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>The second provider taking real money.</strong> Reconciliation starts the same day
+            and is usually noticed a quarter later. Failover becomes possible for the first time, and
+            worth building before the outage rather than during it.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <strong>Recurring revenue.</strong> Every unattended charge multiplies the cost of every
+            weakness above, because there is nobody present to retry, re-enter a card, or notice that
+            something failed. This is where a payment layer that was adequate becomes the constraint.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Evaluating what you already have</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Nine questions, answerable in an afternoon by whoever owns the checkout. They are ordered
+            so that a "no" early on matters more than a "no" late.
+          </p>
+          <ol class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <li>Is an order marked paid only after your server independently confirms the capture with
+              the provider, never because a browser reached a success URL?</li>
+            <li>Is every inbound webhook signature verified before the payload is trusted, for every
+              provider, in one place rather than once per integration?</li>
+            <li>Does every charge carry an idempotency key derived from the order and attempt, so a
+              timeout followed by a retry cannot create a second payment?</li>
+            <li>Does your system have a state for "we do not know what happened", and a process that
+              resolves it by asking the provider rather than assuming?</li>
+            <li>If your primary provider stopped accepting payments for six hours, how long would it
+              take to route around it, and has that path ever run?</li>
+            <li>Is the decision about which provider takes a payment configuration you can change, or
+              is it compiled into your checkout?</li>
+            <li>Can you answer "what did we take yesterday, net of fees, across every provider"
+              without exporting anything?</li>
+            <li>Do you know your approval rate split by country, method and first-payment versus
+              renewal, rather than as one blended number?</li>
+            <li>Are there limits on payment attempts, distinct cards and repeated failures per
+              customer, and do they act automatically?</li>
+          </ol>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The first four are correctness: a "no" there is a bug waiting for traffic, regardless of
+            size. The middle three are resilience and become urgent at the second provider. The last
+            two are visibility: the ones that decide whether you find problems yourself or hear about
+            them from customers. A longer version, with what to do about each answer, is the
+            <a href="/payment-infrastructure/checklist/">payment infrastructure readiness
+            checklist</a>.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Where this lands in practice</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The jobs above are the same everywhere, but the order in which they become urgent is
+            not. A business whose revenue is mostly unattended renewals meets them years before a
+            one-off retail checkout does, because there is nobody present to retry a failed charge
+            and nobody to notice when one quietly stops working. That is the whole reason
+            <a href="/integrations/hosting/">payments for hosting and web companies</a> reads
+            differently from general e-commerce advice.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            One term is worth pinning down before going further, because it is used loosely and
+            covers several of the jobs on this page at once:
+            <a href="/blog/what-is-payment-orchestration/">what payment orchestration is</a>
+            defines it, and the rest of this page describes the work it names.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Build or buy</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Building this is entirely possible and teams do it well. What they underestimate is the
+            ratio: routing, the interesting part, is perhaps a fifth of the work. The rest is
+            idempotency, per-provider error classification, a signature scheme for each provider, state
+            machines that agree with each other, reconciliation, and then maintaining all of it as every
+            provider changes their API on their own schedule.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The honest test is not technical. Build it when your routing logic is genuinely unusual, or
+            when payments <em>are</em> the product. Buy it when payments are critical to the business but
+            are not the business. The comparison in
+            <a href="/payment-infrastructure/orchestration-vs-single-gateway/">orchestration versus a
+            single gateway</a> is the same decision framed by cost rather than by capability, and
+            <a href="/blog/single-payment-processor-limitations/">the limits of a single payment
+            processor</a> covers what you are carrying while you decide.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            One trend raises the stakes on all of it. Software that pays on a user's behalf retries
+            instantly and identically rather than hesitating the way a person does, which turns a
+            tolerable weakness in a payment layer into a visible one (see
+            <a href="/blog/automated-retries-payment-idempotency/">the risks of letting AI agents make
+            payments</a>).
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">How InfyniPay fits</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            <a href="/">InfyniPay</a> is the payments half of the boundary above, delivered as one
+            integration. Your product talks to one API (or a
+            <a href="/integrations/">free plugin</a> if you are on WooCommerce, WHMCS or Joomla), and
+            <a href="/providers.html">{{ site.provider_floor }} providers</a> sit behind it, with
+            routing, failover, idempotency, webhook verification and reconciliation handled once rather
+            than once per provider. Every provider account stays contracted in your own name and funds
+            settle directly to you; InfyniPay is not a processor, an acquirer or a merchant of record,
+            and takes no percentage and no per-transaction fee at any volume.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            What it does not do is the other half. No metering, no plans, no proration, no invoices, no
+            dunning, no tax. Keep your billing engine. This layer goes underneath it.
+          </p>
+
+          <!-- CTA -->
+          <div class="text-center mt-5 pt-5 animated" data-animate="fadeInUp" data-delay=".3">
+            <h3 class="txt-blue-600 mb-3">Put the payment layer somewhere you can change it</h3>
+            <p class="lead mb-4">Create a free account, connect the providers you already use, and take a payment. Your billing stack does not move.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <a href="{{ site.signup_url }}" class="vh-btn btn-lg btn-blue-100">
+                <span>Create Your Free Account</span>
+                <em class="ti ti-arrow-right ps-2"></em>
+              </a>
+              <a href="/payment-infrastructure/checklist/" class="vh-btn btn-lg btn-green-300 vh-btn-outline">
+                <span>Pre-launch checklist</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include providers-strip.html eyebrow="Route Across" title="One integration, every provider" description="Global, regional and crypto providers, activated from a dashboard rather than added in code." %}
+
+  {% include faq.html items=site.data.payment_infrastructure.faqs eyebrow="Infrastructure FAQ" bg="bg-light" %}
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

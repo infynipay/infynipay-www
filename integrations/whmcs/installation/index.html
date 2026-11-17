@@ -1,0 +1,183 @@
+---
+layout: none
+redirect_from: /whmcs/installation/
+nav_active: integrations
+title: "WHMCS Payment Gateway: Installation Guide"
+description: "Install the InfyniPay payment gateway module in WHMCS in under five minutes. Download, upload, activate, then start taking payments."
+---
+
+{% include header-secondary.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+{% include breadcrumb.html %}
+
+<main id="main-content">
+    <!-- Hero Section -->
+    <section class="install-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <span class="plugin-hero-badge animated" data-animate="fadeInUp" data-delay=".1">
+                            <i class="fas fa-plug"></i> WHMCS Integration
+                        </span>
+                    </div>
+                    <h2 class="display-4 fw-bold mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+                        InfyniPay for WHMCS
+                    </h2>
+                    <p class="lead mb-4 animated" data-animate="fadeInUp" data-delay=".3">
+                        Accept payments through {{ site.provider_floor }} payment providers with a single integration. Install in under 5 minutes and start processing payments instantly.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 align-items-center animated" data-animate="fadeInUp" data-delay=".4">
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.WHMCS/releases/latest/download/infynipay-whmcs.zip"
+                           class="vh-btn btn-xl btn-green-300 no-change">
+                            <i class="fas fa-download me-2"></i>
+                            Download Module
+                        </a>
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.WHMCS" 
+                           target="_blank" rel="noopener"
+                           class="vh-btn btn-xl btn-green-300 vh-btn-outline no-change">
+                            <i class="fab fa-github me-2"></i>
+                            View on GitHub<span class="visually-hidden"> (opens in new tab)</span>
+                        </a>
+                    </div>
+                    <div class="mt-4 d-flex align-items-center gap-3 animated" data-animate="fadeInUp" data-delay=".5">
+                        <span class="badge bg-white text-dark px-3 py-2">
+                            <strong>Version:</strong> 1.2.0
+                        </span>
+                        <span class="badge bg-white text-dark px-3 py-2">
+                            <i class="fas fa-star text-warning"></i> Free & Open Source
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center animated" data-animate="fadeInRight" data-delay=".3">
+                    <img src="{{ '/assets/images/whmcs/whmcs-logo.png' | relative_url }}" class="img-fluid install-hero-logo" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Guide -->
+    <section class="section bg-blue-30">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-head text-center mb-5">
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Installation Guide</h2>
+                        <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">Follow these simple steps to install InfyniPay in your WHMCS</p>
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".2">
+                        <span class="step-number">1</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Download the Module</h3>
+                        <p class="txt-blue-400 mb-3">Download the latest InfyniPay WHMCS module from GitHub releases.</p>
+                        <div class="info-box mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Tip:</strong> Always download the latest version for the newest features and security updates.
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".3">
+                        <span class="step-number">2</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Extract & Upload Files</h3>
+                        <p class="txt-blue-400 mb-3">Extract the downloaded ZIP file and upload its <code>modules/</code> and <code>includes/</code> folders to your WHMCS root directory. The module consists of a payment gateway module, an addon module, automation hooks, and a transactions report.</p>
+                        <div class="code-block">
+# Upload structure:<br>
+/your-whmcs-root/<br>
+├── includes/<br>
+│   └── hooks/<br>
+│       └── infynipay-*.php<br>
+├── modules/<br>
+│   ├── addons/<br>
+│   │   └── infynipay/<br>
+│   ├── gateways/<br>
+│   │   ├── callback/infynipay.php<br>
+│   │   ├── infynipay/<br>
+│   │   └── infynipay.php<br>
+│   └── reports/<br>
+│       └── infynipay_transactions.php<br>
+└── ...
+                        </div>
+                        <div class="warning-box">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> Upload <em>all</em> folders to the WHMCS root directory, not a subdirectory. The gateway module reports an installation error if the addon or hook files are missing.
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".4">
+                        <span class="step-number">3</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Activate Payment Gateway</h3>
+                        <p class="txt-blue-400 mb-3">Navigate to <strong>System Settings → Payment Gateways</strong> in your WHMCS admin panel.</p>
+                        <ol class="txt-blue-400">
+                            <li>Visit <strong>Apps & Integration</strong></li>
+                            <li>In the search box, search for <strong>InfyniPay</strong></li>
+                            <li>Select InfyniPay from the results</li>
+                        </ol>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".5">
+                        <span class="step-number">4</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Activate InfyniPay Gateway</h3>
+                        <p class="txt-blue-400 mb-3">Click the "Activate" button to enable InfyniPay in your WHMCS.</p>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".6">
+                        <span class="step-number">5</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Sign Up with Gmail</h3>
+                        <p class="txt-blue-400 mb-3">After activation, you'll be redirected to InfyniPay for easy sign-up using your Gmail account. Once completed, you'll automatically return to WHMCS.</p>
+                        <div class="info-box">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Quick Setup:</strong> Sign up with just one click using your Gmail account. No complex forms or long registration process.
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".7">
+                        <span class="step-number">6</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Gateway Ready to Use</h3>
+                        <p class="txt-blue-400 mb-3">Your InfyniPay gateway is now activated and configured. Both sandbox and live apps have been automatically created and are ready to use.</p>
+                        <div class="success-box">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>All Set!</strong> Your sandbox and live apps have been created automatically. Simply define your gateway settings and start accepting payments.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-blue-200 tc-light">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-4 animated" data-animate="fadeInUp" data-delay=".1">Ready to Get Started?</h2>
+                    <p class="lead mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+                        Download the InfyniPay WHMCS module and start accepting payments in minutes.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center animated" data-animate="fadeInUp" data-delay=".3">
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.WHMCS/releases/latest/download/infynipay-whmcs.zip" 
+                           class="vh-btn btn-xl btn-green-300 no-change">
+                            <i class="fas fa-download me-2"></i>
+                            Download Module
+                        </a>
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.WHMCS" 
+                           target="_blank" rel="noopener"
+                           class="vh-btn btn-xl btn-outline-light no-change">
+                            <i class="fab fa-github me-2"></i>
+                            GitHub<span class="visually-hidden"> (opens in new tab)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

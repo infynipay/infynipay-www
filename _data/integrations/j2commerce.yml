@@ -1,0 +1,55 @@
+# Structured data for the /integrations/j2commerce/ pages.
+# `software` drives the SoftwareApplication JSON-LD (via _includes/software-application.html);
+# `faqs` drives the accordion + FAQPage JSON-LD (via _includes/faq.html). Answers may
+# contain inline HTML (a/em/strong/br/ul/ol/li are allowed in FAQ rich results).
+software:
+  name: InfyniPay J2Commerce Plugin
+  operating_system: Joomla 4.0+
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.J2Commerce/releases/latest/download/infynipay-j2commerece.zip
+
+# `product` drives the whole product page via _includes/integration-product.html.
+product:
+  platform: J2Commerce
+  compat_name: Joomla                      # chip shows "Joomla 4.0+"
+  compat: "4.0+"
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.J2Commerce/releases/latest/download/infynipay-j2commerece.zip
+  repo: InfyniPay.Plugins.J2Commerce
+  logo: { src: /assets/images/j2commerce/j2commerce-logo.webp, width: 669, height: 180 }
+  ecosystem: Joomla                        # named in the default install steps
+  install_path: 'Extensions → Manage → Install'
+
+faqs:
+  - q: Which Joomla and J2Commerce versions does the plugin support?
+    a: >-
+      InfyniPay for J2Commerce runs on Joomla 4.0 or higher with a supported J2Commerce
+      release. It is tested against the latest stable Joomla and J2Commerce versions.
+  - q: Does InfyniPay support subscriptions or recurring billing?
+    a: >-
+      Not at this time. The current version supports one-time checkout payments only.
+      Subscription / recurring billing support is planned for a future release.
+  - q: How do I get a InfyniPay API key?
+    a: >-
+      Create a free InfyniPay account, add your chosen payment provider in the dashboard,
+      and generate an API key. Then paste that key into the J2Commerce plugin settings page.
+  - q: Can I test payments before going live?
+    a: >-
+      Yes. The plugin includes a sandbox mode toggle. When enabled, all transactions are routed
+      through your payment provider's sandbox environment so you can verify the full checkout
+      flow without processing real payments.
+  - q: How is the plugin installed on Joomla?
+    a: >-
+      It installs like any Joomla extension. Download the package, go to
+      <em>Extensions → Manage → Install</em>, upload the file, then enable the InfyniPay
+      payment plugin. It then appears as a payment method inside J2Commerce.
+  - q: Is there a cost to use the plugin?
+    a: >-
+      No. The InfyniPay J2Commerce plugin is free to download and use. You pay only the
+      transaction fees charged by your chosen payment provider. InfyniPay takes no percentage
+      and no per-transaction cut at any volume. An optional
+      <a href="/pricing.html" class="txt-blue-100">Premium plan</a> adds white-label checkout branding.
+  - q: Can I switch payment providers without reinstalling the plugin?
+    a: >-
+      Yes. Provider switching happens in your InfyniPay dashboard; just activate a different
+      provider there. Your J2Commerce plugin continues working without any changes on the
+      Joomla side.
+

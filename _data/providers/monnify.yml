@@ -1,0 +1,108 @@
+# Single source of truth for /providers/monnify/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/monnify/index.html.
+
+name: Monnify
+slug: monnify
+status: live
+category: regional
+region: Nigeria
+logo: /assets/images/home/providers-icon/monnify.webp
+accent: "#0e7c3a"
+accent_rgb: "14,124,58"
+accent_text: "#0e7c3a"   # computed: 5.30 on white, 5.03 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  Monnify is Moniepoint's payment gateway for Nigerian merchants, built around reserved
+  virtual accounts: each transaction gets its own account number, the customer transfers to it
+  from any bank app, and the payment confirms instantly. Cards, USSD and cash at agent
+  locations sit alongside it.
+
+countries:
+  - Nigeria
+
+currencies: [NGN]
+
+methods:
+  - label: Bank transfer
+    icon: bank
+    detail: A one-time virtual account number generated per transaction
+  - label: Cards
+    icon: card
+    detail: Verve, Mastercard and Visa with 3-D Secure
+  - label: USSD
+    icon: ussd
+    detail: A dial string returned alongside the account details
+  - label: Cash at agents
+    icon: mobile
+    detail: Payment in cash at a Moniepoint agent location
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://monnify.com/
+  docs: https://developers.monnify.com/
+  pricing: https://monnify.com/pricing
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: API key and secret key exchanged for a bearer token, held server-side in InfyniPay
+  webhook: Signed transaction completion webhook, validated before an order is released
+  verification: Server-side transaction status re-check against the Monnify API before fulfilment
+
+faqs:
+  - q: How does the virtual account flow work?
+    a: >-
+      Monnify generates a dedicated account number for that specific transaction. The customer
+      transfers the exact amount from any Nigerian bank app or USSD code, and the payment is
+      matched and confirmed automatically. The account is short-lived (around 40 minutes), so an
+      abandoned checkout does not leave a payable account lying around.
+  - q: What happens if the customer pays after the account expires?
+    a: >-
+      This is the flow's main edge case and the thing worth testing before launch. Confirm
+      Monnify's current behaviour for late and partial transfers, and make sure your order
+      handling matches it.
+  - q: Can customers pay in cash?
+    a: >-
+      Yes, at Moniepoint agent locations nationwide, an unusual and genuinely useful option for
+      customers with no bank app.
+  - q: Does InfyniPay charge extra on top of Monnify?
+    a: >-
+      No. InfyniPay adds nothing to what Monnify charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. Monnify bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://developers.monnify.com/docs/collections/payment-methods
+    - https://monnify.com/products/accept-payments

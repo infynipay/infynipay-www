@@ -1,0 +1,107 @@
+# InfyniPay WWW — Project Instructions
+
+Marketing site for InfyniPay (payment orchestration platform). Static Jekyll site: every page is a standalone HTML file with front matter (`layout: none` — no Jekyll layouts) that includes a shared header/footer.
+
+## Build & Deploy
+- Jekyll 4.x pinned via `Gemfile`. Local build: `bundle exec jekyll build` (output `_site/`, gitignored).
+- **Pushing `main` deploys production.** `.github/workflows/jekyll.yml` builds and publishes to GitHub Pages (`build_type=workflow`); served at https://www.infynipay.com. Never switch Pages back to the legacy branch builder — it runs Jekyll 3.9, not our pinned version.
+- **HTTPS is enforced by GitHub Pages' own "Enforce HTTPS" checkbox** (Settings → Pages, per repository) — not by a Cloudflare redirect rule. That checkbox is the fix if `http://` ever serves 200 again.
+- **Cloudflare IS in front of the site** (verified 2026-08-27: responses carry `Server: cloudflare` and `CF-RAY`, with GitHub Pages' Fastly layer behind it). An earlier version of this file said DNS resolved straight to the Pages IPs and Cloudflare was not proxying — that was true when written and is not true now. It matters because edge Transform Rules are only possible while Cloudflare is in the path. Verify with `curl -sI https://www.infynipay.com/` rather than assuming, in either direction.
+- Plugins (wired in `_config.yml`):
+  - `jekyll-seo-tag` — `{% seo %}` in the headers emits title/canonical/OG/Twitter tags. Page `title:` must **not** end in “| InfyniPay” (the tag appends the site name itself).
+  - `jekyll-sitemap` — auto-generates `/sitemap.xml`; never hand-write one (a manual file silently disables the plugin).
+  - `jekyll-redirect-from` — `redirect_from: /old-path/` front matter is the **only** redirect mechanism; no `.htaccess`/`_redirects` duplicates.
+- Utility pages (`404.html`, `thank-you.html`) carry `sitemap: false` + `noindex: true`.
+- **Asset URLs are content-hashed at deploy time.** The live site serves CSS/JS with a one-year cache, so a changed file with an unchanged URL never reaches anyone who already has it. `npm run purge-css` (the workflow's "Strip unused CSS" step) is followed by npm's `postpurge-css` hook, `scripts/version-assets.mjs`, which stamps every `/assets/css/*.css` and `/assets/js/*.js` reference in `_site/` with `?v=<hash of the final bytes>`. Do not hand-bump `?ver=` for production; it is replaced. New HTML running against an old cached `components.css` would render with stale styles.
+- **PurgeCSS runs on every deploy and deletes what it thinks is unused.** Anything toggled only by JavaScript must have its class name written literally in the HTML or in a scanned script (`scripts/purge-css.mjs` lists them; add new site scripts there). Never put selectors inside `:is()`: PurgeCSS drops the whole rule if one argument is unused. After touching hero or other JS-toggled CSS, run `bundle exec jekyll build && npm run purge-css` and test the purged output, not just `jekyll serve`.
+
+## Page Anatomy
+- Home (`index.html`) uses `{% include header.html %}`. **Every other page** uses `{% include header-secondary.html %}`, which renders `page.title` as the visible `<h1>` — so titles must read well as a heading, and section titles start at `<h2>`.
+- Front matter: `layout: none`, `title`, `description`, `nav_active`. **No `permalink:`** — the folder path is the URL.
+- `nav_active` drives the header's active-nav highlight (`header.html` compares it per menu item and emits `.active` + `aria-current="page"`). Valid values are exactly the top-level menu items: `home|integrations|security|pricing|blog|contact`. Posts get `nav_active: blog` from the posts defaults in `_config.yml`, not from per-post front matter. **Omit it on pages with no matching menu item** (Terms, Privacy, About, Providers, 404, thank-you) — a value that matches nothing is fine, but a wrong one lights up the wrong tab. Add a value here only when you add the matching menu item.
+- Stylesheet links go immediately after the header include, before `<main>`: `components.css` first, then the page CSS so it can override.
+
+## SEO & semantic HTML
+**All SEO + semantic-HTML conventions live in [.docs/seo-and-semantic-html.md](.docs/seo-and-semantic-html.md) — read it before editing pages or the shared `header.html`/`footer.html`/`faq.html`/`integration-product.html`.** It covers seo-tag/JSON-LD/sitemap/robots & site metadata, generated structured data (FAQPage/SoftwareApplication/BreadcrumbList from includes — never hand-written), favicons/app-icons/manifest, the heading outline (one H1, no skipped levels), title-tag branding, image & inline-SVG a11y (decorative `alt=""`/`aria-hidden` vs descriptive; no redundant alt), `<ul><li>` link groups, and announcing `target="_blank"` new-tab links. These are binding for any markup change.
+- **Title rule (this site):** `{% seo %}` runs **without** `title=false`, so jekyll-seo-tag appends ` | InfyniPay` itself — page `title:` front matter must **not** contain the brand (it would render doubled).
+
+## Security headers & disclosure
+- **HTTP security headers belong at the Cloudflare edge, not in this repo** — GitHub Pages cannot send custom headers. The rules are specified in [.docs/security-headers.md](.docs/security-headers.md); the Cloudflare dashboard has no version control, so change that file in the same commit as any rule change. **As of 2026-08-28 the five baseline headers are live** (HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy), verified on production across several pages and `docs.`. **CSP is still not deployed** and must go out as `Content-Security-Policy-Report-Only` first. Re-run the verification in that file's Status section before claiming any header is live — the Cloudflare dashboard will show a rule as "Active" even when it is in the wrong rule family and doing nothing.
+- `security.txt` has one body, `_includes/security-txt.html`, served at both `/.well-known/security.txt` (RFC 9116) and `/security.txt` (Open Bug Bounty verifies ownership by fetching exactly that URL). Never inline it into either copy.
+- Researcher credits on `/disclosure/#hall-of-fame` come from `_data/security_researchers.yml`. Adding a name there is the whole publication step — the `Acknowledgments:` field in `security.txt` already points at the section.
+
+## Integration Pages (`integrations/…`)
+- Layout: `integrations/<slug>/index.html` (product), `integrations/<slug>/installation/index.html` (install guide), `integrations/index.html` (hub). The folder name **is** the URL slug (`phoca-cart`, not `phocacart`).
+- **All per-integration data lives in one file: `_data/integrations/<slug>.yml`** with three keys:
+  - `product:` — drives the shared product template (see below): `platform`, `compat`, `download_url`, `repo`, `logo`, `ecosystem`, `install_path`, plus optionals (`noun`, `audience`, `compat_name`, `hero_title_html`, `store`, `supports_subscriptions`). The template's top comment documents each field.
+  - `software:` — name, operating_system, download_url, optional version/release_notes.
+  - `faqs:` — list of `q:`/`a:` pairs; inline HTML allowed in answers.
+- **The entire product-page body is one shared template, `_includes/integration-product.html`.** A product page is just a thin stub: front matter (`layout: none`, `slug`, `redirect_from`, `nav_active: integrations`, `title`, `description`) → `{% include header-secondary.html %}` → `software-application.html` → `breadcrumb.html` → the `components.css` link → an inline `<style>` setting the `--pp-*` theme vars on `#main-content` → `{% include integration-product.html slug=page.slug %}` → `footer.html` (see `integrations/woocommerce/index.html`). **To change product-page copy or structure, edit the template, not the stubs** — the template renders the hero, all sections, the providers strip, and the FAQ for every plugin. Never hand-write product markup per page.
+- Shared includes generate all structured data — **never hand-write `SoftwareApplication`/`FAQPage`/`BreadcrumbList` JSON-LD or FAQ accordion markup**:
+  - `{% include software-application.html app=site.data.integrations.<slug>.software %}` — product stub only, never on install pages (one canonical software listing per plugin).
+  - `{% include faq.html items=… %}` — rendered **inside** `integration-product.html`; emits the accordion **and** the FAQPage schema. Optional params: `eyebrow`, `bg`, `first_open`.
+  - `{% include breadcrumb.html %}` — on every integration page; derives the trail from `page.url`. Segment labels come from `_data/breadcrumb_labels.yml` — add an entry only for special casing (e.g. `whmcs: WHMCS`); unmapped segments fall back to a capitalized slug.
+  - Hyphenated slugs break dot-access inside include tags — assign first: `{% assign d = site.data.integrations["phoca-cart"] %}` then `app=d.software` (see `integrations/phoca-cart/index.html`).
+- **Installation pages are still standalone hand-written files** (the shared template is product-only). New install page = copy an existing `*/installation/index.html`, keep the shared class names exactly (`install-hero`, `step-card`, …), link `components.css`, and add `{% include breadcrumb.html %}`. Never create page-prefixed clones of shared components.
+- Exactly **one `<h1>` per page** — it's the visible page title from `header-secondary.html`. Hero/in-content headings are `<h2>` (keep a size class like `h1`/`display-4` so the visual size is unchanged).
+
+## CSS Rules
+**Core principle: one unified class vocabulary across the whole site.** Always reach for Bootstrap utilities and existing site/master classes before writing any CSS; the same visual pattern must use the same class on every page (never a per-page re-implementation or near-duplicate). New CSS is a last resort, only for what no existing class can express.
+
+**All site CSS is authored as SCSS** and compiled by Jekyll (jekyll-sass-converter / Dart Sass). The compiled URLs are unchanged — `<link>` tags still point at `/assets/css/<name>.css`:
+- Entry files live in `assets/css/*.scss` (front matter required, two `---` lines). `style.scss` and `components.scss` are thin `@use` lists; **cascade order of the `@use` lines is intentional — never re-sort them.** Page stylesheets (`providers.scss`, `integrations.scss`) hold their rules inline.
+- `assets/css/style.scss` → partials in **`_sass/theme/`** (palette, fonts, base, utilities, buttons, typography, forms, preloader, accordion, blocks, plugin-pages, header, menu, sections, overrides, extras, integrations-menu). This is the master theme, loaded by `header.html` on every page. `_overrides.scss` and later partials are deliberately late-cascade — site-specific rules that beat the theme.
+- `assets/css/components.scss` → partials in **`_sass/components/`** (shared, product-hero, product-sections, faq, cta, install).
+- `assets/css/vendor.bundle.scss` → **`_sass/vendor/`**: `_bootstrap-overrides.scss` (the theme's Bootstrap variables — the ONLY place to customize Bootstrap) → `bootstrap/` (official Bootstrap v5.2.2 Sass source, **unmodified — never edit**) → `_icocrypto-vendor-pack.scss` (Font Awesome, select2, Magnific, Owl, icon fonts, animate — verbatim vendored CSS, **never edit**). Note the theme's custom grid: extra `mb: 410px` breakpoint, `xxl` at 1600px, 30px gutters, spacers `6`/`gs`.
+- Never create a plain `.css` file in `assets/css/` whose name collides with a `.scss` entry, and never edit anything under `_site/` (build output).
+- The theme partials were extracted from the old 11,800-line ICOCrypto `style.css` with all verifiably-unused rules removed (verified against a site-wide class census). Repeated selectors with different bodies inside a partial are intentional cascade overrides — keep their order.
+
+Resolve every style in this order — never skip a tier:
+1. **Bootstrap 5.2 + master classes** (`vendor.bundle.css`, `_sass/theme/`): grids `row g-*`/`col-*`, spacing `m*/p*`/`gap-*`/`d-flex`, typography `fs-*`/`fw-*`, colors `txt-*`/`bg-*` (e.g. `txt-blue-50`, `bg-blue-200`), `.card`, `.badge`.
+2. **`_sass/components/`** (compiled into `components.css`) — anything reused by 2+ secondary pages (browse the partials for the inventory: product-hero set, stats-bar, feat-card, faq, install-hero, cta-banner, …). Product components are themed per page via `--pp-accent`, `--pp-accent-rgb`, `--pp-hero-end`, `--pp-blob-rgb` set on `#main-content` (defaults = blue). Promote a rule here the moment a second page needs it; add variants as modifiers (`.use-case-list--grid`), never fork into page CSS.
+3. **Page SCSS** (`assets/css/<page>.scss`) — last resort: `--pp-*` overrides, unique pseudo-elements, sizing quirks.
+
+Conventions:
+- **No inline `<style>` blocks or `style=""` attributes** in new or refactored pages. Sole sanctioned exception: the one-line `<style>` on a product-page stub that sets the `--pp-*` theme vars on `#main-content` (this replaced the old per-slug `assets/css/<slug>-product.css` files).
+- kebab-case class names; page-specific classes are page-prefixed, component classes are generic. Grep `_sass/` for collisions before naming (e.g. `.step-card` is taken).
+- Use palette vars (`var(--blue-200)`, `var(--gray-200)`, …, defined in `_sass/theme/_palette.scss`) — never hardcode a hex that matches a var. No `@media` in page SCSS (use Bootstrap cols + auto-fit grids). No new custom properties except the documented `--pp-*` overrides. Beat a global selector by scoping under a parent class, not `!important`.
+- SCSS style: `//` comments; nest only states/children that sit directly with their parent (`&:hover`, `img`); keep rules flat when other rules interleave — nesting must never change emitted rule order. No SCSS variables/mixins/`@extend` — the palette is CSS custom properties.
+- Bootstrap customization goes in `_sass/vendor/_bootstrap-overrides.scss` (variables only) — never in `_sass/vendor/bootstrap/` or the vendor pack. `_sass/theme/` is the master theme and the header/footer includes are shared by every page — editable, but changes there affect the whole site, so make them deliberate and global in intent.
+
+## Markup Patterns (follow index.html)
+- Section head: `<div class="section-head [wide|wide-sm] [text-center]">` → `<span>` eyebrow → `<h2 class="txt-blue-600">` → `<p>`.
+- Animations: `animated` + `data-animate="fadeInUp"` + `data-delay=".N"` (section heads use `.1`/`.2`/`.3`).
+- Buttons: `<a class="vh-btn btn-* …"><span>Label</span><em class="ti ti-arrow-right ps-2"></em></a>`.
+- Decorative overlays: `<div class="nk-ovm shape-y"></div>` / `shape-x-2` as the last child of a section.
+
+## Fixed Design Decisions (don't revisit)
+- No contact-us form at the bottom of the home page.
+- Footer: a LinkedIn (`https://www.linkedin.com/company/infynipay/`) icon link lives under the logo in the brand column (`.footer-social` in `_sass/theme/_extras.scss`) — no other social platforms, no “Schedule App demo” link. The X/Twitter link was removed when that company account was disabled; do not re-add it, and keep `sameAs` in `header.html` plus `twitter.username` in `_config.yml` free of it too.
+- The home page does **not** load `components.css` — leave its markup and styles as they are.
+
+## Brand (2026-11 rebrand)
+The site was cloned from a sister product and rebranded. **The company is "InfyniPay", based in the Netherlands** — one company that builds, sells, invoices and supports the product. Never mention the previous product or operator names anywhere (copy, alt text, image pixels, OG cards, comments that render). No legal details yet: no legal form (B.V./LLC), KvK/VAT number or street address until the owner supplies them.
+- **No security certification or registry listing exists.** The CSA STAR listing belonged to the previous operator and was removed with everything that referenced it. Never claim certified, audited, attested or "listed on" anything.
+- **Palette:** deep, calm banking blue on white, defined in `_sass/theme/_palette.scss`. The owner went indigo/violet → bright blue → this: the bright `#1d4ed8`/`#2563eb` with sky glows strained the eyes, so keep large blue areas deep (`--blue-200` #1e44a8, hero `#0f2557 → var(--blue-200) → #24489f`), glows faint, and no bright sky/cyan fills. Var NAMES are the theme's historical `--blue-*`/`--green-*`; VALUES: `--blue-100` accent #2a5bc4, `--blue-600` ink #0b1b3f, `--green-300` CTA = primary.
+- **Fonts:** Plus Jakarta Sans (headings) + Inter (body), self-hosted variable woff2 in `assets/fonts/`, declared in `_sass/theme/_fonts.scss`. The heading font is preloaded in `header.html` (the LCP element is a heading).
+- **Logo:** `assets/images/logos/logo.svg` (colour, light backgrounds) and `logo-white.svg` (on indigo). In the full logo the mark is a bare infinity loop (deep-blue gradient #1e44a8 → #4a78d4, white on blue) on the wordmark's line: no tile, because a tile read as a separate block stuck to the name (owner's feedback). Only the square icons keep a tile; `assets/images/logos/favicon.svg` (moved from `assets/images/favicon.svg`, whose old version Cloudflare kept serving from cache) and the PNG icons/manifest icons are rendered from it. `logo.png` exists only for JSON-LD.
+- **Light theme only, by the owner's decision** (a payments site should look the same, and trustworthy, for everyone). There is no dark mode, no theme switcher and no `data-theme` attribute; `header.html` sets `<meta name="color-scheme" content="light">`. Do not add `prefers-color-scheme` rules. The footer is a solid deep-blue band (`.site-footer`, white logo, `.tc-light`); a pale footer was tried and rejected by the owner.
+- **Em dashes:** the owner reads "—" as a tell of AI-written copy. Don't use em dashes in visible text; use commas, colons, full stops or parentheses.
+- **Images with text:** OG cards (`assets/images/og-image.jpg`, `assets/images/og/*.jpg`) are rendered from an HTML template in the brand style (1200×630). The plugin install and checkout screenshots showed the previous product name and were removed (owner's request); the install guides are text-only until new media exists. The product pages' "What your customers see at checkout" section renders only when `product.checkout_video` is set in `_data/integrations/<slug>.yml` (fields in the template header); the owner will supply videos. Never re-add images that show the old name.
+
+## Home hero
+`index.html` `#homeHero`, styles `_sass/theme/_home-hero.scss` (theme, because the home page does not load `components.css`). Single static hero; the old two-slide slider was removed with the CSA slide.
+- Drawn entirely in CSS + SVG: blue gradient field and faint grid on the left (headline, lead, integration buttons, trust line "Free to start · No transaction fees · Based in the Netherlands"; the checkout card shows a USD amount, by the owner's request), and on the right a decorative (`aria-hidden`) **dotted globe** showing providers as a global network: `assets/images/home/globe-dots.svg` (orthographic dots from Natural Earth land outlines, centred on Europe/Africa), the InfyniPay hub pinned on Amsterdam, arcs to provider pins, a checkout card and a "Stripe unavailable → rerouted to Adyen" toast. Pin positions are percentages from the same projection; if the globe is regenerated with a different centre, every `.hhv-pin--*` and `.hhv-hub` position and the arc paths must be regenerated with it.
+- No glow/halo around the hub, no eyebrow pill above the headline, and the globe stays faint (all owner requests). Animations stop under `prefers-reduced-motion`.
+- The `<h1>` is not `animated` on purpose: it is the LCP element.
+- No class in these files may contain `bg-`: `base.scss` gives every `[class*='bg-']` element `position:relative` and a background size.
+
+## Home "What is InfyniPay" diagram
+`index.html` `.route-demo`, styles `_sass/theme/_home-route.scss`. A decorative HTML/CSS flow of one request: request in → InfyniPay routing rules (the matched rule lit) → provider logo grid (the chosen one lit) → "Approved via Paystack". It replaced an isometric stock illustration the owner disliked; keep it conceptual (it must show what the product does) and use real provider logos.
+
+## Home "vibe coding" banner
+`index.html` `#aiBuildersBanner`, under "Supported Payment Providers" (inside `.nk-block-about`); styles `_sass/theme/_ai-banner.scss` (in the theme, because the home page does not load `components.css`). It exists because `/integrations/ai-builders/` was only reachable from the Integrations menu. Its logo row loops `site.data.ai_builder_prompts.builders` (first logo of each), so a builder added to that data file appears here too. Keep the "not affiliated" line: names and logos only say which tool a prompt is written for.
+
+## Gotchas
+- Liquid parses `{% %}` tags even inside `{% comment %}` blocks — never put example include tags in comments.
+- Local builds render absolute URLs as `http://localhost:4000`; production builds use `site.url`. Don't "fix" localhost URLs seen in a local `_site`.

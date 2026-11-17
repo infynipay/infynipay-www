@@ -1,0 +1,136 @@
+# Single source of truth for /providers/paystack/.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# RULE: every factual claim rendered on the provider page comes from this file.
+# Nothing is written from memory, and no number appears here without a URL in
+# `verification.sources` that a human has actually opened.
+#
+# `fees` is deliberately absent from this schema. Provider pricing changes
+# without notice and a wrong fee is the fastest way to lose merchant trust —
+# the template links to the provider's own pricing page instead.
+#
+# Set `verification.verified_by` to a real name once every field below has been
+# checked against the linked sources, then delete `noindex`/`sitemap: false`
+# from providers/paystack/index.html. Until then the page builds but stays out
+# of the index.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Paystack
+slug: paystack
+status: live                 # live | development — only `live` may be published
+category: regional
+region: Nigeria, Ghana, South Africa, Kenya & Côte d'Ivoire
+logo: /assets/images/home/providers-icon/paystack-light.webp
+accent: "#00c3f7"
+accent_rgb: "0,195,247"
+accent_text: "#007b9d"   # WCAG AA on white and .bg-light; see _sass/components/_provider.scss
+
+# Lead paragraph. Written to be lifted verbatim as a featured snippet or an LLM
+# citation: direct definition first, no marketing wind-up.
+summary: >-
+  Paystack is a payment gateway that lets businesses in Nigeria, Ghana, South Africa,
+  Kenya and Côte d'Ivoire accept card, bank transfer, USSD and mobile money payments
+  through one API. It is a full-stack processor rather than an aggregator, which means
+  a merchant account is opened directly with Paystack in each supported country.
+
+countries:
+  - Nigeria
+  - Ghana
+  - South Africa
+  - Kenya
+  - Côte d'Ivoire
+
+currencies: [NGN, GHS, ZAR, KES, USD]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Visa, Mastercard and Verve debit and credit cards
+  - label: Bank transfer
+    icon: bank
+    detail: Customer-initiated transfer to a generated account number
+  - label: USSD
+    icon: ussd
+    detail: Nigerian bank shortcodes, no smartphone required
+  - label: Mobile money
+    icon: mobile
+    detail: M-PESA, MTN, AirtelTigo and Vodafone, in the countries where each operates
+  - label: QR
+    icon: qr
+    detail: Scan-to-pay at checkout
+  - label: Dedicated Virtual Account
+    icon: bank
+    detail: A persistent account number per customer, for recurring collections
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://paystack.com/
+  docs: https://paystack.com/docs/api/
+  pricing: https://paystack.com/pricing
+  channels: https://paystack.com/docs/payments/payment-channels/
+
+# What InfyniPay handles on the merchant's behalf. Keep these accurate to the
+# actual InfyniPay.Services provider implementation, not to the provider's docs.
+integration:
+  auth: Secret key, held server-side in InfyniPay and never exposed to the storefront
+  webhook: HMAC SHA512 signature on the x-paystack-signature header, verified before any order is marked paid
+  verification: Server-side transaction re-verification against the Paystack API before fulfilment
+
+faqs:
+  - q: Which countries can use Paystack with InfyniPay?
+    a: >-
+      Paystack supports merchants registered in Nigeria, Ghana, South Africa, Kenya and
+      Côte d'Ivoire. You open the Paystack account yourself in your country of registration,
+      then connect it to InfyniPay. InfyniPay does not resell or sit in the flow of funds.
+  - q: Which currencies does Paystack support?
+    a: >-
+      Nigerian Naira (NGN), Ghanaian Cedi (GHS), South African Rand (ZAR), Kenyan Shilling (KES)
+      and US Dollar (USD). Which of these you can actually charge in depends on the country your
+      Paystack account is registered in.
+  - q: Does InfyniPay charge extra on top of Paystack's fees?
+    a: >-
+      No. InfyniPay adds nothing to what Paystack charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. Paystack bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html" class="txt-blue-100">InfyniPay pricing</a> and <a
+      href="https://paystack.com/pricing" target="_blank" rel="noopener">Paystack's pricing
+      page<span class="visually-hidden"> (opens in new tab)</span></a>.
+  - q: How are Paystack webhooks secured?
+    a: >-
+      Paystack signs every webhook with an HMAC SHA512 digest in the <em>x-paystack-signature</em>
+      header. InfyniPay verifies that signature and independently re-queries the Paystack API to
+      confirm the transaction before an order is marked paid, so a forged or replayed webhook
+      cannot complete an order.
+  - q: Can I switch from Paystack to another provider later?
+    a: >-
+      Yes. Your store talks to InfyniPay, not to Paystack, so switching provider is a change in
+      the InfyniPay dashboard. No plugin update, no code change and no second checkout integration.
+
+verification:
+  verified_on: 2026-08-07
+  # Sign-off recorded 2026-08-07 on the site owner's instruction. Precisely what
+  # it attests to, so nobody later reads more into it than is there:
+  #   - every URL in this file resolves (scripts/check-provider-data.mjs)
+  #   - no fee, count or completeness claim is present (same script)
+  #   - the `integration:` block describes InfyniPay's own implementation
+  #   - provider facts trace to the `sources` below
+  # It does NOT attest that a person re-read every field against those sources.
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://paystack.com/docs/payments/payment-channels/
+    - https://paystack.com/docs/api/
+    - https://paystack.com/pricing

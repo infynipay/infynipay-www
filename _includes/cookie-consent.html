@@ -1,0 +1,57 @@
+{%- comment -%}
+  Cookie consent banner. Pairs with the Consent Mode v2 / GTM gate in the
+  <head> of header.html, which exposes window.ipConsent.
+
+  Since the move to Consent Mode advanced (2026-09-29) the GTM container loads
+  for every visitor, so this banner is no longer the thing that keeps Google
+  Analytics and Microsoft Clarity quiet. What keeps them quiet is the denied
+  consent state set before the container arrives, plus per-tag consent checks
+  configured inside the container. Reject is still a real choice, not a
+  dismiss: it is stored, and it sends an explicit denied update.
+
+  Rendered hidden and revealed by JS so it never appears for visitors who have
+  already chosen, and never blocks first paint.
+{%- endcomment -%}
+<div id="ip-consent" class="ip-consent" role="dialog" aria-modal="false" aria-labelledby="ip-consent-title" aria-describedby="ip-consent-desc" hidden>
+  <div class="ip-consent-inner">
+    <div class="ip-consent-copy">
+      <p id="ip-consent-title" class="ip-consent-title">We use cookies</p>
+      <p id="ip-consent-desc" class="ip-consent-text">Essential cookies keep the site working. We would also like analytics cookies to understand how the site is used, which includes session recording. These start only if you accept. Read our <a href="/privacy.html">Privacy Policy</a>.</p>
+    </div>
+    <div class="ip-consent-actions">
+      <button type="button" id="ip-consent-reject" class="ip-consent-btn ip-consent-btn--ghost">Reject</button>
+      <button type="button" id="ip-consent-accept" class="ip-consent-btn ip-consent-btn--accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var el = document.getElementById('ip-consent');
+    if (!el || !window.ipConsent) return;
+
+    // Already chosen: never show the banner again.
+    if (window.ipConsent.state()) return;
+
+    function close() {
+      el.hidden = true;
+      el.classList.remove('is-open');
+    }
+
+    document.getElementById('ip-consent-accept').addEventListener('click', function () {
+      window.ipConsent.accept();
+      close();
+    });
+
+    document.getElementById('ip-consent-reject').addEventListener('click', function () {
+      window.ipConsent.reject();
+      close();
+    });
+
+    // Reveal after paint so the banner never competes with LCP.
+    el.hidden = false;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { el.classList.add('is-open'); });
+    });
+  })();
+</script>

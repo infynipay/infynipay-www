@@ -1,0 +1,309 @@
+---
+layout: none
+title: Trust Center
+description: InfyniPay's security architecture, tokenized data flow, encryption, access control, compliance scope, and how to report a vulnerability.
+nav_active: security
+redirect_from: /security/
+---
+
+{% include header-secondary.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/trust-center.css' | relative_url }}">
+
+<!-- Section nav. Deliberately outside <main>: position:sticky cannot work inside
+     an overflow-hidden ancestor, and #main-content carries .overflow-hidden. -->
+<nav class="tc-nav-wrap" aria-label="Trust Center sections">
+    <div class="container">
+        <ul class="tc-nav list-unstyled mb-0">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#data-flow">Data Flow</a></li>
+            <li><a href="#encryption">Encryption</a></li>
+            <li><a href="#access">Access Control</a></li>
+            <li><a href="#fraud">Fraud &amp; Risk</a></li>
+            <li><a href="#infrastructure">Infrastructure</a></li>
+            <li><a href="#compliance">Compliance</a></li>
+            <li><a href="#responsibility">Responsibility</a></li>
+            <li><a href="#incident">Incident Response</a></li>
+            <li><a href="#disclosure">Disclosure</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main id="main-content" class="overflow-hidden">
+
+    <!-- 1. Security Overview -->
+    <section class="section" id="overview">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="tc-callout animated" data-animate="fadeInUp" data-delay=".1">
+                        <span class="tc-eyebrow">Our security promise</span>
+                        <h2 class="h2 fw-bold mb-3">The safest card data is the card data we never hold</h2>
+                        <p class="tc-callout-lead">InfyniPay is built on a single principle: reduce what can be lost. We do not store, process, or transmit cardholder data. Card details travel directly from your customer to your payment provider's certified infrastructure, and InfyniPay orchestrates every payment using tokens alone.</p>
+                    </div>
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-4 animated" data-animate="fadeInUp" data-delay=".2">
+                            <div class="tc-principle"><h3 class="h5">Minimise the blast radius</h3><p>If sensitive data never enters a system, it cannot leak from it. Tokenization is our first control, not our last.</p></div>
+                        </div>
+                        <div class="col-md-4 animated" data-animate="fadeInUp" data-delay=".3">
+                            <div class="tc-principle"><h3 class="h5">Isolate every merchant</h3><p>Authorization is checked server-side on every request against your application and merchant scope, so one merchant's data is never reachable from another's session or API key.</p></div>
+                        </div>
+                        <div class="col-md-4 animated" data-animate="fadeInUp" data-delay=".4">
+                            <div class="tc-principle"><h3 class="h5">Make everything provable</h3><p>Signed webhooks and end to end audit logs mean security claims can be verified, not just trusted.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Security Architecture -->
+    <section class="section bg-light" id="architecture">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Security Architecture</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Where Card Data Goes, and Where It Does Not</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">The unified customer token model. Follow the card and you will see it never reaches us.</p>
+            </div>
+
+            <ol class="tc-flow list-unstyled animated" data-animate="fadeInUp" data-delay=".4">
+                <li class="tc-flow-step tc-flow-step--external">
+                    <span class="tc-flow-icon" aria-hidden="true">💳</span>
+                    <span class="tc-flow-title">Customer Card</span>
+                    <span class="tc-flow-desc">Entered by your customer at checkout</span>
+                </li>
+                <li class="tc-flow-step tc-flow-step--external">
+                    <span class="tc-flow-icon" aria-hidden="true">🏦</span>
+                    <span class="tc-flow-title">Provider</span>
+                    <span class="tc-flow-desc">Received by your provider's certified infrastructure</span>
+                </li>
+                <li class="tc-flow-step tc-flow-step--token">
+                    <span class="tc-flow-icon" aria-hidden="true">🎟️</span>
+                    <span class="tc-flow-title">Payment Token</span>
+                    <span class="tc-flow-desc">The provider returns a token. The card is never exposed</span>
+                </li>
+                <li class="tc-flow-step tc-flow-step--internal">
+                    <span class="tc-flow-icon" aria-hidden="true">⚙️</span>
+                    <span class="tc-flow-title">InfyniPay</span>
+                    <span class="tc-flow-desc">Orchestrates and routes using the token only</span>
+                </li>
+                <li class="tc-flow-step tc-flow-step--internal">
+                    <span class="tc-flow-icon" aria-hidden="true">🔐</span>
+                    <span class="tc-flow-title">Encrypted Storage</span>
+                    <span class="tc-flow-desc">Token sealed with AES-256-GCM at rest</span>
+                </li>
+            </ol>
+
+            <p class="tc-flow-note animated" data-animate="fadeInUp" data-delay=".5">
+                Card data flows only between your customer and your provider. Everything InfyniPay touches is a token, so adding InfyniPay brings no cardholder data into your environment. It is designed to minimise your PCI scope, not to remove the obligations your own channels already carry.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. Data Flow & Tokenization -->
+    <section class="section" id="data-flow">
+        <div class="container">
+            <div class="row g-5 align-items-start">
+                <div class="col-lg-6">
+                    <div class="section-head">
+                        <span class="animated" data-animate="fadeInUp" data-delay=".1">Data Flow &amp; Tokenization</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">One Customer Reference, <span class="txt-blue-200">Many Providers</span></h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">Your systems work with a customer ID and an amount. InfyniPay resolves everything behind it: which stored token to charge, which provider to route to, and in which currency.</p>
+                    </div>
+                    <ul class="use-case-list animated" data-animate="fadeInUp" data-delay=".4">
+                        <li><span class="uc-icon blue"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Tokens are issued by the provider, never minted by us</li>
+                        <li><span class="uc-icon blue"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Your integration never handles a PAN, CVV, or expiry date</li>
+                        <li><span class="uc-icon blue"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Switch or add providers without changing your application integration</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="section-head">
+                        <span class="animated" data-animate="fadeInUp" data-delay=".1">Traceability</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Every Action, <span class="txt-blue-200">On the Record</span></h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">InfyniPay records the full lifecycle of every payment: each status change, when it happened, who triggered it, and why, alongside every gateway interaction and webhook delivery attempt.</p>
+                    </div>
+                    <ul class="use-case-list animated" data-animate="fadeInUp" data-delay=".4">
+                        <li><span class="uc-icon green"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Complete payment lifecycle with actor and reason</li>
+                        <li><span class="uc-icon green"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Every gateway call and webhook delivery attempt</li>
+                        <li><span class="uc-icon green"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>End to end tracing for any investigation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Encryption -->
+    <section class="section bg-blue-30" id="encryption">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Encryption</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Strong Cryptography at Every Layer</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">At rest, in transit, and in every notification we send.</p>
+            </div>
+            <div class="row g-4 animated" data-animate="fadeInUp" data-delay=".4">
+                <div class="col-md-6"><div class="feat-card h-100"><div class="feat-card-icon navy">🔐</div><h3 class="h4">AES-256 at Rest</h3><p>Every merchant's payment provider credentials are sealed at rest with AES-256-GCM, and are decrypted only for the moment a provider call is made, and never written back in the clear.</p></div></div>
+                <div class="col-md-6"><div class="feat-card h-100"><div class="feat-card-icon blue">🗝️</div><h3 class="h4">Sealed Keys</h3><p>The key ring that protects your credentials is itself sealed with AES-256-GCM authenticated encryption, under a master key supplied to the service at runtime and never stored beside the data it protects.</p></div></div>
+                <div class="col-md-6"><div class="feat-card h-100"><div class="feat-card-icon teal">🔒</div><h3 class="h4">TLS in Transit</h3><p>All traffic between your systems, your customers, and InfyniPay is protected with HTTPS/TLS. End to end, with no exceptions.</p></div></div>
+                <div class="col-md-6"><div class="feat-card h-100"><div class="feat-card-icon orange">✍️</div><h3 class="h4">HMAC-SHA256 Webhooks</h3><p>Every webhook is signed and timestamped, so you can verify each notification came from InfyniPay and was not tampered with or replayed.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Authentication & Access Control -->
+    <section class="section" id="access">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Authentication &amp; Access Control</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Least Privilege, Enforced</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">Who can reach your account, and what they can do once they are in.</p>
+            </div>
+            <div class="row g-4 animated" data-animate="fadeInUp" data-delay=".4">
+                <div class="col-md-6"><div class="why-card h-100"><div class="why-card-icon">📱</div><div><h3 class="h5">Enforceable MFA</h3><p>Sensitive account actions are protected by TOTP multi-factor authentication using Google Authenticator or any compatible app. Administrators can make MFA mandatory across their entire team.</p></div></div></div>
+                <div class="col-md-6"><div class="why-card h-100"><div class="why-card-icon">👥</div><div><h3 class="h5">Role-Based Team Access</h3><p>Invite your team with role-based permissions so every member is scoped to exactly what they need and nothing more.</p></div></div></div>
+                <div class="col-md-6"><div class="why-card h-100"><div class="why-card-icon">🎫</div><div><h3 class="h5">JWT and OAuth 2.0</h3><p>API and session access use industry standard JWT tokens and OAuth 2.0 flows for authentication and session management.</p></div></div></div>
+                <div class="col-md-6"><div class="why-card h-100"><div class="why-card-icon">🎛️</div><div><h3 class="h5">You Control the Secrets</h3><p>Generate and rotate your webhook signing secret at any time, or disable signing entirely. Add your own Authorization header when your endpoint requires one.</p></div></div></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 6. Fraud & Risk -->
+    <section class="section bg-light" id="fraud">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Fraud &amp; Risk</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Risk Signals, Watched Automatically</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">InfyniPay applies AI-assisted risk analysis to payment behaviour, so unusual activity surfaces without adding friction to ordinary checkouts.</p>
+            </div>
+            <div class="row g-4 animated" data-animate="fadeInUp" data-delay=".4">
+                <div class="col-md-4"><div class="tc-principle"><h3 class="h5">Behaviour-based</h3><p>Payment activity is assessed against how your customers normally behave, rather than against a fixed list of rules that never changes.</p></div></div>
+                <div class="col-md-4"><div class="tc-principle"><h3 class="h5">AI-assisted</h3><p>Scoring is model-driven, so it keeps working as patterns shift instead of going stale the moment someone learns the rules.</p></div></div>
+                <div class="col-md-4"><div class="tc-principle"><h3 class="h5">Deliberately unpublished</h3><p>We do not document our signals, weightings, or thresholds. Publishing them would hand the people we are defending against a map of exactly what to avoid.</p></div></div>
+            </div>
+            <p class="tc-flow-note mt-4 animated" data-animate="fadeInUp" data-delay=".5">
+                Evaluating InfyniPay and need more than this? <a href="/contact-us.html">Talk to us</a> and we will go further under NDA than we will in public.
+            </p>
+        </div>
+    </section>
+
+    <!-- 7. Infrastructure & Availability -->
+    <section class="section" id="infrastructure">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Infrastructure &amp; Availability</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Built to Keep Running</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">Managed cloud infrastructure, asynchronous delivery, and isolated environments.</p>
+            </div>
+            <div class="feature-grid animated" data-animate="fadeInUp" data-delay=".4">
+                <div class="feat-card"><div class="feat-card-icon blue">☁️</div><h3 class="h4">Managed Cloud Platform</h3><p>InfyniPay runs on Microsoft Azure, with logs held in secure cloud logging under managed retention policies.</p></div>
+                <div class="feat-card"><div class="feat-card-icon green">🔁</div><h3 class="h4">Resilient Delivery</h3><p>Webhook events are queued and delivered asynchronously with automatic retries when your endpoint is temporarily unavailable, so a brief outage on your side never loses an event.</p></div>
+                <div class="feat-card"><div class="feat-card-icon indigo">🧪</div><h3 class="h4">Isolated Environments</h3><p>Sandbox and live are fully separated: separate credentials, separate configuration, no crossover. Going live is a credential swap, not a code change.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Compliance -->
+    <section class="section bg-blue-30" id="compliance">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-head wide-sm text-center">
+                        <span class="animated" data-animate="fadeInUp" data-delay=".1">Compliance</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Scope Reduction by Design</h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">The most reliable way to satisfy a cardholder data requirement is to remove the cardholder data.</p>
+                    </div>
+                    <dl class="fact-table animated" data-animate="fadeInUp" data-delay=".4">
+                        <div class="fact-row">
+                            <dt class="fact-label">Cardholder data</dt>
+                            <dd class="fact-value">Never stored, processed, or transmitted by InfyniPay</dd>
+                        </div>
+                        <div class="fact-row">
+                            <dt class="fact-label">PCI scope</dt>
+                            <dd class="fact-value">Card data is handled entirely within your payment provider's certified environment, and InfyniPay works only with provider-issued tokens. Adding InfyniPay introduces no cardholder data into your systems, so it adds nothing to whatever PCI obligation your own channels already carry.</dd>
+                        </div>
+                        <div class="fact-row">
+                            <dt class="fact-label">Provider certification</dt>
+                            <dd class="fact-value">Each connected provider maintains its own certifications for the card data it handles on your behalf.</dd>
+                        </div>
+                        <div class="fact-row">
+                            <dt class="fact-label">Data residency and retention</dt>
+                            <dd class="fact-value">Audit and delivery logs are retained on Microsoft Azure under managed retention policies.</dd>
+                        </div>
+                    </dl>
+                    <p class="tc-fineprint animated" data-animate="fadeInUp" data-delay=".6">Need documentation for a vendor review or security questionnaire? <a href="/contact-us.html">Contact us</a> and we will work through it with you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Shared responsibility -->
+    <section class="section" id="responsibility">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="tc-disclosure animated" data-animate="fadeInUp" data-delay=".1">
+                        <div class="tc-disclosure-icon" aria-hidden="true">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="h3 fw-bold mb-2">Who Is Responsible for What</h2>
+                            <p class="mb-4">Most security incidents happen at the seam, where each side assumed the other had it covered. Our Shared Security Responsibility Model draws that line explicitly across seventeen security control domains, including a plain list of the things we do not do.</p>
+                            <div class="tc-disclosure-actions">
+                                <a href="/trust-center/shared-responsibility/" class="btn btn-green-300 btn-lg px-4 rounded-pill">Read the Responsibility Model</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Incident Response -->
+    <section class="section" id="incident">
+        <div class="container">
+            <div class="section-head wide-sm text-center">
+                <span class="animated" data-animate="fadeInUp" data-delay=".1">Incident Response</span>
+                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">If Something Goes Wrong</h2>
+                <p class="animated" data-animate="fadeInUp" data-delay=".3">How we detect, contain, and communicate.</p>
+            </div>
+            <div class="row g-4 justify-content-center animated" data-animate="fadeInUp" data-delay=".4">
+                <div class="col-md-3 col-sm-6"><div class="tc-step"><span class="tc-step-num">1</span><h3 class="h6">Detect</h3><p>Platform and gateway interactions are continuously logged, so anomalies surface against a complete record.</p></div></div>
+                <div class="col-md-3 col-sm-6"><div class="tc-step"><span class="tc-step-num">2</span><h3 class="h6">Contain</h3><p>Provider credentials are stored encrypted and never logged, so a single issue does not expose them, and any credential can be replaced from your dashboard without redeploying anything.</p></div></div>
+                <div class="col-md-3 col-sm-6"><div class="tc-step"><span class="tc-step-num">3</span><h3 class="h6">Investigate</h3><p>End to end audit trails let us reconstruct exactly what happened, when, and to which payments.</p></div></div>
+                <div class="col-md-3 col-sm-6"><div class="tc-step"><span class="tc-step-num">4</span><h3 class="h6">Notify</h3><p>Affected merchants are contacted directly with what we know, what we have done, and what you should do.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Responsible Disclosure -->
+    <section class="section bg-light" id="disclosure">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="tc-disclosure animated" data-animate="fadeInUp" data-delay=".1">
+                        <div class="tc-disclosure-icon" aria-hidden="true">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="h3 fw-bold mb-2">Responsible Disclosure</h2>
+                            <p class="mb-4">Found a vulnerability? We want to hear from you before anyone else does. Report it privately and we will acknowledge your message, investigate, and keep you updated until it is resolved. Please give us reasonable time to fix an issue before disclosing it publicly, and avoid accessing or modifying data that is not yours while testing.</p>
+                            <div class="tc-disclosure-actions">
+                                <a href="mailto:support@infynipay.com?subject=Security%20Disclosure" class="btn btn-green-300 btn-lg px-4 rounded-pill">Report a Vulnerability</a>
+                                <a href="/disclosure/" class="btn btn-outline-primary btn-lg px-4 rounded-pill">Full Disclosure Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Security FAQ -->
+    {% include faq.html items=site.data.trust_center.faqs eyebrow="Security FAQ" bg="bg-white" %}
+
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

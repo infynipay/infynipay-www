@@ -1,0 +1,23 @@
+---
+layout: none
+title: Terms of Use
+description: Read InfyniPay's Terms of Use.
+redirect_from: [/term-of-use/, /term-of-use.html, /company/terms/]
+---
+
+    {% include header-secondary.html %}
+
+    <link rel="stylesheet" href="{{ '/assets/css/legal.css' | relative_url }}">
+
+    <main id="main-content" class="legal-main">
+        <div class="container">
+            <div class="legal-card" role="article" aria-labelledby="term_of_use-title">
+                <article>
+                    {% capture term_of_use_content %}{% include_relative legals/term-of-use.md %}{% endcapture %}
+                    {{ term_of_use_content | markdownify }}
+                </article>
+            </div>
+        </div>
+    </main>
+
+    {% include footer.html %}

@@ -1,0 +1,110 @@
+# Single source of truth for /providers/square/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/square/index.html.
+
+name: Square
+slug: square
+status: live
+category: global
+region: US / Global
+logo: /assets/images/home/providers-icon/square.webp
+accent: "#3e4348"
+accent_rgb: "62,67,72"
+accent_text: "#3e4348"   # computed: 9.99 on white, 9.48 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  Square is a payment platform built around a unified view of online and in-person selling:
+  the same catalogue, inventory and customer records serve a physical till and a web checkout.
+  For merchants who sell in both places that shared ledger is the point, more than the online
+  rates.
+
+# No `countries` list: coverage is too broad to render as chips, so the
+# template falls back to this sentence. The two fields are exclusive.
+coverage: >-
+  Merchant accounts are available in the United States, Canada, Australia, Japan, the United
+  Kingdom, Ireland, France and Spain.
+coverage_short: "NA, EU, AU & JP"
+
+currencies: [USD, CAD, AUD, JPY, GBP, EUR]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Visa, Mastercard, American Express, Discover and JCB
+  - label: Digital wallets
+    icon: wallet
+    detail: Apple Pay, Google Pay and Cash App Pay
+  - label: Buy now, pay later
+    icon: bnpl
+    detail: Afterpay where Square offers it
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://squareup.com/
+  docs: https://developer.squareup.com/docs
+  pricing: https://squareup.com/us/en/pricing
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: OAuth access token scoped to the merchant, held server-side in InfyniPay
+  webhook: HMAC-signed event notification, verified before an order is released
+  verification: Server-side payment status re-check against the Square API before fulfilment
+
+faqs:
+  - q: Is Square only for physical shops?
+    a: >-
+      No, but that is where it is strongest. If you sell only online, a pure online processor will
+      usually give you more payment methods and better international reach. If you sell in both
+      places, Square's single inventory and customer record is hard to replicate.
+  - q: Which countries can open a Square account?
+    a: >-
+      The United States, Canada, Australia, Japan, the United Kingdom, Ireland, France and Spain.
+      Square does not onboard merchants outside those markets.
+  - q: Can I combine Square with another provider?
+    a: >-
+      Yes. A common setup is Square for the till and a broader online provider for the web
+      checkout, both behind one InfyniPay integration so your storefront code does not care
+      which is which.
+  - q: Does InfyniPay charge extra on top of Square?
+    a: >-
+      No. InfyniPay adds nothing to what Square charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. Square bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://developer.squareup.com/docs
+    - https://squareup.com/us/en/pricing
+  # NOTE: The country list is stated as membership, not as a total, so Square adding a
+  # market makes it incomplete rather than wrong. No re-check needed on a schedule.

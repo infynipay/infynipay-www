@@ -1,0 +1,204 @@
+---
+layout: none
+redirect_from: /virtuemart/installation/
+nav_active: integrations
+title: "VirtueMart Payment Plugin: Installation Guide"
+description: "Install the InfyniPay payment gateway in your VirtueMart Joomla store in minutes. Download, install, connect, then start taking payments."
+---
+
+{% include header-secondary.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+{% include breadcrumb.html %}
+
+<main id="main-content">
+
+    <!-- Hero Section -->
+    <section class="install-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="mb-3">
+                        <span class="plugin-hero-badge animated" data-animate="fadeInUp" data-delay=".1">
+                            <i class="fab fa-joomla me-1"></i> VirtueMart Integration
+                        </span>
+                    </div>
+                    <h2 class="display-4 fw-bold mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+                        InfyniPay for VirtueMart
+                    </h2>
+                    <p class="lead mb-4 animated" data-animate="fadeInUp" data-delay=".3">
+                        Accept payments through {{ site.provider_floor }} providers with a single plugin. Install it on your Joomla / VirtueMart store, connect your account, and start processing payments in minutes.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 align-items-center animated" data-animate="fadeInUp" data-delay=".4">
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.VirtueMart/releases/latest/download/infynipay-virtuemart.zip"
+                           class="vh-btn btn-xl btn-green-300 no-change">
+                            <i class="fas fa-download me-2"></i>
+                            Download Plugin
+                        </a>
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.VirtueMart"
+                           target="_blank" rel="noopener"
+                           class="vh-btn btn-xl btn-green-300 vh-btn-outline no-change">
+                            <i class="fab fa-github me-2"></i>
+                            View on GitHub<span class="visually-hidden"> (opens in new tab)</span>
+                        </a>
+                    </div>
+                    <div class="mt-4 d-flex align-items-center gap-3 flex-wrap animated" data-animate="fadeInUp" data-delay=".5">
+                        <span class="badge bg-white text-dark px-3 py-2">
+                            <i class="fas fa-star text-warning"></i> Free Plugin
+                        </span>
+                        <span class="badge bg-white text-dark px-3 py-2">
+                            <strong>Joomla 4.0+ / VirtueMart 4</strong>
+                        </span>
+                        <span class="badge bg-white text-dark px-3 py-2">
+                            <i class="fas fa-bolt text-primary"></i> 5-Minute Setup
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-5 mt-lg-0 text-center animated" data-animate="fadeInRight" data-delay=".3">
+                    <span class="logo-wrap">
+                        <img src="{{ '/assets/images/virtuemart/virtuemart-logo.png' | relative_url }}" class="img-fluid install-hero-logo" alt="">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Guide -->
+    <section class="section bg-blue-30">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-head text-center mb-5">
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Installation Guide</h2>
+                        <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">Follow these steps to install InfyniPay in your VirtueMart store</p>
+                    </div>
+
+                    <!-- Step 1: Download -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".2">
+                        <span class="step-number">1</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Download the Plugin</h3>
+                        <p class="txt-blue-400 mb-3">Download the latest InfyniPay plugin for VirtueMart from our GitHub repository. It is a standard Joomla extension package (<code>.zip</code>); no build steps or extra dependencies required.</p>
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.VirtueMart/releases/latest/download/infynipay-virtuemart.zip"
+                           class="vh-btn btn-green-300 no-change">
+                            <i class="fas fa-download me-2"></i>
+                            Download Plugin
+                        </a>
+                        <div class="info-box mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Tip:</strong> This link always serves the newest release, so you get the latest features and security updates every time.
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Upload & Install -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".3">
+                        <span class="step-number">2</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Upload &amp; Install in Joomla</h3>
+                        <p class="txt-blue-400 mb-3">Log in to your Joomla administrator and go to <strong>Extensions → Install</strong>. On the <strong>Upload Package File</strong> tab, drag &amp; drop the ZIP you downloaded (or click <em>Or browse for file</em>). Joomla installs it in seconds and shows <em>“Installation of the plugin was successful.”</em></p>
+                    </div>
+
+                    <!-- Step 3: Confirm installed & enabled -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".4">
+                        <span class="step-number">3</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Confirm the Plugin is Installed</h3>
+                        <p class="txt-blue-400 mb-3">Go to <strong>Extensions → Manage</strong> and search for <strong>“VirtueMart - InfyniPay”</strong>. You should see it listed as a <strong>Site Plugin</strong> in the <code>vmpayment</code> folder, by Infynipay, and <strong>enabled</strong>.</p>
+                    </div>
+
+                    <!-- Step 4: Open the plugin -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".5">
+                        <span class="step-number">4</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Open the InfyniPay Plugin</h3>
+                        <p class="txt-blue-400 mb-3">Go to <strong>System → Plugins</strong>, search for <strong>“VM Payment - Infynipay”</strong> (type <code>vmpayment</code>, element <code>infynipay</code>), and click the plugin name to open its settings.</p>
+                    </div>
+
+                    <!-- Step 5: Configure & connect (with localhost webhook warning) -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".6">
+                        <span class="step-number">5</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Configure &amp; Connect Your Account</h3>
+                        <p class="txt-blue-400 mb-3">Set the <strong>Display name</strong> shown to customers at checkout (e.g. <em>InfyniPay</em>) and turn on <strong>Sandbox mode</strong> while you are testing. Then click <strong>Connect to Infynipay</strong> to link your account.</p>
+                        <div class="warning-box mt-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Running on localhost? Webhooks can’t reach your machine.</strong>
+                            If your Joomla site runs on a <strong>localhost / private network URL</strong>, InfyniPay’s webhook notifications cannot be delivered to your computer, so <strong>payment status updates will not be received</strong>. To receive webhooks, deploy your store to a <strong>public domain</strong>, or expose your local site with a tunnel such as <strong>Cloudflare Tunnel</strong> or <strong>ngrok</strong> ; the plugin links to our Cloudflare Tunnel guide right in this warning.
+                        </div>
+                        <div class="info-box mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>On a public domain</strong> you won’t see the warning above; the account panel goes straight to the <strong>Connect to Infynipay</strong> action.
+                        </div>
+                    </div>
+
+                    <!-- Step 6: Complete Sandbox / Live setup -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".7">
+                        <span class="step-number">6</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Complete Your Sandbox &amp; Live Setup</h3>
+                        <p class="txt-blue-400 mb-3">Once connected, the panel shows <strong>“InfyniPay is connected”</strong> with two environments: <strong>Sandbox</strong> (for trial transactions) and <strong>Live</strong> (for real payments). Click <strong>Complete Setup</strong> on an environment to be taken to the InfyniPay Console to configure it.</p>
+                        <div class="warning-box">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            <strong>Our strong recommendation:</strong> set up your <strong>Sandbox</strong> environment and test the full checkout before switching to <strong>Live</strong>.
+                        </div>
+                    </div>
+
+                    <!-- Step 7: Sandbox ready / manage gateways -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".8">
+                        <span class="step-number">7</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Add Your Payment Gateways</h3>
+                        <p class="txt-blue-400 mb-3">When an environment is configured it shows <strong>“Sandbox account is ready”</strong> (or Live). Use <strong>Manage Gateways</strong> to add and enable the providers you want: PayPal, Stripe, Authorize.net, Adyen, and more, all from your InfyniPay account.</p>
+                        <div class="success-box mt-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>All set!</strong> Test thoroughly in Sandbox, then run the same <em>Complete Setup</em> for your Live environment to start accepting real payments.
+                        </div>
+                    </div>
+
+                    <!-- Step 8: Define a VirtueMart payment method -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay=".9">
+                        <span class="step-number">8</span>
+                        <h3 class="txt-blue-600 mb-3 h4">Define a Payment Method in VirtueMart</h3>
+                        <p class="txt-blue-400 mb-3">For InfyniPay to appear at checkout, define a payment method in the VirtueMart component. Go to <strong>VirtueMart → Shop → Payment Methods</strong> and click <strong>New</strong>. Give it a <strong>Payment Name</strong> (e.g. <em>InfyniPay</em>), set <strong>Published</strong> to <em>Yes</em>, then choose <strong>Payment Method → <code>plg_vmpayment_infynipay</code></strong> and <strong>Save</strong>.</p>
+                        <div class="info-box mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Tip:</strong> Pick your store's <strong>Currency</strong> and assign a <strong>Shopper Group</strong> if needed; once saved, InfyniPay shows up as an option on the VirtueMart checkout.
+                        </div>
+                    </div>
+
+                    <!-- Step 9: Checkout preview (both images) -->
+                    <div class="step-card animated" data-animate="fadeInUp" data-delay="1">
+                        <span class="step-number">9</span>
+                        <h3 class="txt-blue-600 mb-3 h4">What Your Customers See at Checkout</h3>
+                        <p class="txt-blue-400 mb-3">At checkout, shoppers select <strong>InfyniPay</strong> and confirm their purchase. They're securely redirected to InfyniPay to pay, then returned to a clear confirmation; the <em>Sandbox</em> badge shows you're still in test mode.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-blue-200 tc-light">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-4 animated" data-animate="fadeInUp" data-delay=".1">Ready to Get Started?</h2>
+                    <p class="lead mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+                        Download the InfyniPay VirtueMart plugin and start accepting payments in minutes.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center animated" data-animate="fadeInUp" data-delay=".3">
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.VirtueMart/releases/latest/download/infynipay-virtuemart.zip"
+                           class="vh-btn btn-xl btn-green-300 no-change">
+                            <i class="fas fa-download me-2"></i>
+                            Download Plugin
+                        </a>
+                        <a href="https://github.com/infynipay/InfyniPay.Plugins.VirtueMart"
+                           target="_blank" rel="noopener"
+                           class="vh-btn btn-xl btn-outline-light no-change">
+                            <i class="fab fa-github me-2"></i>
+                            GitHub<span class="visually-hidden"> (opens in new tab)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

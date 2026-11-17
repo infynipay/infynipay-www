@@ -1,0 +1,111 @@
+# Single source of truth for /providers/authorize-net/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/authorize-net/index.html.
+
+name: Authorize.net
+slug: authorize-net
+status: live
+category: regional
+region: US / Canada
+logo: /assets/images/home/providers-icon/authorize.webp
+accent: "#0072c6"
+accent_rgb: "0,114,198"
+accent_text: "#0072c6"   # computed: 4.97 on white, 4.72 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  Authorize.net is a long-established North American payment gateway, owned by Visa. It
+  connects a merchant's existing acquiring account to an online checkout rather than providing
+  the acquiring itself, which is why merchants with a bank relationship already in place often
+  land on it.
+
+countries:
+  - United States
+  - Canada
+  - United Kingdom
+  - Australia
+  - Europe
+
+currencies: [USD, CAD, GBP, EUR, AUD]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Visa, Mastercard, American Express, Discover, JCB and Diners Club
+  - label: eCheck / ACH
+    icon: bank
+    detail: Bank debit for US merchants
+  - label: Digital wallets
+    icon: wallet
+    detail: Apple Pay and PayPal through the gateway
+  - label: Recurring billing
+    icon: recurring
+    detail: Automated Recurring Billing for subscription charges
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://www.authorize.net/
+  docs: https://developer.authorize.net/api/reference/
+  pricing: https://www.authorize.net/sign-up/pricing.html
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: API login ID and transaction key, held server-side in InfyniPay
+  webhook: Signed webhook notification, verified before an order is released
+  verification: Server-side transaction status re-check against the Authorize.net API before fulfilment
+
+faqs:
+  - q: Do I need a separate merchant account for Authorize.net?
+    a: >-
+      Usually yes. Authorize.net is a gateway rather than an acquirer, so it sits between your
+      checkout and a merchant account you hold with a bank or processor. That is the main
+      structural difference from an all-in-one provider like Stripe.
+  - q: Why choose a gateway over an all-in-one provider?
+    a: >-
+      Because you already have acquiring on terms you like, or your bank requires it. Keeping the
+      acquirer and changing only the gateway is a much smaller change than moving your whole
+      payment relationship.
+  - q: Does it support subscriptions?
+    a: >-
+      Yes, through Automated Recurring Billing. Whether it fits depends on your billing model, so
+      check the constraints with Authorize.net before you design around it.
+  - q: Does InfyniPay charge extra on top of Authorize.net?
+    a: >-
+      No. InfyniPay adds nothing to what Authorize.net charges: no percentage, no per-
+      transaction cut, and no volume threshold where that changes. Authorize.net bills you
+      directly for its own processing fees, and you keep that relationship. InfyniPay's only
+      paid plan is Premium at $29 a month, which adds white-label checkout branding and nothing
+      to your transaction cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://developer.authorize.net/api/reference/
+    - https://www.authorize.net/sign-up/pricing.html

@@ -1,0 +1,26 @@
+---
+layout: none
+slug: j2commerce
+redirect_from: /j2commerce/
+nav_active: integrations
+title: J2Commerce Payment Gateway Plugin
+description: "Accept one-time payments on your Joomla store through J2Commerce."
+image:
+  path: /assets/images/og/j2commerce.jpg
+  width: 1200
+  height: 630
+---
+{% include header-secondary.html %}
+{% include software-application.html app=site.data.integrations.j2commerce.software %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<style>
+#main-content{--pp-accent:#6a091b;--pp-accent-rgb:106,9,27;--pp-hero-end:#6a091b;--pp-blob-rgb:106,9,27}
+/* The J2Commerce logo PNG is wide and short; give it more air. */
+.logo-box{padding:30px 28px;min-height:128px}
+.logo-box img{max-width:300px}
+/* The J2Commerce checkout capture is narrow; don't stretch it to the shared 908px frame width. */
+.checkout-screenshot-wrap{max-width:400px}
+</style>
+{% include integration-product.html slug=page.slug %}
+{% include footer.html %}

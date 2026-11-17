@@ -1,0 +1,23 @@
+---
+layout: none
+platform: phoca-cart
+provider: tpay
+nav_active: integrations
+# Excluded from the index on 2026-08-17. This exact URL had been in the sitemap for
+# three months and had not earned a single impression in Search Console, while 200
+# near-identical combo pages competed for the same crawl budget. It still renders and
+# still links onward - it is simply not a candidate for search. Delete these two lines
+# if this pairing ever gets its own genuinely unique content.
+noindex: true
+sitemap: false
+title: "Tpay Payment Gateway for Phoca Cart"
+description: "Accept Tpay payments on Phoca Cart with the free InfyniPay plugin. Install in minutes, no gateway code."
+---
+{% include header-secondary.html %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<style>
+#main-content{--pp-accent:#5b2d90;--pp-accent-text:#5b2d90;--pp-accent-rgb:91,45,144;--pp-hero-end:#5b2d90;--pp-blob-rgb:91,45,144}
+</style>
+{% include integration-provider.html platform=page.platform provider=page.provider %}
+{% include footer.html %}

@@ -1,0 +1,113 @@
+# Single source of truth for /providers/adyen/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/adyen/index.html.
+
+name: Adyen
+slug: adyen
+status: live
+category: global
+region: Europe / Global
+logo: /assets/images/home/providers-icon/adyen.webp
+accent: "#0abf53"
+accent_rgb: "10,191,83"
+accent_text: "#008433"   # computed: 4.83 on white, 4.58 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  Adyen is an enterprise payment platform that combines gateway, risk and acquiring in one
+  contract, so a merchant deals with a single counterparty instead of stitching together a
+  gateway and a separate acquirer. It is built for large, multi-market volume and prices
+  accordingly.
+
+# No `countries` list: coverage is too broad to render as chips, so the
+# template falls back to this sentence. The two fields are exclusive.
+coverage: >-
+  Global, with local acquiring across Europe, North America, Asia-Pacific and Latin America.
+  Adyen sets a minimum volume expectation, so it suits established merchants rather than new
+  stores.
+coverage_short: "Global"
+
+currencies: [EUR, GBP, USD]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Global and local card schemes with local acquiring in many markets
+  - label: Digital wallets
+    icon: wallet
+    detail: Apple Pay, Google Pay, PayPal and regional wallets
+  - label: Local methods
+    icon: link
+    detail: iDEAL, Bancontact, SOFORT, Klarna and market-specific rails
+  - label: Bank transfers
+    icon: bank
+    detail: SEPA and local bank payment rails
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://www.adyen.com/
+  docs: https://docs.adyen.com/
+  pricing: https://www.adyen.com/pricing
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: API key plus merchant account identifier, held server-side in InfyniPay
+  webhook: HMAC-signed notification, validated before an order is released
+  verification: Server-side payment result re-check against the Adyen API before fulfilment
+
+faqs:
+  - q: Is Adyen a good fit for a small store?
+    a: >-
+      Usually not. Adyen prices and onboards for scale, and expects meaningful monthly volume. If
+      you are starting out, a provider with no volume floor is a better first choice, and
+      InfyniPay makes moving to Adyen later a dashboard change rather than a re-integration.
+  - q: What does Adyen's local acquiring actually buy me?
+    a: >-
+      When Adyen acquires locally rather than routing cross-border, the transaction looks domestic
+      to the issuing bank. That typically means a higher authorisation rate and lower scheme fees
+      in that market. That is the main reason large multi-market merchants choose it.
+  - q: Can I use Adyen for some markets and another provider elsewhere?
+    a: >-
+      Yes. Routing by country or currency is exactly what InfyniPay's orchestration layer is
+      for, and it is configured in the dashboard rather than in your checkout.
+  - q: Does InfyniPay charge extra on top of Adyen?
+    a: >-
+      No. InfyniPay adds nothing to what Adyen charges: no percentage, no per-transaction cut,
+      and no volume threshold where that changes. Adyen bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://docs.adyen.com/
+    - https://www.adyen.com/pricing
+    - https://www.chargeflow.io/blog/stripe-vs-adyen

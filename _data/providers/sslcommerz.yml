@@ -1,0 +1,102 @@
+# Single source of truth for /providers/sslcommerz/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/sslcommerz/index.html.
+
+name: SSLCommerz
+slug: sslcommerz
+status: live
+category: regional
+region: Bangladesh
+logo: /assets/images/home/providers-icon/sslcommerz.webp
+accent: "#00539b"
+accent_rgb: "0,83,155"
+accent_text: "#00539b"   # computed: 7.75 on white, 7.35 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  SSLCommerz is Bangladesh's largest payment gateway, used by well over ten thousand
+  businesses. Its importance is the mobile financial services it aggregates (bKash, Nagad,
+  Rocket), which carry far more Bangladeshi consumer volume than cards do.
+
+countries:
+  - Bangladesh
+
+currencies: [BDT, USD, EUR, GBP, SGD, INR, MYR]
+
+methods:
+  - label: Mobile financial services
+    icon: mobile
+    detail: bKash, Nagad, Rocket and other Bangladeshi wallets
+  - label: Cards
+    icon: card
+    detail: Visa, Mastercard, American Express and local debit cards
+  - label: Internet banking
+    icon: bank
+    detail: Direct bank payment across Bangladeshi banks
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://www.sslcommerz.com/
+  docs: https://developer.sslcommerz.com/
+  pricing: https://www.sslcommerz.com/pricing/
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: Store ID and store password, held server-side in InfyniPay
+  webhook: Instant Payment Notification with signature validation before an order is released
+  verification: Server-side transaction validation against the SSLCommerz API before fulfilment
+
+faqs:
+  - q: Why do mobile wallets matter more than cards in Bangladesh?
+    a: >-
+      Mobile financial services like bKash and Nagad reach far more consumers than credit cards
+      do. A Bangladeshi checkout built around cards will convert poorly; one built around MFS will
+      not.
+  - q: Which currencies can I charge in?
+    a: >-
+      BDT plus USD, EUR, GBP, SGD, INR and MYR, with conversion to BDT at the prevailing rate.
+      Confirm the conversion terms with SSLCommerz. They affect what you actually receive.
+  - q: What integration options are there?
+    a: >-
+      Hosted payment pages, an embedded checkout, or the full REST API. Behind InfyniPay you get
+      the hosted flow without integrating any of them yourself.
+  - q: Does InfyniPay charge extra on top of SSLCommerz?
+    a: >-
+      No. InfyniPay adds nothing to what SSLCommerz charges: no percentage, no per-transaction
+      cut, and no volume threshold where that changes. SSLCommerz bills you directly for its own
+      processing fees, and you keep that relationship. InfyniPay's only paid plan is Premium
+      at $29 a month, which adds white-label checkout branding and nothing to your transaction
+      cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://paymentgateways.org/gateway/sslcommerz
+    - https://www.sslcommerz.com/

@@ -1,0 +1,46 @@
+# FAQ entries for /trust-center/.
+# Rendered by _includes/faq.html, which emits both the accordion and the
+# FAQPage JSON-LD from this one source.
+#
+# Every answer here must stay consistent with the fact table and the
+# tokenization diagram on the same page. Do not add a claim here that is not
+# already stated and true elsewhere on the page.
+
+faqs:
+  - q: Does InfyniPay ever see my customer's card number?
+    a: >-
+      No. Card details go directly from your customer to your payment provider.
+      InfyniPay receives only the token the provider issues in return.
+
+  - q: Where are my provider credentials stored?
+    a: >-
+      Encrypted at rest with AES-256-GCM authenticated encryption. The key ring that
+      protects them is itself sealed under a master key supplied to the service at
+      runtime, so it is never stored alongside the credentials it protects. Provider
+      credentials are decrypted only for the moment an outbound call is made, and are
+      never written back in the clear or included in log output.
+
+  - q: Can I force my whole team to use MFA?
+    a: >-
+      Yes. Administrators can make TOTP multi-factor authentication mandatory for every
+      member of the account.
+
+  - q: How do I know a webhook really came from you?
+    a: >-
+      Every webhook is signed with HMAC-SHA256 and timestamped. Verify the signature with
+      your secret, which you can rotate at any time.
+
+  - q: Is sandbox data separated from live data?
+    a: >-
+      Completely. Separate credentials, separate configuration, and no crossover between
+      the two environments.
+
+  - q: What happens if my endpoint is down when an event fires?
+    a: >-
+      Events are queued and retried automatically. You can inspect every delivery attempt,
+      including status, response code, and the exact payload.
+
+# InfyniPay holds no security certification, attestation or registry listing, so the
+# Trust Center shows none. Do not add a badge, a "certifications" list or any wording
+# that implies one. The registry listing shown here before belonged to a different
+# company and was removed for that reason.

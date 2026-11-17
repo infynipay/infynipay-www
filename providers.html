@@ -1,0 +1,189 @@
+---
+layout: none
+title: Payment Providers
+nav_active: providers
+# The old site served this hub at /providers/. That directory now holds only the
+# individual provider pages, so the bare directory URL 404s and Search Console has
+# been reporting it since 10 Aug 2026. Keep this redirect permanently.
+redirect_from: /providers/
+description: Connect to 30+ payment providers through a single integration. Global processors, regional gateways and crypto networks, all behind one API.
+---
+
+{% include header-secondary.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/providers.css' | relative_url }}">
+
+<main id="main-content" class="overflow-hidden">
+  <section class="section">
+    <div class="container">
+
+      <div class="section-head wide text-center">
+        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">All Payment Providers</h2>
+        {%- assign live_count = 0 -%}{%- for e in site.data.providers -%}{%- if e[1].status == "live" -%}{%- assign live_count = live_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        <p class="lead animated" data-animate="fadeInUp" data-delay=".2">InfyniPay integrates with {{ live_count }} payment providers worldwide. Connect to global processors, regional gateways and crypto networks through a single, unified API.</p>
+      </div>
+
+      <div class="d-flex justify-content-center flex-wrap gap-3 mb-5 animated" data-animate="fadeInUp" data-delay=".2">
+        <button class="filter-btn active" data-category="all">All Providers</button>
+        <button class="filter-btn" data-category="global">Global</button>
+        <button class="filter-btn" data-category="regional">Regional / Local</button>
+        <button class="filter-btn" data-category="crypto">Crypto</button>
+      </div>
+
+      {%- comment %}
+        Rendered from _data/providers/*.yml, not hand-written. Before this the page
+        carried 36 hardcoded cards while the data directory held its own list, so the
+        two could drift apart silently — and adding a provider meant editing the card
+        markup, `provider_count` in _config.yml and a data file, in three places.
+        Now the data file is the only declaration: `status: live` is what puts a
+        provider on this page and what allows its /providers/<slug>/ page to exist.
+
+        Two Liquid constraints shape this loop. A `for` collection cannot contain a
+        filter, so the category order is assigned first; and site.data.providers is a
+        hash, so each `entry` is a [slug, data] pair and entry[1] is the record.
+        Jekyll already yields data hashes in key order, which is why no sort is needed.
+      {% endcomment -%}
+      {%- assign groups = "global,regional,crypto" | split: "," -%}
+      <div class="providers-grid">
+{%- assign delay = 25 -%}
+{%- for group in groups -%}
+{%- for entry in site.data.providers -%}
+{%- assign prov = entry[1] -%}
+{%- if prov.status == "live" and prov.category == group -%}
+{%- assign delay = delay | plus: 5 -%}
+        <a href="/providers/{{ prov.slug }}/" class="provider-card text-decoration-none animated" data-animate="fadeInUp" data-delay=".{{ delay }}" data-category="{{ prov.category }}" aria-label="{{ prov.name }} payment gateway integration">
+          <img src="{{ prov.logo | relative_url }}" alt="{{ prov.name }}" class="provider-logo" loading="lazy" decoding="async">
+          <span class="provider-category category-{{ prov.category }}">{{ prov.region }}</span>
+        </a>
+{%- endif -%}
+{%- endfor -%}
+{%- endfor %}
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center mt-5 pt-5 animated" data-animate="fadeInUp" data-delay=".9">
+        <h3 class="txt-blue-600 mb-3">Ready to Connect?</h3>
+        <p class="lead mb-4">Start accepting payments through multiple providers with a single integration.</p>
+        <a href="/integrations/" class="vh-btn btn-lg btn-blue-100">
+          <span>Start Your Integration</span>
+          <em class="ti ti-arrow-right ps-2"></em>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  {%- comment %}
+    Hub copy. This page owns the "choosing between providers" intent
+    (.docs/seo-page-ownership.md): comparing categories, running several at once,
+    switching. It deliberately describes NO individual provider - each of those has
+    its own page and would be cannibalised by a summary here.
+    Counts are computed from _data/providers/, never hardcoded.
+  {% endcomment -%}
+  {%- assign g = 0 -%}{%- assign r = 0 -%}{%- assign c = 0 -%}
+  {%- for e in site.data.providers -%}
+    {%- if e[1].status == "live" -%}
+      {%- case e[1].category -%}
+        {%- when "global" -%}{%- assign g = g | plus: 1 -%}
+        {%- when "regional" -%}{%- assign r = r | plus: 1 -%}
+        {%- when "crypto" -%}{%- assign c = c | plus: 1 -%}
+      {%- endcase -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+          <div class="section-head">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Types of payment providers</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The providers above fall into three groups, and most businesses end up using more than one.
+            The {{ g }} <strong>global processors</strong> handle cards almost anywhere and are the usual
+            default for a first integration. The {{ r }} <strong>regional gateways</strong> exist because
+            a local acquirer often converts far better in its own market: it supports the payment methods
+            people there actually use, settles in the local currency, and looks domestic to the issuing
+            bank rather than like a foreign transaction. The {{ c }} <strong>crypto networks</strong> settle
+            in digital assets, and several convert to ordinary currency before payout.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Those categories are also the filter buttons above, so you can narrow the list before opening
+            any individual provider page.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">How to choose a payment provider</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            The instinct is to compare fee tables first. That is usually the wrong order. A provider that
+            is fractionally cheaper but does not support the payment method your customer expects will lose
+            you the whole sale, not a percentage of it, so the more useful questions are where your customers
+            are, what they normally pay with, and which currency you want to be paid in.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            After that, weigh how much onboarding each provider expects. Some open an account in a day;
+            others price and underwrite for scale and expect meaningful monthly volume before they are
+            interested. Each provider page here states which markets and methods it covers and links to
+            the provider's own pricing, because published rates change without notice and a stale figure
+            on our page would be worse than none.
+          </p>
+
+          <div class="section-head mt-5">
+            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".1">Using several payment providers at once</h2>
+          </div>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            One integration connects you to every provider on this page, which changes what choosing one
+            actually costs. Normally a provider decision is close to permanent: the integration is built
+            against that provider's API, so replacing it means development work, testing and a release.
+            That is what makes merchants stay on a provider that stopped suiting them.
+          </p>
+          <p class="txt-blue-400 animated" data-animate="fadeInUp" data-delay=".2">
+            Through InfyniPay the provider is configuration rather than code. You can run a local gateway
+            for domestic cards and a global processor for everyone else, add a regional provider when you
+            open a new market, or move away from one entirely, and your checkout never changes. Because the
+            payment tokens are issued by the provider rather than by us, the switch does not invalidate
+            saved customer payment details either. That is also why the first choice matters less than it
+            appears to: it is reversible.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include faq.html items=site.data.providers_hub.faqs eyebrow="Provider FAQ" bg="bg-white" %}
+</main>
+
+<script>
+  // Category filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const providerCards = document.querySelectorAll('.provider-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const category = this.getAttribute('data-category');
+        
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter cards
+        providerCards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          
+          if (category === 'all' || cardCategory === category) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

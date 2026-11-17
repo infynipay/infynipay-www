@@ -1,0 +1,850 @@
+---
+layout: none
+nav_active: home
+title: All-in-One Payment Orchestration Platform
+description: Enterprise payment orchestration platform with a unified API for 30+ payment providers. Accept payments in minutes without touching your code.
+# /features.html was a page on the previous site. It has no direct replacement - the
+# capability sections it described now live on this page.
+redirect_from: /features.html
+---
+
+
+    {% include header.html %}
+
+    <main id="main-content" class="overflow-hidden">
+
+        {%- comment %}
+          Home hero (2026-11 rebrand). Drawn entirely in CSS + inline SVG: no photo, so the
+          LCP element is the <h1> and nothing image-sized sits on the critical path.
+          Styles: _sass/theme/_home-hero.scss (the home page does not load components.css).
+          The illustration on the right is decorative (aria-hidden): it shows what the
+          product does - checkout -> InfyniPay -> the provider you route to, with a
+          failover toast - and every word in it is generic, not a metric or a claim.
+          Animations stop under prefers-reduced-motion.
+        {% endcomment -%}
+        <div class="header-banner home-hero" id="homeHero">
+            <div class="home-hero-grid" aria-hidden="true"></div>
+            <div class="container position-relative">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6 text-center text-lg-start">
+                        <div class="banner-caption cpn tc-light">
+                            <div class="cpn-head">
+                                <h1 class="title title-lg home-hero-title">All-in-One <br class="d-none d-md-block"><span class="home-hero-accent">Payment Integration</span></h1>
+                            </div>
+                            <div class="cpn-text cpn-text-s3 mb-0">
+                                <p class="lead lead-s3 animated" data-animate="fadeInUp" data-delay="0.1">InfyniPay is a <a href="/payment-orchestration/">payment orchestration platform</a>: connect {{ site.provider_floor }} providers through one integration and route every payment automatically. No code changes needed.</p>
+                            </div>
+                            <p class="home-hero-label animated" data-animate="fadeInUp" data-delay="0.2">Integration modules:</p>
+<div class="cpn-action d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-lg-start mt-0">
+                                    <div class="cpn-btns animated" data-animate="fadeInUp" data-delay="0.3">
+                                        <a href="/integrations/whmcs/" class="vh-btn btn-md btn-brand-equal btn-blue-100 no-change">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 448 512">
+                                                <path fill="#fff" d="M448 161v-21.3l-28.5-8.8l-2.2-10.4l20.1-20.7L427 80.4l-29 7.5l-7.2-7.5l7.5-28.2l-19.1-11.6l-21.3 21l-10.7-3.2l-7-26.4h-22.6l-6.2 26.4l-12.1 3.2l-19.7-21l-19.4 11l8.1 27.7l-8.1 8.4l-28.5-7.5l-11 19.1l20.7 21l-2.9 10.4l-28.5 7.8l-.3 21.7l28.8 7.5l2.4 12.1l-20.1 19.9l10.4 18.5l29.6-7.5l7.2 8.6l-8.1 26.9l19.9 11.6l19.4-20.4l11.6 2.9l6.7 28.5l22.6.3l6.7-28.8l11.6-3.5l20.7 21.6l20.4-12.1l-8.8-28l7.8-8.1l28.8 8.8l10.3-20.1l-20.9-18.8l2.2-12.1zm-119.2 45.2c-31.3 0-56.8-25.4-56.8-56.8s25.4-56.8 56.8-56.8s56.8 25.4 56.8 56.8c0 31.5-25.4 56.8-56.8 56.8m72.3 16.4l46.9 14.5V277l-55.1 13.4l-4.1 22.7l38.9 35.3l-19.2 37.9l-54-16.7l-14.6 15.2l16.7 52.5l-38.3 22.7l-38.9-40.5l-21.7 6.6l-12.6 54l-42.4-.5l-12.6-53.6l-21.7-5.6l-36.4 38.4l-37.4-21.7l15.2-50.5l-13.7-16.1l-55.5 14.1l-19.7-34.8l37.9-37.4l-4.8-22.8l-54-14.1l.5-40.9L54 219.9l5.7-19.7l-38.9-39.4L41.5 125l53.6 14.1l15.2-15.7l-15.2-52l36.4-20.7l36.8 39.4L191 84l11.6-52H245l11.6 45.9L234 72l-6.3-1.7l-3.3 5.7l-11 19.1l-3.3 5.6l4.6 4.6l17.2 17.4l-.3 1l-23.8 6.5l-6.2 1.7l-.1 6.4l-.2 12.9C153.8 161.6 118 204 118 254.7c0 58.3 47.3 105.7 105.7 105.7c50.5 0 92.7-35.4 103.2-82.8l13.2.2l6.9.1l1.6-6.7l5.6-24l1.9-.6l17.1 17.8l4.7 4.9l5.8-3.4l20.4-12.1l5.8-3.5l-2-6.5z"></path>
+                                            </svg>
+                                            <span class="fs-5 ms-1">WHMCS</span>
+                                            <em class="ti ti-arrow-right ps-2"></em>
+                                        </a>
+                                    </div>
+                                    <div class="cpn-btns animated" data-animate="fadeInUp" data-delay="0.4">
+                                        <a href="/integrations/woocommerce/" class="vh-btn btn-md btn-brand-equal btn-blue-100 no-change" aria-label="WooCommerce">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="padding-top: 2px" width="110" height="24" viewBox="0 0 512 104">
+                                                <g fill-rule="evenodd">
+                                                    <path fill="#ffffff" d="M157.267 0H16.097C7.161 0-.07 7.303 0 16.166v53.887C0 78.987 7.233 86.22 16.167 86.22H83.03l30.56 17.017l-6.949-17.017h50.626c8.934 0 16.166-7.232 16.166-16.166V16.166C173.433 7.232 166.2 0 157.267 0M13.119 12.48c-1.986.14-3.475.85-4.467 2.197c-.993 1.276-1.348 2.907-1.135 4.75q6.275 39.885 11.7 53.817c1.417 3.403 3.048 5.034 4.963 4.893c2.978-.213 6.523-4.326 10.706-12.338q3.297-6.806 10.21-20.42c3.83 13.4 9.076 23.47 15.67 30.205c1.844 1.914 3.758 2.765 5.601 2.623c1.632-.141 2.908-.992 3.758-2.552q1.064-2.021.851-4.68c-.425-6.452.213-15.457 1.986-27.014c1.843-11.912 4.112-20.492 6.877-25.597c.568-1.063.78-2.127.71-3.403c-.142-1.631-.851-2.978-2.198-4.042c-1.348-1.063-2.837-1.56-4.468-1.418c-2.056.142-3.616 1.135-4.68 3.12c-4.395 8.012-7.515 20.988-9.358 38.997C57.15 44.811 54.88 36.8 53.109 27.37c-.78-4.183-2.695-6.169-5.815-5.956q-3.191.213-5.317 4.254L26.449 55.234c-2.553-10.28-4.964-22.83-7.162-37.65q-.744-5.53-6.168-5.105m136.632 5.104c5.034 1.064 8.792 3.758 11.345 8.225c2.269 3.83 3.403 8.438 3.403 13.968c0 7.303-1.843 13.969-5.53 20.066c-4.255 7.09-9.785 10.636-16.663 10.636q-1.807 0-3.829-.426c-5.034-1.063-8.792-3.757-11.345-8.224q-3.403-5.85-3.403-14.04q0-10.954 5.53-19.994c4.326-7.09 9.856-10.636 16.663-10.636q1.809 0 3.829.425m-2.978 38.36c2.624-2.34 4.396-5.815 5.389-10.494c.284-1.631.496-3.404.496-5.247c0-2.056-.425-4.254-1.276-6.452c-1.064-2.766-2.482-4.255-4.184-4.61c-2.552-.496-5.034.923-7.373 4.397c-1.915 2.694-3.12 5.53-3.758 8.437c-.355 1.631-.497 3.404-.497 5.177c0 2.056.425 4.254 1.276 6.452c1.064 2.765 2.482 4.254 4.184 4.609c1.772.354 3.687-.426 5.743-2.27M116.64 25.808c-2.553-4.467-6.382-7.161-11.345-8.225q-2.02-.425-3.83-.425c-6.806 0-12.336 3.545-16.661 10.636q-5.531 9.04-5.53 19.995q0 8.19 3.402 14.039c2.553 4.467 6.311 7.161 11.345 8.224q2.02.426 3.83.426c6.877 0 12.407-3.545 16.661-10.636c3.688-6.097 5.53-12.763 5.53-20.066c0-5.53-1.134-10.139-3.402-13.968m-8.935 19.64c-.992 4.68-2.765 8.155-5.388 10.494c-2.056 1.844-3.97 2.624-5.743 2.27c-1.702-.355-3.12-1.844-4.184-4.61c-.85-2.197-1.276-4.395-1.276-6.451c0-1.773.142-3.546.497-5.177c.638-2.907 1.843-5.743 3.757-8.437c2.34-3.474 4.822-4.893 7.374-4.396c1.702.354 3.12 1.843 4.184 4.609c.85 2.198 1.276 4.396 1.276 6.452c0 1.843-.142 3.616-.497 5.247"></path>
+                                                    <path d="M191.372 25.17c-4.751 4.68-7.09 10.636-7.09 17.869c0 7.728 2.339 14.039 7.019 18.79s10.777 7.16 18.364 7.16c2.198 0 4.68-.354 7.374-1.134V56.368c-2.481.71-4.609 1.064-6.452 1.064c-3.758 0-6.736-1.276-9.005-3.758c-2.269-2.552-3.404-5.956-3.404-10.28c0-4.042 1.135-7.375 3.333-9.927c2.269-2.624 5.034-3.9 8.438-3.9c2.198 0 4.537.354 7.09 1.063V19.144c-2.34-.638-4.963-.922-7.729-.922c-7.232-.07-13.188 2.27-17.938 6.949m49.207-7.019c-6.523 0-11.628 2.198-15.315 6.523c-3.687 4.326-5.46 10.423-5.46 18.223c0 8.438 1.844 14.89 5.46 19.357s8.934 6.736 15.883 6.736c6.735 0 11.911-2.27 15.527-6.736c3.616-4.467 5.46-10.778 5.46-18.86q0-12.125-5.53-18.72c-3.758-4.325-9.076-6.523-16.025-6.523m5.602 36.87C244.904 57.007 242.99 58 240.579 58c-2.269 0-3.97-.993-5.176-2.979c-1.205-1.985-1.772-5.956-1.772-11.982c0-9.289 2.34-13.898 7.09-13.898c4.963 0 7.516 4.68 7.516 14.11c-.071 5.814-.78 9.785-2.056 11.77m50.98-35.523l-2.553 10.849c-.638 2.765-1.276 5.601-1.843 8.508l-1.418 7.516c-1.347-7.516-3.191-16.45-5.53-26.873h-16.45l-6.17 48.286h12.338l3.332-33.254l8.438 33.254h8.792l8.083-33.183l3.475 33.183h12.904l-6.523-48.286zm59.063 0l-2.552 10.849c-.639 2.765-1.277 5.601-1.844 8.508l-1.418 7.516c-1.347-7.516-3.191-16.45-5.53-26.873h-16.45l-6.169 48.286h12.337l3.332-33.254l8.438 33.254h8.792l8.013-33.183l3.474 33.183h12.905l-6.524-48.286zm40.132 29.213h11.557v-9.998h-11.557V29.85h13.33V19.57H383.31v48.285h26.447v-10.28h-13.401zm50.129-7.658c1.347-2.198 2.056-4.467 2.056-6.806c0-4.538-1.772-8.154-5.317-10.778c-3.546-2.623-8.438-3.97-14.536-3.97h-15.174v48.285h13.047v-21.98h.213l10.564 21.98h13.756L440.67 46.017c2.481-1.135 4.467-2.766 5.814-4.964m-19.995-.78V28.787c3.12.07 5.318.567 6.665 1.56c1.347.992 1.985 2.552 1.985 4.821c0 3.333-2.907 5.035-8.65 5.105m29.707-15.102c-4.749 4.68-7.089 10.635-7.089 17.868c0 7.728 2.34 14.039 7.021 18.79c4.68 4.75 10.775 7.16 18.364 7.16c2.198 0 4.68-.354 7.372-1.134V56.368c-2.478.71-4.608 1.064-6.452 1.064c-3.756 0-6.733-1.276-9.003-3.758c-2.27-2.552-3.403-5.956-3.403-10.28c0-4.042 1.133-7.375 3.33-9.927c2.27-2.624 5.034-3.9 8.437-3.9c2.198 0 4.54.354 7.091 1.063V19.144c-2.338-.638-4.961-.922-7.725-.922c-7.164-.07-13.19 2.27-17.943 6.949m42.333 32.261V48.64h11.554v-9.997H498.53V29.78h13.398V19.498h-26.375v48.286h26.448V57.503H498.53z" fill="#ffffff"></path>
+                                                </g>
+                                            </svg>
+                                            <em class="ti ti-arrow-right ps-2"></em>
+                                        </a>
+                                    </div>
+                                    <div class="cpn-btns d-none d-sm-block animated" data-animate="fadeInUp" data-delay="0.5">
+                                        <a href="/integrations/" class="vh-btn btn-md btn-brand-equal btn-blue-100 no-change" aria-label="View All integrations">
+                                            <em class="ti ti-layout-grid2"></em>
+                                            <span class="ms-1">View All</span>
+                                            <em class="ti ti-arrow-right ps-2"></em>
+                                        </a>
+                                    </div>
+                                </div>
+                            <ul class="home-hero-trust list-unstyled animated" data-animate="fadeInUp" data-delay="0.6">
+                                <li><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Free to start</li>
+                                <li><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No transaction fees</li>
+                                <li><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Based in the Netherlands</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="home-hero-visual" aria-hidden="true">
+                            <img class="hhv-globe" src="{{ '/assets/images/home/globe-dots.svg' | relative_url }}" width="1000" height="1000" alt="" decoding="async">
+                            <svg class="hhv-arcs" viewBox="0 0 100 100">
+                                <path class="hhv-arc hhv-arc--down" d="M48.5 26.2 Q26.0 13.9 14.7 23.4"/>
+                                <path class="hhv-arc hhv-arc--live" d="M48.5 26.2 Q14.7 46.9 14.9 76.8"/>
+                                <path class="hhv-arc" d="M48.5 26.2 Q43.0 31.6 46.2 62.5"/>
+                                <path class="hhv-arc" d="M48.5 26.2 Q72.9 37.4 72.7 66.4"/>
+                                <path class="hhv-arc" d="M48.5 26.2 Q69.6 59.8 64.5 84.1"/>
+                                <path class="hhv-arc" d="M48.5 26.2 Q79.2 22.2 90.2 42.8"/>
+                                <circle class="hhv-dot" r=".9"><animateMotion dur="2.4s" repeatCount="indefinite" path="M48.5 26.2 Q14.7 46.9 14.9 76.8"/></circle>
+                                <circle class="hhv-dot" r=".9"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M48.5 26.2 Q14.7 46.9 14.9 76.8"/></circle>
+                            </svg>
+                            <div class="hhv-hub">
+                                <svg viewBox="0 0 40 40"><path d="M20 20C17.1 15.2 9.6 15.2 9.6 20S17.1 24.8 20 20 C22.9 15.2 30.4 15.2 30.4 20S22.9 24.8 20 20Z" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <ul class="hhv-pins list-unstyled">
+                                <li class="hhv-pin hhv-pin--stripe is-down"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/stripe.webp' | relative_url }}" width="72" height="30" alt="" decoding="async"><span class="hhv-tag hhv-tag--down">Unavailable</span></span></li>
+                                <li class="hhv-pin hhv-pin--adyen is-live"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/adyen.webp' | relative_url }}" width="93" height="30" alt="" decoding="async"><span class="hhv-tag">Routed</span></span></li>
+                                <li class="hhv-pin hhv-pin--paystack"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/paystack-light.webp' | relative_url }}" width="481" height="86" alt="" decoding="async"></span></li>
+                                <li class="hhv-pin hhv-pin--flutterwave"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/flutterwave-light.webp' | relative_url }}" width="544" height="86" alt="" decoding="async"></span></li>
+                                <li class="hhv-pin hhv-pin--ozow"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/Ozow-light.webp' | relative_url }}" width="281" height="79" alt="" decoding="async"></span></li>
+                                <li class="hhv-pin hhv-pin--razorpay hhv-pin--left"><span class="hhv-pin-dot"></span><span class="hhv-pin-label"><img class="hhv-logo" src="{{ '/assets/images/home/providers-icon/razor.webp' | relative_url }}" width="244" height="51" alt="" decoding="async"></span></li>
+                            </ul>
+
+                            <div class="hhv-card hhv-checkout">
+                                <span class="hhv-kicker">Checkout</span>
+                                <span class="hhv-amount">$128.00</span>
+                                <span class="hhv-method"><span class="hhv-cardicon"></span>Card &middot; USD</span>
+                            </div>
+
+                            <div class="hhv-card hhv-toast">
+                                <span class="hhv-check"></span>
+                                <span><strong>Payment approved</strong><br><small>Stripe unavailable &rarr; rerouted to Adyen</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Provider Icons slider -->
+        <section class="section section-m over-lg-up pdb-0">
+            <div class="container">
+                <div class="nk-block block-partners partner-box">
+                    <div id="screenshotSlider" class="linear-slider-wrapper animated" data-animate="fadeInUp" data-delay=".1">
+                        <div class="linear-slider-items d-flex align-items-center">
+                            <img src="assets/images/home/providers-icon/paypal.webp" width="117" height="30" alt="Paypal">
+                            <img src="assets/images/home/providers-icon/stripe.webp" width="72" height="30" alt="Stripe">
+                            <img src="assets/images/home/providers-icon/authorize.webp" width="234" height="27" alt="Authorize.net" style="height: 23px;">
+                            <img src="assets/images/home/providers-icon/adyen.webp" width="93" height="30" alt="Adyen">
+                            <img src="assets/images/home/providers-icon/braintree.webp" width="158" height="22" alt="Braintree">
+                            <img src="assets/images/home/providers-icon/binance.webp" width="148" height="30" alt="Binance">
+                            <img src="assets/images/home/providers-icon/amazon.webp" width="142" height="28" alt="Amazon Pay">
+                            <img src="assets/images/home/providers-icon/oxapay.webp" width="64" height="30" alt="Oxapay">
+                            <img src="assets/images/home/providers-icon/paytabs.webp" width="103" height="30" alt="PayTabs">
+                            <img src="assets/images/home/providers-icon/tap.webp" width="76" height="30" alt="Tap">
+                            <img src="assets/images/home/providers-icon/bitpay.webp" width="86" height="30" alt="BitPay">
+                            <img src="assets/images/home/providers-icon/revolut.webp" width="136" height="30" alt="Revolut" style="height: 23px;">
+                            <img src="assets/images/home/providers-icon/sslcommerz.webp" width="434" height="84" alt="SSLCommerz" style="height: 30px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {%- comment %}
+          Trust bar. Sits directly after the provider logos: the banner makes a
+          claim, the logos show who is behind it, and this answers the question
+          that follows both, which is why any of it should be believed. Eight
+          scrolls down in the Trust Center is too late for that.
+
+          It cannot go between the banner and the logos, which was the first
+          attempt. That slider carries .over-lg-up, a -80px margin that lifts it
+          onto the curve at the foot of the banner, so anything placed above it
+          gets 80px of slider dropped on top. The badge landed on the logos.
+
+          InfyniPay holds no security certification, and this bar must not imply
+          one (the CSA STAR listing belonged to the previous operator and was
+          removed in the 2026-11 rebrand). Each column is something true that a
+          visitor can check: who we are and where, how card data is handled,
+          and how security reports are handled.
+
+          No data-animate here. The bar has to be in the first frame: anything
+          that waits for a scroll trigger is missed by the visitor who scrolls
+          straight past, which is exactly the visitor this is for. The logo is
+          eager for the same reason.
+
+          Bootstrap utilities and theme classes only; the home page does not
+          load components.css, so the Trust Center's .tc-cert markup cannot be
+          reused here.
+        {% endcomment -%}
+        {%- comment %}
+          mt-6 (3rem) sits the band in the middle of the gap rather than up
+          against the slider. Measured: 39px of air above it and 105px below,
+          which read as stuck to the logos; the extra 48 evens that out. The
+          105 below belongs to the next section padding and is left alone.
+        {% endcomment -%}
+        <section class="bg-blue-30 py-4 mt-6 border-bottom">
+            <div class="container">
+                <ul class="row g-4 align-items-center list-unstyled mb-0">
+                    <li class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="trust-bar-icon">
+                                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+                            </span>
+                            <div>
+                                <p class="mb-0 fw-semibold txt-blue-600">EU company, based in the Netherlands</p>
+                                <a href="{{ '/about/' | relative_url }}" class="small txt-blue-100 text-decoration-none">Who you do business with</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="trust-bar-icon">
+                                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            </span>
+                            <div>
+                                <p class="mb-0 fw-semibold txt-blue-600">Card data never reaches your server</p>
+                                <a href="{{ '/blog/do-you-need-pci-compliance-to-accept-payments/' | relative_url }}" class="small txt-blue-100 text-decoration-none">What that means for your PCI scope</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="trust-bar-icon">
+                                <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                            </span>
+                            <div>
+                                <p class="mb-0 fw-semibold txt-blue-600">Responsible disclosure programme</p>
+                                <a href="{{ '/disclosure/' | relative_url }}" class="small txt-blue-100 text-decoration-none">How we handle reported issues</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- What is InfyniPay and Providers  -->
+        <section class="section overflow-hidden">
+
+            <!-- What is InfyniPay -->
+            <div class="nk-block nk-block-features">
+                <div class="container">
+                    <div class="home-mcta d-lg-none" data-mcta>
+                        <a href="{{ site.signup_url }}" class="vh-btn btn-md btn-auto btn-green-300 no-change"><span>Start Free</span></a>
+                    </div>
+                    <div class="section-head wide-sm text-center">
+                        <span class="animated" data-animate="fadeInUp" data-delay=".1">What is</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Infyni<span class="text-secondary">Pay</span></h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">Your payment request comes in. InfyniPay picks the best provider, routes it automatically, and returns the result. Your integration code never changes.</p>
+                        <p class="mt-3 mb-0 animated" data-animate="fadeInUp" data-delay=".35"><a href="/blog/what-is-payment-orchestration/" class="txt-blue-200 fw-semibold">What is payment orchestration? &rarr;</a></p>
+                    </div>
+                    <div class="row align-items-center g-6">
+                        <div class="col-xl-6 text-center text-xl-start">
+                            {%- comment %}
+                              How InfyniPay works, as one request travelling through it: request in,
+                              routing rules pick a provider, provider list with the chosen one lit,
+                              result back. Decorative (the cards on the right say it in words).
+                              Replaced the old isometric illustration (owner's request, 2026-11).
+                              Styles: _sass/theme/_home-route.scss.
+                            {% endcomment -%}
+                            <div class="route-demo animated" data-animate="fadeInUp" data-delay=".3" aria-hidden="true">
+                                <div class="rd-step rd-request">
+                                    <span class="rd-label">Payment request</span>
+                                    <div class="rd-request-row">
+                                        <span class="rd-amount">$86.40</span>
+                                        <span class="rd-chip">Card</span>
+                                        <span class="rd-chip">Customer in Nigeria</span>
+                                    </div>
+                                </div>
+                                <div class="rd-link"><span class="rd-pulse"></span></div>
+                                <div class="rd-step rd-engine">
+                                    <div class="rd-engine-head">
+                                        <span class="rd-mark"><svg viewBox="0 0 40 40"><path d="M20 20C17.1 15.2 9.6 15.2 9.6 20S17.1 24.8 20 20 C22.9 15.2 30.4 15.2 30.4 20S22.9 24.8 20 20Z" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                        <span class="rd-label">InfyniPay routing rules</span>
+                                    </div>
+                                    <ul class="rd-rules list-unstyled">
+                                        <li class="is-match"><span class="rd-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Country is Nigeria</span><span class="rd-arrow">&rarr;</span><span class="rd-to">Paystack</span></li>
+                                        <li><span class="rd-check"></span><span>Currency is EUR</span><span class="rd-arrow">&rarr;</span><span class="rd-to">Adyen</span></li>
+                                        <li><span class="rd-check"></span><span>Anything else</span><span class="rd-arrow">&rarr;</span><span class="rd-to">Stripe</span></li>
+                                    </ul>
+                                </div>
+                                <div class="rd-link"><span class="rd-pulse rd-pulse--late"></span></div>
+                                <ul class="rd-step rd-providers list-unstyled">
+                                    <li class="is-chosen"><img src="{{ '/assets/images/home/providers-icon/paystack-light.webp' | relative_url }}" width="481" height="86" alt="" loading="lazy" decoding="async"></li>
+                                    <li><img src="{{ '/assets/images/home/providers-icon/adyen.webp' | relative_url }}" width="93" height="30" alt="" loading="lazy" decoding="async"></li>
+                                    <li><img src="{{ '/assets/images/home/providers-icon/stripe.webp' | relative_url }}" width="72" height="30" alt="" loading="lazy" decoding="async"></li>
+                                    <li><img src="{{ '/assets/images/home/providers-icon/flutterwave-light.webp' | relative_url }}" width="544" height="86" alt="" loading="lazy" decoding="async"></li>
+                                    <li><img src="{{ '/assets/images/home/providers-icon/razor.webp' | relative_url }}" width="244" height="51" alt="" loading="lazy" decoding="async"></li>
+                                    <li><img src="{{ '/assets/images/home/providers-icon/Ozow-light.webp' | relative_url }}" width="281" height="79" alt="" loading="lazy" decoding="async"></li>
+                                </ul>
+                                <div class="rd-link"></div>
+                                <div class="rd-step rd-result">
+                                    <span class="rd-ok"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                    <span><strong>Approved via Paystack</strong><small>Result returned to your checkout. No code changed.</small></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="d-flex flex-row gap-4 card card-s3 mb-3 animated" data-animate="fadeInUp" data-delay=".2">
+                                <span class="about-feature-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16"><g fill="#fff"><path d="m10.71 1.29l3 3L14 5v9l-1 1H3l-1-1V9h1v5h10V5l-3-3H8.06v-.264L8 1.676V1h2zM10 12H5v-1h5zM8 6h2v1H8v2H7V7H5.064l1-1H7v-.937l1-1z"/><path fill-rule="evenodd" d="M7.06 2.854L4.915 5l-.707-.707L5.5 3h-3a1.5 1.5 0 0 0 0 3H3v1h-.5a2.5 2.5 0 1 1 0-5h3L4.207.707L4.914 0l2.147 2.146z" clip-rule="evenodd"/></g></svg>
+                                </span>
+                                <div>
+                                    <h3 class="txt-blue-600 title-md h5">Receives Payment Requests</h3>
+                                    <p>Every payment request from your site or app hits InfyniPay first, regardless of which gateway the customer's method requires.</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item d-flex flex-row gap-4 p-4 mb-3 animated" data-animate="fadeInUp" data-delay=".3">
+                                <span class="about-feature-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 32 32"><circle cx="29" cy="5" r="2" fill="#fff"/><circle cx="29" cy="27" r="2" fill="#fff"/><path fill="#fff" d="M7 13H1v6h6zm-2 4H3v-2h2z"/><path fill="#fff" d="M17.5 6.677A7.02 7.02 0 0 0 12 4a7.03 7.03 0 0 0-6.063 3.499L4.772 9.518l1.732 1L7.669 8.5C8.56 6.958 10.22 6 12 6s3.439.958 4.331 2.5l.016.023l-1.933 3.348A6.28 6.28 0 0 1 9 15v2a6.28 6.28 0 0 1 5.414 3.129l1.933 3.347l-.016.024C15.439 25.042 13.779 26 12 26s-3.439-.958-4.33-2.5l-1.166-2.018l-1.732 1l1.165 2.02A7.03 7.03 0 0 0 12 28a7.03 7.03 0 0 0 5.5-2.677A7.02 7.02 0 0 0 23 28h2v-2h-2a5.01 5.01 0 0 1-4.261-2.397A5 5 0 0 1 22.393 22H25v-2h-2.607a7 7 0 0 0-4.69 1.824l-1.557-2.696a8.25 8.25 0 0 0-3.246-3.13a8.25 8.25 0 0 0 3.246-3.128l1.557-2.696a7 7 0 0 0 4.69 1.824H25v-2h-2.607a5 5 0 0 1-3.655-1.601A5.01 5.01 0 0 1 23 6h2V4h-2a7.02 7.02 0 0 0-5.5 2.677"/></svg>
+                                </span>
+                                <div>
+                                    <h3 class="txt-blue-600 title-md h5">Routes Them to the Right Provider</h3>
+                                    <p>InfyniPay automatically picks the best available gateway for each transaction by geography, payment method, or your custom rules.</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item d-flex flex-row gap-4 p-4 mb-3 animated" data-animate="fadeInUp" data-delay=".4">
+                                <span class="about-feature-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16"><g fill="#fff"><path d="m10.71 1.29l3 3L14 5v9l-1 1H3l-1-1V9h1v5h10V5l-3-3H8.06v-.264L8 1.676V1h2zM10 12H5v-1h5zM8 6h2v1H8v2H7V7H5.064l1-1H7v-.937l1-1z"/><path fill-rule="evenodd" d="M7.06 2.854L4.915 5l-.707-.707L5.5 3h-3a1.5 1.5 0 0 0 0 3H3v1h-.5a2.5 2.5 0 1 1 0-5h3L4.207.707L4.914 0l2.147 2.146z" clip-rule="evenodd"/></g></svg>
+                                </span>
+                                <div>
+                                    <h3 class="txt-blue-600 title-md h5">Integration Automatically Up to Date</h3>
+                                    <p>When Stripe or PayPal updates their API, InfyniPay absorbs the change on our side. Your integration keeps working, with no code changes and no redeploy on your part.</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item d-flex flex-row gap-4 p-4 mb-3 animated" data-animate="fadeInUp" data-delay=".45">
+                                <span class="about-feature-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 10.174C9.235 10.174 7 8.32 7 6c0-2.32 2.235-4.174 5-4.174s5 1.854 5 4.174c0 2.32-2.235 4.174-5 4.174"/><path d="M5 19.2c0-2.29 1.867-4.267 4.5-5.067c1.124-.343 2.368-.533 3.5-.533s2.376.19 3.5.533c2.633.8 4.5 2.777 4.5 5.067V22H5z"/></g></svg>
+                                </span>
+                                <div>
+                                    <h3 class="txt-blue-600 title-md h5">Customizable Checkout Page</h3>
+                                    <p>Personalize your checkout with your own branding, slogan, business name, and custom domain for a seamless customer experience.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gray-200 p-3 d-flex gap-3 align-items-center animated" data-animate="fadeInUp" data-delay=".5">
+                                <span class="text-secondary">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 22s1-1.425 1-2.137c0-.713-.533-.863-1-.863s-1 .15-1 .863C11 20.575 12 22 12 22ZM9.198 6.59c0-2.336 1.563-4.549 2.805-4.59c1.242.041 2.802 2.254 2.802 4.59v1.148c0 2.54 3.346 4.221 4.187 5.328c.378.475.372 1.913.401 2.541a.38.38 0 0 1-.39.393h-3.906l-.684.819a.4.4 0 0 1-.337.181H9.927a.4.4 0 0 1-.337-.181L8.906 16H5a.38.38 0 0 1-.39-.393c.029-.628.023-2.066.4-2.541c.842-1.107 4.188-2.787 4.188-5.328z"/></svg>
+                                </span>
+                                <p>Add a new region or payment method anytime. InfyniPay connects it automatically, no code changes on your side.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Providers -->
+            <div class="nk-block nk-block-about">
+                <div class="container mt-5 pt-5">
+                    <div id="providerContentWrapper" class="row align-items-center justify-content-lg-between justify-content-center gy-6">
+                        <div class="col-lg-6">
+                            <div class="section-head">
+                                <span class="animated" data-animate="fadeInUp" data-delay=".1">Supported</span>
+                                <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Payment <span class="txt-blue-200">Providers</span></h2>
+                                <p class="animated" data-animate="fadeInUp" data-delay=".3">Support one-time purchases, recurring subscriptions, and automatic billing. All through the same single integration. No separate tools needed.</p>
+                            </div>
+                            <ul id="providersFeatures" class="list-unstyled d-flex flex-column gap-3 p-0">
+                                <li class="animated" data-animate="fadeInUp" data-delay=".2">
+                                    <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">Global Payment</h3>
+                                </li>
+                                <li class="animated" data-animate="fadeInUp" data-delay=".3">
+                                    <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">Regional / Local</h3>
+                                </li>
+                                <li class="animated" data-animate="fadeInUp" data-delay=".5">
+                                    <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">Crypto Gateway</h3>
+                                </li>
+                            </ul>
+                            <a href="/providers.html" class="vh-btn btn-blue-300 mt-5 mb-3 animated" data-animate="fadeInUp" data-delay=".6">
+                                <span>All Payment Providers</span>
+                                <em class="ti ti-arrow-right ps-2"></em>
+                            </a>
+                            <p class="animated" data-animate="fadeInUp" data-delay=".7">These are a handful of the providers you can connect. See the full list, by region and payment method.</p>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="provider-mosaic list-unstyled mb-0 animated" data-animate="fadeInUp" data-delay=".3">
+                                <li><a href="/providers/paypal/" aria-label="PayPal"><img src="assets/images/home/providers-icon/paypal.webp" alt="PayPal" width="117" height="30" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/stripe/" aria-label="Stripe"><img src="assets/images/home/providers-icon/stripe.webp" alt="Stripe" width="72" height="30" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/adyen/" aria-label="Adyen"><img src="assets/images/home/providers-icon/adyen.webp" alt="Adyen" width="93" height="30" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/amazon-pay/" aria-label="Amazon Pay"><img src="assets/images/home/providers-icon/amazon.webp" alt="Amazon Pay" width="142" height="28" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/square/" aria-label="Square"><img src="assets/images/home/providers-icon/square.webp" alt="Square" width="1510" height="500" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/paystack/" aria-label="Paystack"><img src="assets/images/home/providers-icon/paystack-light.webp" alt="Paystack" width="481" height="86" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/ozow/" aria-label="Ozow"><img src="assets/images/home/providers-icon/Ozow-light.webp" alt="Ozow" width="281" height="79" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/razorpay/" aria-label="Razorpay"><img src="assets/images/home/providers-icon/razor.webp" alt="Razorpay" width="244" height="51" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/revolut/" aria-label="Revolut"><img src="assets/images/home/providers-icon/revolut.webp" alt="Revolut" width="136" height="30" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/binance/" aria-label="Binance"><img src="assets/images/home/providers-icon/binance.webp" alt="Binance" width="148" height="30" loading="lazy" decoding="async"></a></li>
+                                <li><a href="/providers/bitpay/" aria-label="BitPay"><img src="assets/images/home/providers-icon/bitpay.webp" alt="BitPay" width="86" height="30" loading="lazy" decoding="async"></a></li>
+                                <li class="provider-mosaic-more"><a href="/providers.html">+{{ site.provider_count | minus: 11 }} more</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vibe coding: points AI-builder users at the prompt page, which is otherwise
+                     only reachable from the Integrations menu. The logo list comes from the same
+                     data file as that page, so a new builder shows up here too. -->
+                {%- assign aib = site.data.ai_builder_prompts.builders %}
+                <div class="container mt-6">
+                    <aside id="aiBuildersBanner" class="home-ai-banner animated" data-animate="fadeInUp" data-delay=".2" aria-labelledby="aiBuildersTitle">
+                        <div>
+                            <span class="home-ai-eyebrow">Vibe coding</span>
+                            <h3 id="aiBuildersTitle" class="h2">Building with AI? Add payments with one prompt.</h3>
+                            <p>Using Lovable, Bolt.new, v0, Replit, Base44 or a coding agent? Copy one of our ready-made prompts into your project and it writes the InfyniPay checkout and webhook for you, with the payment rules generated code usually gets wrong already spelled out.</p>
+                            <a href="/integrations/ai-builders/" class="vh-btn btn-green-300 no-change">
+                                <span>Get the ready-made prompts</span>
+                                <em class="ti ti-arrow-right ps-2" aria-hidden="true"></em>
+                            </a>
+                            <p class="home-ai-fine">InfyniPay is not affiliated with these tools. Names and logos are used only to show which tool a prompt is written for.</p>
+                        </div>
+                        <div aria-hidden="true">
+                            <div class="home-ai-prompt">
+                                <div class="home-ai-prompt-bar"><i></i><i></i><i></i><span>Prompt &middot; paste into your builder</span></div>
+                                <pre class="home-ai-prompt-body">Add payments to this app with <b>InfyniPay</b>.
+
+<b>1.</b> Create the payment on the server
+<b>2.</b> Keep every API key out of the browser
+<b>3.</b> Verify the webhook signature
+<b>4.</b> Mark the order paid only when Captured</pre>
+                            </div>
+                            <ul class="home-ai-logos">
+                                {%- for b in aib %}
+                                <li><img src="{{ '/assets/images/ai-builders/' | append: b.logos.first | relative_url }}" alt="" width="30" height="30" loading="lazy" decoding="async"></li>
+                                {%- endfor %}
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <div class="nk-ovm shape-y"></div>
+        </section>
+
+        <!-- Multi-Payment Type & Fraud Detection -->
+        <section id="hexagonSection" class="section">
+            <!-- Multi Payment Type -->
+            <div id="multiPaymentType" class="nk-block">
+                <div class="container">
+                    <div class="home-mcta d-lg-none" data-mcta>
+                        <a href="{{ site.signup_url }}" class="vh-btn btn-md btn-auto btn-green-300 no-change"><span>Start Free</span></a>
+                    </div>
+                    <div class="section-head wide-sm text-center">
+                        <span class="animated fs-5" data-animate="fadeInUp" data-delay=".1">Supported</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Multi <span class="txt-blue-200">Payment Type</span></h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">One-time charges, recurring billing, crypto. Support every payment model your customers expect, without writing separate integrations for each.</p>
+                    </div>
+                    <div class="row gy-5">
+                        <div class="col-lg-4 col-sm-6 animated" data-animate="fadeInLeft" data-delay=".5">
+                            <div class="payment-type-card">
+                                <div class="icon-wrapper type-1">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="69" height="69" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M13.5 15H6c-1.886 0-2.828 0-3.414-.586S2 12.886 2 11V7c0-1.886 0-2.828.586-3.414S4.114 3 6 3h12c1.886 0 2.828 0 3.414.586S22 5.114 22 7v5c0 .932 0 1.398-.152 1.765a2 2 0 0 1-1.083 1.083C20.398 15 19.932 15 19 15"/><path d="M14 9a2 2 0 1 1-4 0a2 2 0 0 1 4 0m-1 8a3 3 0 0 1 3-3v-2a3 3 0 0 1 3-3v5.5c0 2.335 0 3.502-.472 4.386a4 4 0 0 1-1.642 1.642C16.002 21 14.835 21 12.5 21H12c-1.864 0-2.796 0-3.53-.305a4 4 0 0 1-2.166-2.164C6 17.796 6 16.864 6 15"/></g></svg>
+                                </div>
+                                <h3 class="txt-blue-600 mb-0 h4">One-Time Payment</h3>
+                                <p>Charge customers once for a product or service. Supports cards, wallets, and local payment methods globally.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 animated" data-animate="fadeInUp" data-delay=".5">
+                            <div class="payment-type-card">
+                                <div class="icon-wrapper type-2">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="69" height="69" viewBox="0 0 16 16"><path fill="currentColor" d="M9.5 14h-8C.67 14 0 13.33 0 12.5V2.38C0 1.55.67.88 1.5.88h11c.83 0 1.5.67 1.5 1.5v7.25c0 .28-.22.5-.5.5s-.5-.22-.5-.5V2.38c0-.28-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5V12.5c0 .28.22.5.5.5h8c.28 0 .5.22.5.5s-.22.5-.5.5"/><path fill="currentColor" d="M4 3.62c-.28 0-.5-.22-.5-.5V.5c0-.28.22-.5.5-.5s.5.22.5.5v2.62c0 .28-.22.5-.5.5m6.12 0c-.28 0-.5-.22-.5-.5V.5c0-.28.22-.5.5-.5s.5.22.5.5v2.62c0 .28-.22.5-.5.5M13.5 6H.5C.22 6 0 5.78 0 5.5S.22 5 .5 5h13c.28 0 .5.22.5.5s-.22.5-.5.5m-1 10C10.57 16 9 14.43 9 12.5S10.57 9 12.5 9s3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5m0-6a2.5 2.5 0 0 0 0 5a2.5 2.5 0 0 0 0-5"/><path fill="currentColor" d="M13.5 14a.47.47 0 0 1-.35-.15l-1-1a.5.5 0 0 1-.15-.35V11c0-.28.22-.5.5-.5s.5.22.5.5v1.29l.85.85c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15"/></svg>
+                                </div>
+                                <h3 class="txt-blue-600 mb-0 h4">Subscription</h3>
+                                <p>Flexible billing cycles such as weekly, monthly, or yearly, with renewals and proration handled automatically. Available today on WHMCS, with more platforms on the way.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 animated" data-animate="fadeInRight" data-delay=".5">
+                            <div class="payment-type-card">
+                                <div class="icon-wrapper type-3">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="69" height="69" viewBox="0 0 24 24"><path fill="currentColor" d="M12.68 6h-1.36L7 16h2l.73-2h4.54l.73 2h2zm-2.38 6.5L12 8l1.7 4.5zm7.1 7.9L19 22h-5v-5l2 2c2.39-1.39 4-4.05 4-7c0-4.41-3.59-8-8-8s-8 3.59-8 8c0 2.95 1.61 5.53 4 6.92v2.24C4.47 19.61 2 16.1 2 12C2 6.5 6.5 2 12 2s10 4.5 10 10c0 3.53-1.83 6.62-4.6 8.4"/></svg>
+                                </div>
+                                <h3 class="txt-blue-600 mb-0 h4">Auto Payment</h3>
+                                <p>Seamless automatic billing for usage-based charges, utilities, or variable monthly amounts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Fraud Detection -->
+            <div id="fraudDetection" class="nk-block">
+                <div class="container">
+                    <div class="section-head wide-sm text-center">
+                        <span class="animated fs-5" data-animate="fadeInUp" data-delay=".1">Advanced Detection</span>
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Fraud & Risk <span class="txt-blue-200">Management</span></h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">Screen every transaction against rules you control (amount thresholds, velocity windows, geography and customer history), with manual review where you want a human in the loop. You decide what blocks a payment, so you can tighten fraud controls without adding friction for the customers you trust.</p>
+                    </div>
+                    <div class="row align-items-center justify-content-lg-between justify-content-center gy-5">
+                        <div class="col-xl-auto col-md-5 col-6 animated" data-duration="2" data-animate="fadeInLeft" data-delay=".3">
+                            <img src="assets/images/home/fraud-detection-icon.webp" width="400" height="450" loading="lazy" decoding="async" alt="">
+                        </div>
+                        <div class="col-lg-7">
+                           <div class="row gy-6">
+                               <div class="col-sm-6">
+                                   <div class="fraud-item animated" data-animate="fadeInUp" data-delay=".2">
+                                       <div class="itemIcon">
+                                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7.5 4.5a3 3 0 0 0-2.567 4.554a3.001 3.001 0 0 0 0 5.893M7.5 4.5a2.5 2.5 0 0 1 5 0V6m-5-1.5c0 .818.393 1.544 1 2m-3.567 8.447A3 3 0 0 0 7.5 19.5a2.5 2.5 0 0 0 5 0V18m-7.567-3.054A3 3 0 0 1 6.5 13.67M17.5 9h-2c-.943 0-1.414 0-1.707.293S13.5 10.057 13.5 11v2c0 .943 0 1.414.293 1.707S14.557 15 15.5 15h2c.943 0 1.414 0 1.707-.293s.293-.764.293-1.707v-2c0-.943 0-1.414-.293-1.707S18.443 9 17.5 9M15 15v2m3-2v2M15 7v2m3-2v2m-4.5 1.5h-2m2 3h-2m10-3h-2m2 3h-2"/></svg>
+                                       </div>
+                                       <h3 class="fraud-title h5">Smart AI Protection</h3>
+                                       <p>Analyzes transaction patterns, user behavior, and device signals in real time to detect and prevent suspicious or fraudulent activity.</p>
+                                   </div>
+                               </div>
+                               <div class="col-sm-6">
+                                   <div class="fraud-item animated" data-animate="fadeInUp" data-delay=".3">
+                                       <div class="itemIcon">
+                                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 10a2 2 0 1 0 4 0a2 2 0 0 0-4 0m2-6v4m0 4v8m7.199-5.601A2 2 0 1 0 12 18m0-14v10m0 4v2m4-13a2 2 0 1 0 4 0a2 2 0 0 0-4 0m2-3v1m0 4v2.5m-.999 7.5a2 2 0 1 0 4 0a2 2 0 1 0-4 0m2-3.5V17m0 4v1.5m3.031-5.25l-1.299.75m-3.463 2l-1.3.75m0-3.5l1.3.75m3.463 2l1.3.75"/></svg>
+                                       </div>
+                                       <h3 class="fraud-title h5">Intelligent Rule Engine</h3>
+                                       <p>Creates adaptive fraud rules using behavioral logic, geographic filters, and dynamic thresholds to automatically block or flag risky transactions.</p>
+                                   </div>
+                               </div>
+                               <div class="col-sm-6">
+                                   <div class="fraud-item animated" data-animate="fadeInUp" data-delay=".4">
+                                       <div class="itemIcon">
+                                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1"><path stroke-linejoin="round" d="m14 16l2.1 2.5l3.9-5"/><path d="M10 14H3m7 4H3M3 6h10.5M20 6h-2.25M20 10H9.5M3 10h2.25"/></g></svg>
+                                       </div>
+                                       <h3 class="fraud-title h5">Manual Review Control</h3>
+                                       <p>Flags high-risk transactions for manual review, allowing quick approval or rejection while maintaining control and reducing false positives.</p>
+                                   </div>
+                               </div>
+                               <div class="col-sm-6">
+                                   <div class="fraud-item animated" data-animate="fadeInUp" data-delay=".5">
+                                       <div class="itemIcon">
+                                           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M20 12V5.749a.6.6 0 0 0-.176-.425l-3.148-3.148A.6.6 0 0 0 16.252 2H4.6a.6.6 0 0 0-.6.6v18.8a.6.6 0 0 0 .6.6H13M8 10h8M8 6h4m-4 8h3"/><path d="M16 2v3.4a.6.6 0 0 0 .6.6H20m-.008 9.125l2.556.649c.266.068.453.31.445.584C22.821 22.116 19.5 23 19.5 23s-3.321-.884-3.493-6.642a.59.59 0 0 1 .445-.584l2.556-.649c.323-.082.661-.082.984 0"/></g></svg>
+                                       </div>
+                                       <h3 class="fraud-title h5">Personalized Risk Policies</h3>
+                                       <p>Applies tailored fraud rules per customer, region, or profile to deliver adaptive protection that scales with your business</p>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Features -->
+        <section id="securityFeatures" class="bg-blue-30">
+            <div class="container">
+                <div class="section-head wide-sm">
+                    <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Key Features of <span class="txt-blue-200">Security</span></h2>
+                    <p class="animated" data-animate="fadeInUp" data-delay=".3">Protect every payment with a fraud rule engine you configure yourself. You set the thresholds, geographic controls and review policy; InfyniPay adds proprietary risk signals underneath them. Your enforcement rules stay under your control, and the scoring models stay protected.</p>
+                </div>
+                <div id="securityFeaturesList" class="row gy-4">
+                    <div class="col-lg-4 d-flex flex-column align-items-start gap-2 animated" data-animate="fadeInUp" data-delay=".2">
+                        <div class="icon"><em class="ikon ikon-paricle-alt"></em></div>
+                        <h3 class="txt-blue-600 mb-0 h5">JWT token and OAuth 2.0 authentication</h3>
+                        <p>Industry-standard authentication protocols ensure secure access control and session management.</p>
+                    </div>
+                    <div class="col-lg-4 d-flex flex-column align-items-start gap-2 animated" data-animate="fadeInUp" data-delay=".3">
+                        <div class="icon"><em class="ikon ikon-donught"></em></div>
+                        <h3 class="txt-blue-600 mb-0 h5">Encrypted in transit and at rest</h3>
+                        <p>TLS 1.2 or higher in transit; provider credentials sealed with AES-256-GCM at rest, decrypted only for the moment a provider call is made.</p>
+                    </div>
+                    <div class="col-lg-4 d-flex flex-column align-items-start gap-2 animated" data-animate="fadeInUp" data-delay=".4">
+                        <div class="icon"><em class="ikon ikon-document"></em></div>
+                        <h3 class="txt-blue-600 mb-0 h5">Comprehensive audit logging</h3>
+                        <p>Every payment records its full lifecycle: each status change, when it happened, who triggered it, and why, alongside every gateway call and webhook delivery.</p>
+                    </div>
+                </div>
+                <a href="/trust-center/" class="vh-btn btn-blue-300 mt-5 animated" data-animate="fadeInUp" data-delay=".5">
+                    <span>All Security Features</span>
+                    <em class="ti ti-arrow-right ps-2"></em>
+                </a>
+            </div>
+        </section>
+
+        <section id="transactionControl" class="section bg-light-alt">
+            <div class="container">
+                <div class="home-mcta d-lg-none" data-mcta>
+                    <a href="{{ site.signup_url }}" class="vh-btn btn-md btn-auto btn-green-300 no-change"><span>Start Free</span></a>
+                </div>
+                <div class="section-head wide-sm text-center">
+                    <span class="animated fs-5" data-animate="fadeInUp" data-delay=".1">Supported</span>
+                    <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Flexible <span class="txt-blue-200">Transaction Control</span></h2>
+                    <p class="animated" data-animate="fadeInUp" data-delay=".3">Control every step of your payment flow, from initial authorization to capture, refund, and chargeback visibility. InfyniPay unifies all transaction types in a single integration, giving you the flexibility to build any payment experience.</p>
+                </div>
+
+                <div class="row g-4 justify-content-center transaction-grid">
+                                <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                                    <div class="transaction-card">
+                                        <div class="transaction-text">
+                                            <p class="title title-md h5">Sales</p>
+                                            <p>Process instant payments in a single step. Ideal for straightforward checkouts, subscriptions, or digital purchases where immediate capture is preferred.</p>
+                                        </div>
+                                        <div class="transaction-icon">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24">
+                                                <path fill="white" fill-opacity="1" d="M3 10c0-1.886 0-2.828.586-3.414S5.114 6 7 6h10c1.886 0 2.828 0 3.414.586S21 8.114 21 10v4c0 1.886 0 2.828-.586 3.414S18.886 18 17 18H7c-1.886 0-2.828 0-3.414-.586S3 15.886 3 14z" stroke-width="1" stroke="#16a3fe"></path><circle cx="6" cy="15" r="1" fill="#1940b0"></circle><path fill="#1940b0" d="M3 9h18v2H3z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                                    <div class="transaction-card">
+                                        <div class="transaction-text">
+                                            <p class="title title-md h5">Authorize &amp; Capture</p>
+                                            <p>Reserve funds first, then capture when goods ship or services complete. Perfect for marketplaces, pre-orders, and on-demand platforms that require timing control.</p>
+                                        </div>
+                                        <div class="transaction-icon">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 48 48">
+                                                <g fill="none" stroke-width="2"><path fill="#fff" fill-rule="evenodd" d="M6.506 37.538c-2.19-.178-3.866-1.854-4.044-4.044C2.237 30.727 2 26.312 2 20s.237-10.727.462-13.494c.178-2.19 1.854-3.866 4.044-4.044C9.273 2.237 13.688 2 20 2s10.727.237 13.494.462c2.19.178 3.866 1.854 4.044 4.044C37.763 9.273 38 13.688 38 20v.462c-2.535-1.642-6.204-.981-7.826 1.983l-1.678 3.07a7.5 7.5 0 0 1-2.982 2.98l-3.07 1.68c-2.963 1.62-3.624 5.29-1.982 7.825H20c-6.312 0-10.727-.237-13.494-.462" clip-rule="evenodd"></path><path fill="#1940b0" fill-rule="evenodd" d="M26.857 15.715a6.85 6.85 0 0 1-3.178 5.787a10.53 10.53 0 0 1 4.96 3.752l-.143.26a7.5 7.5 0 0 1-2.982 2.982l-3.07 1.678a5.6 5.6 0 0 0-1.288.966q-.562.003-1.156.003c-3.46 0-6.127-.096-8.083-.212l-.084-.006c-1.507-.113-2.293-1.73-1.787-3.154c1.028-2.894 3.342-5.201 6.275-6.269a6.857 6.857 0 1 1 10.536-5.788Z" clip-rule="evenodd"></path><path fill="#16a3fe" d="M34.123 24.604a1 1 0 0 1 1.754 0l1.68 3.07a12 12 0 0 0 4.77 4.77l3.069 1.679a1 1 0 0 1 0 1.754l-3.07 1.68a12 12 0 0 0-4.77 4.77l-1.679 3.069a1 1 0 0 1-1.754 0l-1.68-3.07a12 12 0 0 0-4.77-4.77l-3.069-1.679a1 1 0 0 1 0-1.754l3.07-1.68a12 12 0 0 0 4.77-4.77z"></path><path stroke="#16a3fe" stroke-linecap="round" stroke-linejoin="round" d="M34.123 24.604a1 1 0 0 1 1.754 0l1.68 3.07a12 12 0 0 0 4.77 4.77l3.069 1.679a1 1 0 0 1 0 1.754l-3.07 1.68a12 12 0 0 0-4.77 4.77l-1.679 3.069a1 1 0 0 1-1.754 0l-1.68-3.07a12 12 0 0 0-4.77-4.77l-3.069-1.679a1 1 0 0 1 0-1.754l3.07-1.68a12 12 0 0 0 4.77-4.77zM38 19.5c-.013-6.046-.243-10.3-.462-12.994c-.178-2.19-1.854-3.866-4.044-4.044C30.727 2.237 26.312 2 20 2s-10.727.237-13.494.462c-2.19.178-3.866 1.854-4.044 4.044C2.237 9.273 2 13.688 2 20s.237 10.727.462 13.494c.178 2.19 1.854 3.866 4.044 4.044c2.694.219 6.948.45 12.994.462"></path><path stroke="#1940b0" stroke-linecap="round" stroke-linejoin="round" d="M20 31.143c-3.46 0-6.127-.096-8.083-.212l-.084-.006c-1.507-.113-2.293-1.73-1.787-3.154c1.028-2.894 3.342-5.201 6.275-6.269a6.857 6.857 0 1 1 7.358 0A10.6 10.6 0 0 1 28 24.451"></path></g>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                                    <div class="transaction-card">
+                                        <div class="transaction-text">
+                                            <p class="title title-md h5">Void Transactions</p>
+                                            <p>Cancel an authorization before capture with a single API call. Avoid unnecessary charges and improve the customer experience when an order is canceled early.</p>
+                                        </div>
+                                        <div class="transaction-icon">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 48 48">
+                                                <g fill="none" stroke-width="2"><path fill="#fff" d="M34.644 3.228c.293.02 2.433.296 6.156 4.019c3.793 3.793 4.004 5.858 4.016 6.076v.019c.11 2.735.184 6.237.184 10.705c0 9.914-.366 16.172-.666 19.636c-.133 1.539-1.877 2.22-3.064 1.23l-3.62-3.016l-2.934 2.934a2 2 0 0 1-2.664.147L28.2 41.897l-2.786 2.785a2 2 0 0 1-2.828 0L19.8 41.897l-3.852 3.081a2 2 0 0 1-2.664-.147l-2.934-2.934l-3.62 3.017c-1.187.989-2.931.308-3.065-1.231C3.365 40.219 3 33.96 3 24.047c0-9.144.311-14.244.595-16.993c.193-1.879 1.533-3.219 3.412-3.413c2.75-.283 7.85-.594 16.993-.594c4.435 0 7.919.073 10.644.18Z"></path><path fill="#1940b0" d="M40.717 14c1.918 0 3.303-.097 4.283-.218c0 0-1-3.214-4.283-6.497C37.435 4.002 34.117 3 34.117 3C34.054 3.929 34 5.301 34 7.285c0 1.399.027 2.494.065 3.343c.076 1.725 1.195 3.045 2.913 3.214c.93.091 2.152.158 3.74.158ZM16.541 32.65c-.868-.989-.63-2.343.271-3.303c.695-.74 1.694-1.783 3.098-3.21a193 193 0 0 1-3.098-3.21c-.9-.96-1.139-2.315-.27-3.303a12 12 0 0 1 1.082-1.083c.988-.868 2.343-.63 3.302.271c.74.695 1.784 1.694 3.21 3.098a193 193 0 0 1 3.211-3.098c.96-.9 2.314-1.139 3.303-.27a12 12 0 0 1 1.082 1.082c.868.988.63 2.343-.271 3.302a191 191 0 0 1-3.098 3.21a193 193 0 0 1 3.098 3.211c.9.96 1.14 2.314.271 3.303a12 12 0 0 1-1.082 1.082c-.989.868-2.343.63-3.303-.27c-.74-.696-1.783-1.695-3.21-3.099a193 193 0 0 1-3.21 3.098c-.96.9-2.315 1.14-3.303.271a12 12 0 0 1-1.083-1.082"></path><path stroke="#1940b0" stroke-linecap="round" stroke-linejoin="round" d="M16.541 32.65c-.868-.989-.63-2.343.271-3.303c.695-.74 1.694-1.783 3.098-3.21a193 193 0 0 1-3.098-3.21c-.9-.96-1.139-2.315-.27-3.303a12 12 0 0 1 1.082-1.083c.988-.868 2.343-.63 3.302.271c.74.695 1.784 1.694 3.21 3.098a193 193 0 0 1 3.211-3.098c.96-.9 2.314-1.139 3.303-.27a12 12 0 0 1 1.082 1.082c.868.988.63 2.343-.271 3.302a191 191 0 0 1-3.098 3.21a193 193 0 0 1 3.098 3.211c.9.96 1.14 2.314.271 3.303a12 12 0 0 1-1.082 1.082c-.989.868-2.343.63-3.303-.27c-.74-.696-1.783-1.695-3.21-3.099a193 193 0 0 1-3.21 3.098c-.96.9-2.315 1.14-3.303.271a12 12 0 0 1-1.083-1.082"></path><path stroke="#16a3fe" stroke-linecap="round" stroke-linejoin="round" d="M34.644 3.226c.293.02 2.433.296 6.156 4.019c3.793 3.793 4.004 5.858 4.016 6.076v.019c.11 2.735.184 6.237.184 10.705c0 9.914-.366 16.172-.666 19.636c-.133 1.539-1.877 2.22-3.064 1.23l-3.62-3.016l-2.934 2.934a2 2 0 0 1-2.664.147L28.2 41.895l-2.786 2.785a2 2 0 0 1-2.828 0L19.8 41.895l-3.852 3.081a2 2 0 0 1-2.664-.147l-2.934-2.934l-3.62 3.017c-1.187.989-2.931.308-3.065-1.231C3.365 40.217 3 33.959 3 24.045C3 14.9 3.311 9.8 3.595 7.052c.193-1.879 1.533-3.219 3.412-3.413c2.75-.283 7.85-.594 16.993-.594c4.435 0 7.919.073 10.644.18Z"></path><path stroke="#1940b0" stroke-linecap="round" stroke-linejoin="round" d="M34.1 3.25c-.055.92-.1 2.222-.1 4.036c0 1.398.027 2.493.065 3.343c.076 1.724 1.195 3.045 2.913 3.213c.93.092 2.152.158 3.74.158c1.757 0 3.067-.082 4.028-.188"></path></g>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                                    <div class="transaction-card">
+                                        <div class="transaction-text">
+                                            <p class="title title-md h5">Refunds</p>
+                                            <p>Issue full refunds from your dashboard or API, each one tracked against the original payment. Where a provider offers no automatic refund, InfyniPay records it and flags the order for manual handling.</p>
+                                        </div>
+                                        <div class="transaction-icon">
+                                            <svg aria-hidden="true" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M55.7525 20.3849C55.435 22.2299 53.8313 23.4012 51.9613 23.4724C48.2963 23.6137 41.1937 23.8087 30 23.8087C18.8063 23.8087 11.7038 23.6137 8.03875 23.4737C6.16875 23.4012 4.565 22.2299 4.2475 20.3862C3.9825 18.8499 3.75 16.6824 3.75 13.8074C3.75 10.9324 3.9825 8.7649 4.2475 7.23115C4.565 5.38615 6.16875 4.21365 8.03875 4.14365C11.7038 4.0024 18.8063 3.80615 30 3.80615C41.1937 3.80615 48.2963 4.0024 51.9613 4.14365C53.8313 4.21365 55.435 5.38615 55.7525 7.23115C56.0175 8.7649 56.25 10.9312 56.25 13.8062C56.25 16.6824 56.0175 18.8499 55.7525 20.3837V20.3849Z" fill="white"/>
+                                                <path d="M45.395 12.4537C47.2738 12.6099 48.7013 14.1787 48.72 16.0649C48.7963 23.3349 48.7488 33.6999 48.295 46.8299C48.1775 50.1849 45.8075 52.9599 42.4637 53.2612C39.5587 53.5224 35.4438 53.7499 29.9288 53.7499C24.4438 53.7499 20.3687 53.5249 17.4975 53.2649C14.1725 52.9649 11.8225 50.2037 11.7075 46.8674C11.25 33.7187 11.2037 23.3412 11.2787 16.0649C11.2987 14.1799 12.7262 12.6099 14.605 12.4524C18.4625 12.1324 23.5525 11.8774 30 11.8774C36.4475 11.8774 41.5375 12.1324 45.395 12.4524V12.4537Z" fill="white"/>
+                                                <path d="M55.3487 22.4999C55.5812 22.1074 55.745 21.6599 55.8238 21.1599C56.0575 19.6749 56.25 17.5024 56.25 14.3774C56.25 11.2524 56.0575 9.07994 55.825 7.59494C55.5162 5.64119 53.905 4.47369 51.9338 4.32369C48.565 4.06994 41.9687 3.75244 30 3.75244C18.0313 3.75244 11.435 4.06994 8.06625 4.32369C6.095 4.47369 4.48375 5.64119 4.17625 7.59494C3.9425 9.07994 3.75 11.2524 3.75 14.3774C3.75 17.5024 3.9425 19.6749 4.175 21.1599C4.255 21.6599 4.41875 22.1074 4.65125 22.4999" stroke="#16A3FE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M31.25 53.7462V11.8812M40 53.4499V12.1024M45.395 12.4537C47.2738 12.6099 48.7013 14.1787 48.72 16.0649C48.7963 23.3349 48.7488 33.6999 48.295 46.8299C48.1775 50.1849 45.8075 52.9599 42.4638 53.2612C39.5588 53.5224 35.4438 53.7499 29.9288 53.7499C24.4438 53.7499 20.3688 53.5249 17.4975 53.2649C14.1725 52.9649 11.8225 50.2037 11.7075 46.8674C11.25 33.7187 11.2037 23.3412 11.2787 16.0649C11.2987 14.1799 12.7262 12.6099 14.605 12.4524C18.4625 12.1324 23.5525 11.8774 30 11.8774C36.4475 11.8774 41.5375 12.1324 45.395 12.4524V12.4537Z" stroke="#16A3FE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M41 52.7181C37.2986 52.8934 33.5911 52.9874 29.8824 53V13C34.0499 13.0167 37.7489 13.0955 41 13.2126V52.7181Z" fill="#1940B0"/>
+                                                <path d="M21.5276 45.8389C19.7123 45.8389 18.1955 44.899 18.0891 43.5363C18.027 42.7123 17.9973 41.887 18.0002 41.0617C18.0002 40.0644 18.0367 39.2463 18.0891 38.5871C18.1955 37.2244 19.7123 36.2844 21.526 36.2844H22.4123C24.2276 36.2844 25.7444 37.2244 25.8524 38.5871C25.9032 39.2463 25.9397 40.0644 25.9397 41.0617C25.9397 42.0589 25.9032 42.877 25.8524 43.5363C25.746 44.899 24.2292 45.8389 22.4139 45.8389H21.5276Z" fill="#1940B0"/>
+                                                <path d="M21.5262 46.25C20.0975 46.25 18.9037 45.2662 18.82 43.84C18.7711 42.9775 18.7478 42.1138 18.75 41.25C18.75 40.2063 18.7787 39.35 18.82 38.66C18.9037 37.2337 20.0975 36.25 21.525 36.25H22.2225C23.6512 36.25 24.845 37.2337 24.93 38.66C24.97 39.35 24.9987 40.2063 24.9987 41.25C24.9987 42.2937 24.97 43.15 24.93 43.84C24.8462 45.2662 23.6525 46.25 22.2237 46.25H21.5262Z" stroke="#1940B0" stroke-width="2.5"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M59 27.8859C59 16.0666 49.9385 6 38.762 6C32.3859 6 26.3322 8.87589 22.4607 13.6402C21.688 13.1989 20.9073 12.7733 20.1192 12.3635C18.9946 11.7833 17.8736 12.6537 18.0115 13.9687C18.552 19.092 19.8052 22.498 20.49 24.0481C20.7593 24.6579 21.3398 25.012 21.9753 24.9529C23.5872 24.8054 27.004 24.2497 31.47 22.1823C32.6161 21.6512 32.7707 20.1936 31.7337 19.4539C31.0767 18.9881 30.4119 18.5347 29.7397 18.0937C32.0505 15.5079 35.116 13.7818 38.7611 13.7818C46.3829 13.7818 52.5605 19.8277 52.5605 27.8859C52.5605 31.3952 51.3884 34.6153 49.4354 37.1322C48.8521 37.8846 48.7459 38.9596 49.2798 39.7524L50.9178 42.1857C51.558 43.1368 52.8438 43.2971 53.5957 42.4414C57.0765 38.4854 59.0076 33.2839 59 27.8849V27.8859Z" fill="#1940B0" stroke="white" stroke-width="1.25"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                                    <div class="transaction-card">
+                                        <div class="transaction-text">
+                                            <p class="title title-md h5">Chargeback Monitoring</p>
+                                            <p>When a provider reports a chargeback, InfyniPay records it and notifies you, so disputes from every connected provider land in one place instead of separate dashboards. Evidence is submitted in your provider's own console, and coverage follows the dispute events each provider sends.</p>
+                                        </div>
+                                        <div class="transaction-icon">
+                                            <svg aria-hidden="true" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M49.6788 55.5762C52.8725 55.3162 55.3162 52.8725 55.5762 49.6788C55.9037 45.6438 56.25 39.205 56.25 30C56.25 20.795 55.9037 14.3562 55.5762 10.3212C55.3162 7.1275 52.8725 4.68375 49.6788 4.42375C45.6438 4.09625 39.205 3.75 30 3.75C20.795 3.75 14.3562 4.09625 10.3212 4.42375C7.1275 4.68375 4.68375 7.1275 4.42375 10.3212C4.09625 14.3562 3.75 20.795 3.75 30C3.75 39.205 4.09625 45.6438 4.42375 49.6788C4.68375 52.8725 7.1275 55.3162 10.3212 55.5762C14.3562 55.9037 20.795 56.25 30 56.25C39.205 56.25 45.6438 55.9037 49.6788 55.5762Z" fill="white"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M39.5738 43.3137C38.8044 44.176 37.7415 44.7208 36.5923 44.8422C35.4431 44.9635 34.2899 44.6526 33.3575 43.97C31.2723 42.4511 29.2133 40.8967 27.1813 39.3075C27.0524 39.2043 26.904 39.1282 26.745 39.0837C26.586 39.0393 26.4197 39.0275 26.256 39.049C26.0923 39.0704 25.9346 39.1248 25.7925 39.2087C25.6503 39.2927 25.5266 39.4045 25.4288 39.5375C24.0213 41.4775 22.4563 43.9212 21.1988 45.9587C19.7313 48.3337 16.84 49.5537 14.5175 48.0037C13.9373 47.6173 13.3847 47.1908 12.8638 46.7275C10.8925 44.9837 11.0963 42.0587 12.805 40.0587C15.4925 36.9125 18.7138 33.3562 21.8363 30.3212C23.6588 28.55 26.5263 28.6137 28.4288 30.3C30.33 31.985 32.7138 34.0337 34.625 35.4725C34.8608 35.651 35.1548 35.735 35.4493 35.7082C35.7439 35.6814 36.0178 35.5456 36.2175 35.3275C38.3688 33.0112 41.3625 29.4475 43.2412 27.1775C44.3862 25.7925 46.0988 24.855 47.6288 25.7975C47.9913 26.0225 48.3425 26.2812 48.6587 26.56C49.8425 27.6075 49.6313 29.3012 48.8375 30.6675C47.3225 33.2762 44.2938 38.01 39.5738 43.3137Z" fill="#1940B0"/>
+                                                <path d="M49.6788 55.5762C52.8725 55.3162 55.3162 52.8725 55.5762 49.6788C55.9037 45.6438 56.25 39.205 56.25 30C56.25 20.795 55.9037 14.3562 55.5762 10.3212C55.3162 7.1275 52.8725 4.68375 49.6788 4.42375C45.6438 4.09625 39.205 3.75 30 3.75C20.795 3.75 14.3562 4.09625 10.3212 4.42375C7.1275 4.68375 4.68375 7.1275 4.42375 10.3212C4.09625 14.3562 3.75 20.795 3.75 30C3.75 39.205 4.09625 45.6438 4.42375 49.6788C4.68375 52.8725 7.1275 55.3162 10.3212 55.5762C14.3562 55.9037 20.795 56.25 30 56.25C39.205 56.25 45.6438 55.9037 49.6788 55.5762Z" stroke="#16A3FE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M39.575 43.315C38.8054 44.1774 37.7422 44.7223 36.5928 44.8433C35.4433 44.9644 34.2899 44.6531 33.3575 43.97C31.2727 42.4512 29.2141 40.8968 27.1825 39.3075C27.0537 39.2043 26.9053 39.1282 26.7463 39.0838C26.5873 39.0393 26.4209 39.0275 26.2572 39.049C26.0935 39.0705 25.9359 39.1248 25.7937 39.2088C25.6516 39.2927 25.5279 39.4045 25.43 39.5375C24.0213 41.4775 22.4575 43.9213 21.1988 45.9588C19.7325 48.3338 16.84 49.5538 14.5188 48.0038C13.9381 47.6173 13.3851 47.1909 12.8638 46.7275C10.8938 44.9838 11.0963 42.0588 12.8063 40.0588C15.4938 36.9125 18.715 33.3563 21.8363 30.3213C23.66 28.55 26.5263 28.6138 28.4288 30.3C30.3313 31.985 32.7138 34.0338 34.6263 35.4725C34.8621 35.651 35.156 35.7351 35.4506 35.7082C35.7451 35.6814 36.019 35.5456 36.2188 35.3275C38.3688 33.0113 41.3625 29.4475 43.2413 27.1775C44.3875 25.7938 46.0988 24.855 47.6288 25.7975C47.9913 26.0225 48.3438 26.2813 48.6588 26.56C49.8425 27.6075 49.6313 29.3013 48.8375 30.6675C47.3225 33.2763 44.2938 38.01 39.575 43.315Z" stroke="#1940B0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.75 13.75H26.25M13.75 21.25H21.25" stroke="#16A3FE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Always Up to Date -->
+        <section class="bg-blue-200 tc-light py-6">
+            <div class="container py-5">
+                <div class="row align-items-center justify-content-center gy-5 text-center text-md-start pb-5">
+                    <div class="col-lg-5 col-md-4 col-sm-3 col-6 animated" data-animate="fadeInDown" data-delay=".2" data-duration="3">
+                        <img src="assets/images/home/update-shape.webp" width="364" height="364" loading="lazy" decoding="async" alt="">
+                    </div>
+                    <div class="col-lg-7 col-md-8">
+                        <div class="section-head pb-5">
+                            <span class="animated txt-blue-50 fs-5" data-animate="fadeInUp" data-delay=".1">Zero Effort</span>
+                            <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Always Up to Date</h2>
+                            <p class="animated txt-blue-50" data-animate="fadeInUp" data-delay=".3">InfyniPay keeps your payment system always up to date.</p>
+                        </div>
+                        <p class="text-white animated" data-animate="fadeInUp" data-delay=".4">When providers change their APIs or release new versions, you <strong>don’t need to update</strong> your website or plugins. InfyniPay <strong>absorbs those changes</strong> behind the scenes, so provider upgrades stop being your maintenance tickets.</p>
+                    </div>
+                </div>
+                <div class="mt-5 p-4 bg-white bg-opacity-10 rounded-4 d-flex align-items-center gap-3 animated" data-animate="fadeInUp" data-delay=".2" data-duration="2">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" class="flex-shrink-0">
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                            <path d="m9 12l2 2l4-4"></path>
+                        </g>
+                    </svg>
+                    <span>Card data never touches InfyniPay. Your customer enters it on your provider's certified page, and we only ever see the token that comes back. The smallest possible PCI footprint, by design.</span></div>
+            </div>
+            <div class="nk-ovm shape-x-2"></div>
+        </section>
+
+        <section class="py-6 my-6">
+            <div class="container">
+                <div class="home-mcta d-lg-none" data-mcta>
+                    <a href="{{ site.signup_url }}" class="vh-btn btn-md btn-auto btn-green-300 no-change"><span>Start Free</span></a>
+                </div>
+                <div class="row align-items-center gx-6 gy-4">
+                    <div class="col-lg-6">
+                        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2"><span class="txt-blue-200">Integration</span> Modules</h2>
+                        <p class="animated" data-animate="fadeInUp" data-delay=".3">InfyniPay connects to the platforms you already run, each with a dedicated module. Same fast experience across all of them: download, upload, activate. Up and running in under 5 minutes.</p>
+                        <ul id="whmcsFeatures" class="list-unstyled d-flex flex-column gap-3 p-0 mt-4">
+                            <li class="animated" data-animate="fadeInUp" data-delay=".4">
+                                <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                <h3 class="txt-blue-600 h5">One-Time Payment</h3>
+                            </li>
+                            <li class="animated" data-animate="fadeInUp" data-delay=".5">
+                                <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                <h3 class="txt-blue-600 mb-0 h5">Subscription</h3>
+                            </li>
+                        </ul>
+                        <div class="row align-items-center gx-sm-6 gy-3 my-5 gx-2">
+                            <div class="col-auto d-flex align-items-center gap-sm-2 gap-1 animated" data-animate="fadeInUp" data-delay=".6">
+                                <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" d="m11 14.5l-5.925-.75q-.625-.075-.813-.675t.263-1.025l10.225-9.8q.125-.125.3-.187T15.525 2q.5 0 .763.425t.012.875L13 9.5l5.925.75q.625.075.813.675t-.263 1.025L9.25 21.75q-.125.125-.3.188T8.475 22q-.5 0-.763-.425T7.7 20.7z"/></svg>
+                                <h3 class="txt-blue-400 h6">5-Min Setup</h3>
+                            </div>
+                            <div class="col-auto d-flex align-items-center gap-sm-2 gap-1 animated" data-animate="fadeInUp" data-delay=".7">
+                                <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" d="M11 2v5H8l4 4l4-4h-3V2h7a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm8 14H5v4h14zm-2 1v2h-2v-2z"/></svg>
+                                <h3 class="txt-blue-400 h6">Easy Install</h3>
+                            </div>
+                            <div class="col-auto d-flex align-items-center gap-sm-2 gap-1 animated" data-animate="fadeInUp" data-delay=".8">
+                                <svg aria-hidden="true" class="txt-blue-200" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" d="M4.96 3.546L9.615 8.2a4.49 4.49 0 0 1 4.773 0l4.652-4.652a11 11 0 0 0-14.078 0M20.454 4.96L15.8 9.615a4.49 4.49 0 0 1 0 4.772l4.653 4.653a11 11 0 0 0 0-14.078M19.04 20.454L14.387 15.8a4.49 4.49 0 0 1-4.773 0L4.96 20.455a11 11 0 0 0 14.079 0M3.547 19.04L8.2 14.385a4.49 4.49 0 0 1 0-4.772L3.547 4.96a11 11 0 0 0 0 14.078"/></svg>
+                                <h3 class="txt-blue-400 h6">Full Support</h3>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap align-items-center justify-content-center gap-3 pt-lg-4 pb-lg-0 pb-5">
+                            <a href="/integrations/whmcs/" class="vh-btn btn-brand-equal btn-blue-300 animated" data-animate="fadeInUp" data-delay=".9">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 448 512">
+                                    <path fill="#fff" d="M448 161v-21.3l-28.5-8.8l-2.2-10.4l20.1-20.7L427 80.4l-29 7.5l-7.2-7.5l7.5-28.2l-19.1-11.6l-21.3 21l-10.7-3.2l-7-26.4h-22.6l-6.2 26.4l-12.1 3.2l-19.7-21l-19.4 11l8.1 27.7l-8.1 8.4l-28.5-7.5l-11 19.1l20.7 21l-2.9 10.4l-28.5 7.8l-.3 21.7l28.8 7.5l2.4 12.1l-20.1 19.9l10.4 18.5l29.6-7.5l7.2 8.6l-8.1 26.9l19.9 11.6l19.4-20.4l11.6 2.9l6.7 28.5l22.6.3l6.7-28.8l11.6-3.5l20.7 21.6l20.4-12.1l-8.8-28l7.8-8.1l28.8 8.8l10.3-20.1l-20.9-18.8l2.2-12.1zm-119.2 45.2c-31.3 0-56.8-25.4-56.8-56.8s25.4-56.8 56.8-56.8s56.8 25.4 56.8 56.8c0 31.5-25.4 56.8-56.8 56.8m72.3 16.4l46.9 14.5V277l-55.1 13.4l-4.1 22.7l38.9 35.3l-19.2 37.9l-54-16.7l-14.6 15.2l16.7 52.5l-38.3 22.7l-38.9-40.5l-21.7 6.6l-12.6 54l-42.4-.5l-12.6-53.6l-21.7-5.6l-36.4 38.4l-37.4-21.7l15.2-50.5l-13.7-16.1l-55.5 14.1l-19.7-34.8l37.9-37.4l-4.8-22.8l-54-14.1l.5-40.9L54 219.9l5.7-19.7l-38.9-39.4L41.5 125l53.6 14.1l15.2-15.7l-15.2-52l36.4-20.7l36.8 39.4L191 84l11.6-52H245l11.6 45.9L234 72l-6.3-1.7l-3.3 5.7l-11 19.1l-3.3 5.6l4.6 4.6l17.2 17.4l-.3 1l-23.8 6.5l-6.2 1.7l-.1 6.4l-.2 12.9C153.8 161.6 118 204 118 254.7c0 58.3 47.3 105.7 105.7 105.7c50.5 0 92.7-35.4 103.2-82.8l13.2.2l6.9.1l1.6-6.7l5.6-24l1.9-.6l17.1 17.8l4.7 4.9l5.8-3.4l20.4-12.1l5.8-3.5l-2-6.5z"></path>
+                                </svg>
+                                <span class="fs-5 ms-1">WHMCS</span>
+                                <em class="ti ti-arrow-right ps-2"></em>
+                            </a>
+                            <a href="/integrations/woocommerce/" class="vh-btn btn-brand-equal btn-blue-300 animated" data-animate="fadeInUp" data-delay=".9" aria-label="WooCommerce integration">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="padding-top: 2px" width="110" height="24" viewBox="0 0 512 104">
+                                    <g fill-rule="evenodd">
+                                        <path fill="#ffffff" d="M157.267 0H16.097C7.161 0-.07 7.303 0 16.166v53.887C0 78.987 7.233 86.22 16.167 86.22H83.03l30.56 17.017l-6.949-17.017h50.626c8.934 0 16.166-7.232 16.166-16.166V16.166C173.433 7.232 166.2 0 157.267 0M13.119 12.48c-1.986.14-3.475.85-4.467 2.197c-.993 1.276-1.348 2.907-1.135 4.75q6.275 39.885 11.7 53.817c1.417 3.403 3.048 5.034 4.963 4.893c2.978-.213 6.523-4.326 10.706-12.338q3.297-6.806 10.21-20.42c3.83 13.4 9.076 23.47 15.67 30.205c1.844 1.914 3.758 2.765 5.601 2.623c1.632-.141 2.908-.992 3.758-2.552q1.064-2.021.851-4.68c-.425-6.452.213-15.457 1.986-27.014c1.843-11.912 4.112-20.492 6.877-25.597c.568-1.063.78-2.127.71-3.403c-.142-1.631-.851-2.978-2.198-4.042c-1.348-1.063-2.837-1.56-4.468-1.418c-2.056.142-3.616 1.135-4.68 3.12c-4.395 8.012-7.515 20.988-9.358 38.997C57.15 44.811 54.88 36.8 53.109 27.37c-.78-4.183-2.695-6.169-5.815-5.956q-3.191.213-5.317 4.254L26.449 55.234c-2.553-10.28-4.964-22.83-7.162-37.65q-.744-5.53-6.168-5.105m136.632 5.104c5.034 1.064 8.792 3.758 11.345 8.225c2.269 3.83 3.403 8.438 3.403 13.968c0 7.303-1.843 13.969-5.53 20.066c-4.255 7.09-9.785 10.636-16.663 10.636q-1.807 0-3.829-.426c-5.034-1.063-8.792-3.757-11.345-8.224q-3.403-5.85-3.403-14.04q0-10.954 5.53-19.994c4.326-7.09 9.856-10.636 16.663-10.636q1.809 0 3.829.425m-2.978 38.36c2.624-2.34 4.396-5.815 5.389-10.494c.284-1.631.496-3.404.496-5.247c0-2.056-.425-4.254-1.276-6.452c-1.064-2.766-2.482-4.255-4.184-4.61c-2.552-.496-5.034.923-7.373 4.397c-1.915 2.694-3.12 5.53-3.758 8.437c-.355 1.631-.497 3.404-.497 5.177c0 2.056.425 4.254 1.276 6.452c1.064 2.765 2.482 4.254 4.184 4.609c1.772.354 3.687-.426 5.743-2.27M116.64 25.808c-2.553-4.467-6.382-7.161-11.345-8.225q-2.02-.425-3.83-.425c-6.806 0-12.336 3.545-16.661 10.636q-5.531 9.04-5.53 19.995q0 8.19 3.402 14.039c2.553 4.467 6.311 7.161 11.345 8.224q2.02.426 3.83.426c6.877 0 12.407-3.545 16.661-10.636c3.688-6.097 5.53-12.763 5.53-20.066c0-5.53-1.134-10.139-3.402-13.968m-8.935 19.64c-.992 4.68-2.765 8.155-5.388 10.494c-2.056 1.844-3.97 2.624-5.743 2.27c-1.702-.355-3.12-1.844-4.184-4.61c-.85-2.197-1.276-4.395-1.276-6.451c0-1.773.142-3.546.497-5.177c.638-2.907 1.843-5.743 3.757-8.437c2.34-3.474 4.822-4.893 7.374-4.396c1.702.354 3.12 1.843 4.184 4.609c.85 2.198 1.276 4.396 1.276 6.452c0 1.843-.142 3.616-.497 5.247"></path>
+                                        <path d="M191.372 25.17c-4.751 4.68-7.09 10.636-7.09 17.869c0 7.728 2.339 14.039 7.019 18.79s10.777 7.16 18.364 7.16c2.198 0 4.68-.354 7.374-1.134V56.368c-2.481.71-4.609 1.064-6.452 1.064c-3.758 0-6.736-1.276-9.005-3.758c-2.269-2.552-3.404-5.956-3.404-10.28c0-4.042 1.135-7.375 3.333-9.927c2.269-2.624 5.034-3.9 8.438-3.9c2.198 0 4.537.354 7.09 1.063V19.144c-2.34-.638-4.963-.922-7.729-.922c-7.232-.07-13.188 2.27-17.938 6.949m49.207-7.019c-6.523 0-11.628 2.198-15.315 6.523c-3.687 4.326-5.46 10.423-5.46 18.223c0 8.438 1.844 14.89 5.46 19.357s8.934 6.736 15.883 6.736c6.735 0 11.911-2.27 15.527-6.736c3.616-4.467 5.46-10.778 5.46-18.86q0-12.125-5.53-18.72c-3.758-4.325-9.076-6.523-16.025-6.523m5.602 36.87C244.904 57.007 242.99 58 240.579 58c-2.269 0-3.97-.993-5.176-2.979c-1.205-1.985-1.772-5.956-1.772-11.982c0-9.289 2.34-13.898 7.09-13.898c4.963 0 7.516 4.68 7.516 14.11c-.071 5.814-.78 9.785-2.056 11.77m50.98-35.523l-2.553 10.849c-.638 2.765-1.276 5.601-1.843 8.508l-1.418 7.516c-1.347-7.516-3.191-16.45-5.53-26.873h-16.45l-6.17 48.286h12.338l3.332-33.254l8.438 33.254h8.792l8.083-33.183l3.475 33.183h12.904l-6.523-48.286zm59.063 0l-2.552 10.849c-.639 2.765-1.277 5.601-1.844 8.508l-1.418 7.516c-1.347-7.516-3.191-16.45-5.53-26.873h-16.45l-6.169 48.286h12.337l3.332-33.254l8.438 33.254h8.792l8.013-33.183l3.474 33.183h12.905l-6.524-48.286zm40.132 29.213h11.557v-9.998h-11.557V29.85h13.33V19.57H383.31v48.285h26.447v-10.28h-13.401zm50.129-7.658c1.347-2.198 2.056-4.467 2.056-6.806c0-4.538-1.772-8.154-5.317-10.778c-3.546-2.623-8.438-3.97-14.536-3.97h-15.174v48.285h13.047v-21.98h.213l10.564 21.98h13.756L440.67 46.017c2.481-1.135 4.467-2.766 5.814-4.964m-19.995-.78V28.787c3.12.07 5.318.567 6.665 1.56c1.347.992 1.985 2.552 1.985 4.821c0 3.333-2.907 5.035-8.65 5.105m29.707-15.102c-4.749 4.68-7.089 10.635-7.089 17.868c0 7.728 2.34 14.039 7.021 18.79c4.68 4.75 10.775 7.16 18.364 7.16c2.198 0 4.68-.354 7.372-1.134V56.368c-2.478.71-4.608 1.064-6.452 1.064c-3.756 0-6.733-1.276-9.003-3.758c-2.27-2.552-3.403-5.956-3.403-10.28c0-4.042 1.133-7.375 3.33-9.927c2.27-2.624 5.034-3.9 8.437-3.9c2.198 0 4.54.354 7.091 1.063V19.144c-2.338-.638-4.961-.922-7.725-.922c-7.164-.07-13.19 2.27-17.943 6.949m42.333 32.261V48.64h11.554v-9.997H498.53V29.78h13.398V19.498h-26.375v48.286h26.448V57.503H498.53z" fill="#ffffff"></path>
+                                    </g>
+                                </svg>
+                                <em class="ti ti-arrow-right ps-2"></em>
+                            </a>
+                            <a href="/integrations/" class="vh-btn btn-brand-equal btn-blue-300 animated" data-animate="fadeInUp" data-delay="1" aria-label="View All integrations">
+                                <em class="ti ti-layout-grid2"></em>
+                                <span class="ms-1">View All</span>
+                                <em class="ti ti-arrow-right ps-2"></em>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="bg-gray-200 border border-5 border-gray-100 rounded-4 p-5">
+                            <h3 class="txt-green-300 animated h4" data-animate="fadeInUp" data-delay=".2">Need a custom integration?</h3>
+                            <p class="animated" data-animate="fadeInUp" data-delay=".3">Accelerate your platform's capabilities with a custom-built plugin. Whether for a major e-commerce platform or your own proprietary system, we deliver a high-quality solution fast, with full support for total peace of mind.</p>
+                            <ul id="customIntegrationFeatures" class="list-unstyled d-flex flex-column gap-3 p-0 my-4">
+                                <li class="animated" data-animate="fadeInUp" data-delay=".4">
+                                    <svg aria-hidden="true" class="txt-green-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">No extra cost</h3>
+                                </li>
+                                <li class="animated" data-animate="fadeInUp" data-delay=".5">
+                                    <svg aria-hidden="true" class="txt-green-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">Free support</h3>
+                                </li>
+                                <li class="animated" data-animate="fadeInUp" data-delay=".6">
+                                    <svg aria-hidden="true" class="txt-green-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><defs><mask id="SVGIQLGgV2F"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path stroke="#000" stroke-linecap="round" d="m16 24l6 6l12-12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGIQLGgV2F)"/></svg>
+                                    <h3 class="txt-blue-600 h5">Full documentation</h3>
+                                </li>
+                            </ul>
+                            <a href="/contact-us.html" class="vh-btn btn-green-300 mb-3 animated" data-animate="fadeInUp" data-delay=".7">
+                                <span>Request Custom Plugin</span>
+                                <em class="ti ti-arrow-right ps-2"></em>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customers -->
+        {%- comment -%}
+          Cut from four logos to two on 2026-08-15. Tavana Group and Modern IT Developer were
+          removed because neither could be verified — tavanagroup.com serves an empty 131-byte
+          page and modernitdeveloper.com does not resolve. A logo wall is the first thing a
+          serious buyer spot-checks, and one dead name there puts every other claim on the site
+          in doubt.
+
+          The rule for anything added back: a real company, named with its consent, and linked
+          to a site that loads. Both entries below now link out, which is the whole point —
+          a logo nobody can click is a logo nobody can check.
+        {%- endcomment -%}
+        <section class="section bg-blue-30">
+            <div class="container">
+                <div class="section-head wide text-center">
+                    <span class="animated" data-animate="fadeInUp" data-delay=".1">Trusted By</span>
+                    <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Some of Our Customers</h2>
+                    <p class="animated" data-animate="fadeInUp" data-delay=".3">Technology companies that run their payments through InfyniPay.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".1">
+                        <a href="https://bitplatform.dev" target="_blank" rel="noopener" class="customer-card text-decoration-none">
+                            <div class="customer-logo-wrap">
+                                <span class="customer-text-logo"><span class="clt-bit">bit</span> platform</span>
+                            </div>
+                            <span class="customer-name">bit platform</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".2">
+                        <a href="https://onyxgift.com" target="_blank" rel="noopener" class="customer-card text-decoration-none">
+                            <div class="customer-logo-wrap">
+                                <img src="assets/images/customers/onyxgift.png" alt="OnyxGift" width="52" height="52" loading="lazy" decoding="async" class="customer-logo">
+                            </div>
+                            <span class="customer-name">OnyxGift</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head wide-sm text-center">
+                    <span class="animated" data-animate="fadeInUp" data-delay=".1">Pricing</span>
+                    <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">Free Forever. <span class="txt-blue-200">Pay Only to Brand It.</span></h2>
+                    <p class="animated" data-animate="fadeInUp" data-delay=".3">Every payment feature is free, with no transaction fees at any volume. Upgrade only when you want the checkout to carry your own branding.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-5 col-md-8 animated" data-animate="fadeInUp" data-delay=".3">
+                        <div class="card card-s3 p-4 h-100 text-center">
+                            <span class="badge bg-blue-30 txt-blue-200 fw-semibold mb-3 px-3 py-2 align-self-center">Free</span>
+                            <h3 class="txt-blue-600 h4 mb-2">$0 forever</h3>
+                            <p class="txt-blue-400 small mb-0">All {{ site.provider_count }} providers, every platform integration, unlimited transactions, analytics, and full API access.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-8 animated" data-animate="fadeInUp" data-delay=".4">
+                        <div class="card card-s3 p-4 h-100 text-center">
+                            <span class="badge bg-blue-30 txt-blue-200 fw-semibold mb-3 px-3 py-2 align-self-center">Premium</span>
+                            <h3 class="txt-blue-600 h4 mb-2">$29 / month</h3>
+                            <p class="txt-blue-400 small mb-0">Everything in Free, plus your own logo, colors, domain, and wording on the checkout page.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="/pricing.html" class="vh-btn btn-blue-300 mt-5 animated" data-animate="fadeInUp" data-delay=".5">
+                        <span>See Full Pricing</span><em class="ti ti-arrow-right ps-2"></em>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // The mobile "Start Free" CTAs ([data-mcta]) are repeated at the
+        // top of several sections. Keep only the topmost one currently in the
+        // viewport visible so two never show within a single screen.
+        (function () {
+            var ctas = Array.prototype.slice.call(document.querySelectorAll('[data-mcta]'));
+            if (ctas.length < 2 || !('IntersectionObserver' in window)) return;
+            var inView = new Set();
+            function refresh() {
+                var shown = ctas.filter(function (el) { return inView.has(el); })
+                    .sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top; });
+                ctas.forEach(function (el) { el.classList.toggle('is-suppressed', el !== shown[0]); });
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { inView.add(e.target); } else { inView.delete(e.target); }
+                });
+                refresh();
+            });
+            ctas.forEach(function (el) { io.observe(el); });
+        })();
+    </script>
+
+    <!-- Chat email gate -->
+    {% include chat-widget.html %}
+
+    {% include footer.html %}

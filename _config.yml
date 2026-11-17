@@ -1,0 +1,106 @@
+# Jekyll Configuration for GitHub Pages
+title: InfyniPay
+description: Enterprise payment orchestration platform with a unified API for 30+ payment providers. Accept payments in minutes without touching your code.
+url: "https://www.infynipay.com"
+baseurl: ""
+lang: en
+author: InfyniPay
+
+# Two numbers on purpose, and they are not interchangeable.
+#
+# `provider_count` is the EXACT count, and only belongs where the page derives
+# something from it (the "+N more" mosaic links, the pricing line). It must match
+# the number of `status: live` records in _data/providers/. Never write it as
+# "{{ site.provider_count }}+" — that renders "37+", which claims more than we have.
+#
+# `provider_floor` is the CLAIM, and belongs in every SEO- and Ads-facing sentence.
+# It is a floor, not a count, so it stays true as providers are added and never
+# needs editing. Google Ads matches ad copy against the landing page, so an exact
+# number that drifts out of sync between pages reads as misrepresentation on review.
+# Only bump this when the real count crosses the next ten.
+provider_count: 45
+provider_floor: "30+"
+
+# Console sign-up destination. The integration plugins are useless without an
+# account, so this is the primary CTA on every product page.
+signup_url: https://console.infynipay.com/auth/signup
+
+# Social Media & SEO (consumed by jekyll-seo-tag)
+logo: /assets/images/logos/logo2x.webp
+# No `twitter:` key on purpose — the InfyniPay X account was disabled. In
+# jekyll-seo-tag's template that one key gates both `twitter:site` (which becomes
+# a bare "@" once the username is gone) and `twitter:creator` (which falls back to
+# `author` and so names the dead handle). Removing it drops both. It does NOT cost
+# the large-image preview: the template already defaults `twitter:card` to
+# summary_large_image whenever the page has an image, which every page does.
+social:
+  name: InfyniPay
+  links:
+    - https://github.com/infynipay
+    - https://docs.infynipay.com
+
+# Default page settings
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/og-image.jpg
+      author: InfyniPay
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  # Posts are the one content type with a Jekyll layout (_layouts/post.html);
+  # every other page is a standalone file with `layout: none`.
+  #
+  # `permalink` is set HERE and not at the top level of this file. A top-level
+  # `permalink:` key also rewrites *page* URLs — it silently turns /pricing.html
+  # into /pricing/, /providers.html into /providers/ and so on, breaking every
+  # existing URL on the live site. Scoped to posts, it only affects posts.
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      permalink: /blog/:title/
+      nav_active: blog
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Sass configuration (sources in _sass/, entry files in assets/css/*.scss)
+sass:
+  style: compressed
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
+
+# GitHub Pages configuration
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+
+# Exclude files from processing
+# Jekyll skips dot-directories by default, so .well-known must be opted in or
+# /.well-known/security.txt (RFC 9116) never reaches _site.
+include:
+  - .well-known
+
+exclude:
+  - README.md
+  - CLAUDE.md
+  - legals/        # raw .md sources; rendered into privacy-policy/term-of-use via include_relative
+  - .gitignore
+  - .git/
+  - .vs/
+
+# GitHub Pages specific
+safe: true
+incremental: false

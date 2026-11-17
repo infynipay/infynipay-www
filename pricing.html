@@ -1,0 +1,206 @@
+---
+layout: none
+nav_active: pricing
+title: Pricing
+description: Simple, transparent pricing. Start free, no credit card required.
+image:
+  path: /assets/images/og/pricing.jpg
+  width: 1200
+  height: 630
+---
+
+{% include header-secondary.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/pricing.css' | relative_url }}">
+
+<main id="main-content">
+
+  <!-- Hero -->
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h2 class="h1 mb-3 animated" data-animate="fadeInUp" data-delay=".1">
+            Free to start. Pay only to customize.
+          </h2>
+          <p class="pricing-hero-lead mb-4 animated" data-animate="fadeInUp" data-delay=".2">
+            Full payment orchestration is free forever. Upgrade only when you want your own branding on checkout.
+          </p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap animated" data-animate="fadeInUp" data-delay=".3">
+            <div class="trust-badge">
+              <em class="fas fa-clock" aria-hidden="true"></em>
+              <span class="small">Start Free</span>
+            </div>
+            <div class="trust-badge">
+              <em class="fas fa-credit-card" aria-hidden="true"></em>
+              <span class="small">No Card Required</span>
+            </div>
+            <div class="trust-badge">
+              <em class="fas fa-percent" aria-hidden="true"></em>
+              <span class="small">No Transaction Fees</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="section pt-0">
+    <div class="container">
+      <div class="row g-4 justify-content-center">
+
+        <!-- Free -->
+        <div class="col-lg-5 col-md-10 animated" data-animate="fadeInUp" data-delay=".3">
+          <div class="plan-card plan-card--free p-4 p-lg-5">
+            <div class="mb-4">
+              <span class="badge plan-badge fw-semibold mb-3 px-3 py-2">Free</span>
+              <div class="d-flex align-items-start">
+                <span class="plan-currency txt-blue-600">$</span>
+                <span class="plan-price txt-blue-600">0</span>
+              </div>
+              <p class="plan-note mb-0">No credit card. No time limit.</p>
+            </div>
+
+            <p class="plan-summary">
+              Every payment feature, free forever. Nothing here is limited or time-boxed.
+            </p>
+
+            <dl class="plan-features">
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-plug"></em></span>All payment gateways</dt>
+                <dd>Connect any provider, anytime</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-puzzle-piece"></em></span>All platform integrations</dt>
+                <dd>WHMCS, WooCommerce, J2Commerce, VirtueMart, Phoca Cart and more</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-infinity"></em></span>Unlimited transactions</dt>
+                <dd>No transaction pricing and no commercial volume cap. Standard API rate limits and fair-use controls apply.</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-chart-line"></em></span>Real-time analytics</dt>
+                <dd>Track performance and insights</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-shield-alt"></em></span>Fraud protection</dt>
+                <dd>Configurable fraud rules included</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-code"></em></span>Full API access</dt>
+                <dd>Complete developer documentation</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-tag"></em></span>InfyniPay checkout page</dt>
+                <dd>Standard checkout with InfyniPay branding</dd>
+              </div>
+            </dl>
+
+            <a href="{{ site.signup_url }}" class="vh-btn btn-blue-100 vh-btn-outline w-100 justify-content-center">
+              <span>Start Free</span><em class="ti ti-arrow-right ps-2"></em>
+            </a>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div class="col-lg-5 col-md-10 animated" data-animate="fadeInUp" data-delay=".4">
+          <div class="plan-card plan-card--premium p-4 p-lg-5">
+            <div class="mb-4">
+              <span class="badge plan-badge mb-3 px-3 py-2 fw-semibold">Premium</span>
+              <div class="d-flex align-items-start">
+                <span class="plan-currency">$</span>
+                <span class="plan-price">29</span>
+              </div>
+              <p class="plan-note mb-0">per month</p>
+            </div>
+
+            <p class="plan-summary">
+              <strong class="text-white">Everything in Free</strong>, plus one thing: the checkout becomes entirely yours.
+            </p>
+
+            <dl class="plan-features">
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-paint-brush"></em></span>Custom checkout branding</dt>
+                <dd>Your logo, colors, and business name</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-globe"></em></span>Custom domain</dt>
+                <dd>Customers stay on your domain through payment</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-eye-slash"></em></span>Remove InfyniPay badge</dt>
+                <dd>Fully white-labeled checkout experience</dd>
+              </div>
+              <div class="plan-feature">
+                <dt><span class="plan-feature-icon" aria-hidden="true"><em class="fas fa-comment-alt"></em></span>Custom slogan and copy</dt>
+                <dd>Your own messaging on the checkout page</dd>
+              </div>
+            </dl>
+
+            <p class="plan-terms">Flat $29/month. No transaction fees, no volume limits, no contracts.</p>
+
+            <a href="{{ site.signup_url }}" class="vh-btn btn-blue-100 w-100 justify-content-center">
+              <span>Get Started</span><em class="ti ti-arrow-right ps-2"></em>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% include faq.html items=site.data.pricing.faqs eyebrow="Pricing FAQ" bg="bg-light" %}
+
+  <!-- Still deciding -->
+  <section class="section bg-blue-30">
+    <div class="container">
+      <div class="section-head text-center">
+        <span class="animated" data-animate="fadeInUp" data-delay=".1">Still deciding?</span>
+        <h2 class="txt-blue-600 animated" data-animate="fadeInUp" data-delay=".2">We're here to help</h2>
+        <p class="animated" data-animate="fadeInUp" data-delay=".3">Not ready to start yet? Reach out and we'll help you figure out if InfyniPay is the right fit.</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+
+        <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".2">
+          <div class="card card-s3 p-4 h-100 text-center d-flex flex-column">
+            <span class="about-feature-icon mx-auto mb-3"><em class="ti ti-comments" aria-hidden="true"></em></span>
+            <h3 class="txt-blue-600 h5">Chat with us</h3>
+            <p class="txt-blue-400 small flex-grow-1">Ask anything. Our AI assistant answers payment questions instantly, 24/7.</p>
+            <button type="button" class="vh-btn btn-blue-300 w-100 mt-3 justify-content-center" onclick="document.getElementById('ip-chat-launcher').click()">
+              <span>Open Chat</span><em class="ti ti-comment ps-2"></em>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".3">
+          <div class="card card-s3 p-4 h-100 text-center d-flex flex-column">
+            <span class="about-feature-icon mx-auto mb-3"><em class="ti ti-email" aria-hidden="true"></em></span>
+            <h3 class="txt-blue-600 h5">Send us an email</h3>
+            <p class="txt-blue-400 small flex-grow-1">Prefer email? Write to us and we'll get back to you within one business day.</p>
+            <a href="/contact-us.html" class="vh-btn btn-blue-300 w-100 mt-3 justify-content-center">
+              <span>Contact Us</span><em class="ti ti-arrow-right ps-2"></em>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 animated" data-animate="fadeInUp" data-delay=".4">
+          <div class="card card-s3 p-4 h-100 text-center d-flex flex-column">
+            <span class="about-feature-icon mx-auto mb-3"><em class="ti ti-book" aria-hidden="true"></em></span>
+            <h3 class="txt-blue-600 h5">Read the docs</h3>
+            <p class="txt-blue-400 small flex-grow-1">Prefer to dig in yourself? The API reference and integration guides are open to everyone.</p>
+            <a href="https://docs.infynipay.com/" target="_blank" rel="noopener" class="vh-btn btn-blue-300 w-100 mt-3 justify-content-center">
+              <span>Documentation</span><span class="visually-hidden"> (opens in new tab)</span><em class="ti ti-arrow-top-right ps-2"></em>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{% include chat-widget.html %}
+
+{% include footer.html %}

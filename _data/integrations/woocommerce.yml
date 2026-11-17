@@ -1,0 +1,64 @@
+# Structured data for the /integrations/woocommerce/ pages.
+# `software` drives the SoftwareApplication JSON-LD (via _includes/software-application.html);
+# `faqs` drives the accordion + FAQPage JSON-LD (via _includes/faq.html). Answers may
+# contain inline HTML (a/em/strong/br/ul/ol/li are allowed in FAQ rich results).
+# `product` drives the whole product page via _includes/integration-product.html -
+# one shared template renders every integration from this data. See any other
+# integrations/<slug>.yml for the same shape.
+software:
+  name: InfyniPay WooCommerce Plugin
+  # Source of truth is the plugin header in InfyniPay.Plugins.WooCommerce/infynipay.php:
+  #   Requires at least: 6.0      <- WordPress, NOT WooCommerce
+  #   WC requires at least: 8.0   <- WooCommerce
+  # Those two were previously conflated here, publishing "WooCommerce 6.0+ on
+  # WordPress 5.8+" — both below the real floor, so a merchant on WooCommerce 7
+  # would install and break. Re-read the header before changing these.
+  operating_system: WordPress 6.0+ with WooCommerce 8.0+
+  version: "1.0.0"
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.WooCommerce/releases/latest/download/infynipay-woocommerce.zip
+
+
+
+product:
+  platform: WooCommerce                    # display name woven through all shared copy
+  compat: "8.0+"                           # hero version pill ("WooCommerce 8.0+"); matches `WC requires at least` in the plugin header
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.WooCommerce/releases/latest/download/infynipay-woocommerce.zip
+  repo: InfyniPay.Plugins.WooCommerce     # open-source repo under github.com/infynipay
+  logo: { src: /assets/images/woocommerce/woo-logo.png, width: 225, height: 225 }
+  ecosystem: WordPress                     # named in the default install steps
+  install_path: 'Plugins → Add New → Upload Plugin'
+  marketplace_url: https://wordpress.org/plugins/infynipay/
+  marketplace_name: WordPress.org
+faqs:
+  - q: Which WooCommerce versions does the plugin support?
+    a: >-
+      InfyniPay for WooCommerce requires WooCommerce 8.0 or higher on WordPress 6.0+,
+      with PHP 8.0+. It is tested up to WooCommerce 10.8.
+  - q: Does InfyniPay support WooCommerce Subscriptions?
+    a: >-
+      Not at this time. The current version supports one-time checkout payments only.
+      Subscription / recurring billing support is planned for a future release.
+  - q: How do I get a InfyniPay API key?
+    a: >-
+      Create a free InfyniPay account, add your chosen payment provider in the dashboard,
+      and generate an API key. Then paste that key into the WooCommerce plugin settings page.
+  - q: Can I test payments before going live?
+    a: >-
+      Yes. The plugin includes a sandbox mode toggle. When enabled, all transactions are routed
+      through your payment provider's sandbox environment so you can verify the full checkout
+      flow without processing real payments.
+  - q: Does the plugin work with the WooCommerce Block Checkout?
+    a: >-
+      Yes. InfyniPay registers as a standard WooCommerce payment gateway and is compatible
+      with both the Classic Checkout and the newer Block-based Checkout experience.
+  - q: Is there a cost to use the plugin?
+    a: >-
+      No. The InfyniPay WooCommerce plugin is free to download and use. You pay only the
+      transaction fees charged by your chosen payment provider. InfyniPay takes no percentage
+      and no per-transaction cut at any volume. An optional
+      <a href="/pricing.html" class="txt-blue-100">Premium plan</a> adds white-label checkout branding.
+  - q: Can I switch payment providers without reinstalling the plugin?
+    a: >-
+      Yes. Provider switching happens in your InfyniPay dashboard; just activate a different
+      provider there. Your WooCommerce plugin continues working without any changes on the
+      WordPress side.

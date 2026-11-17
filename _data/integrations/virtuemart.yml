@@ -1,0 +1,57 @@
+# Structured data for the /integrations/virtuemart/ pages.
+# `software` drives the SoftwareApplication JSON-LD (via _includes/software-application.html);
+# `faqs` drives the accordion + FAQPage JSON-LD (via _includes/faq.html). Answers may
+# contain inline HTML (a/em/strong/br/ul/ol/li are allowed in FAQ rich results).
+software:
+  name: InfyniPay VirtueMart Plugin
+  operating_system: Joomla 4.0+
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.VirtueMart/releases/latest/download/infynipay-virtuemart.zip
+
+# `product` drives the whole product page via _includes/integration-product.html.
+product:
+  platform: VirtueMart
+  compat: "4.0+"
+  download_url: https://github.com/infynipay/InfyniPay.Plugins.VirtueMart/releases/latest/download/infynipay-virtuemart.zip
+  repo: InfyniPay.Plugins.VirtueMart
+  logo: { src: /assets/images/virtuemart/virtuemart-logo.png, width: 300, height: 120 }
+  ecosystem: Joomla                        # named in the default install steps
+  install_path: 'Extensions → Manage → Install'
+  marketplace_url: https://extensions.joomla.org/extension/e-commerce/payment-gateway/infynipay-payment-gateway-for-virtuemart/
+  marketplace_name: Joomla Extensions Directory
+
+faqs:
+  - q: Which Joomla and VirtueMart versions does the plugin support?
+    a: >-
+      InfyniPay for VirtueMart runs on Joomla 4.0 or higher with a supported VirtueMart 4
+      release. It is tested against the latest stable Joomla and VirtueMart versions.
+  - q: Does InfyniPay support subscriptions or recurring billing?
+    a: >-
+      Not at this time. The current version supports one-time checkout payments only.
+      Subscription / recurring billing support is planned for a future release.
+  - q: How do I get a InfyniPay API key?
+    a: >-
+      Create a free InfyniPay account, add your chosen payment provider in the dashboard,
+      and generate an API key. Then paste that key into the VirtueMart payment method
+      settings page.
+  - q: Can I test payments before going live?
+    a: >-
+      Yes. The plugin includes a sandbox mode toggle. When enabled, all transactions are routed
+      through your payment provider's sandbox environment so you can verify the full checkout
+      flow without processing real payments.
+  - q: How is the plugin installed on Joomla?
+    a: >-
+      It installs like any Joomla extension. Download the package, go to
+      <em>Extensions → Manage → Install</em>, upload the file, then enable the InfyniPay
+      payment plugin. It then appears as a payment method inside VirtueMart.
+  - q: Is there a cost to use the plugin?
+    a: >-
+      No. The InfyniPay VirtueMart plugin is free to download and use. You pay only the
+      transaction fees charged by your chosen payment provider. InfyniPay takes no percentage
+      and no per-transaction cut at any volume. An optional
+      <a href="/pricing.html" class="txt-blue-100">Premium plan</a> adds white-label checkout branding.
+  - q: Can I switch payment providers without reinstalling the plugin?
+    a: >-
+      Yes. Provider switching happens in your InfyniPay dashboard; just activate a different
+      provider there. Your VirtueMart plugin continues working without any changes on the
+      Joomla side.
+

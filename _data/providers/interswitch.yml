@@ -1,0 +1,114 @@
+# Single source of truth for /providers/interswitch/.
+#
+# RULE: every factual claim rendered on the provider page comes from this file,
+# and every field traces to a URL in `verification.sources`. Nothing is written
+# from memory. `fees` is deliberately absent from the schema — provider pricing
+# changes without notice, so the template links to the provider's own pricing
+# page rather than restating a number that will go stale.
+#
+# accent_text is computed, not chosen: it is `accent` darkened until it clears
+# WCAG AA (4.5:1) on white and on .bg-light. Use it for text and small icons;
+# `accent` stays the true brand colour for fills and gradients.
+#
+# Set `verification.verified_by` once every field is checked against the sources
+# below, then delete `noindex`/`sitemap: false` from providers/interswitch/index.html.
+
+name: Interswitch
+slug: interswitch
+status: live
+category: regional
+region: Nigeria / Africa
+logo: /assets/images/home/providers-icon/interswitch-light.webp
+accent: "#c8102e"
+accent_rgb: "200,16,46"
+accent_text: "#c8102e"   # computed: 5.88 on white, 5.58 on bg-light
+
+# Lead paragraph, written to be lifted verbatim as a featured snippet or an
+# LLM citation: definition first, no marketing wind-up.
+summary: >-
+  Interswitch is the payments infrastructure company much of Nigeria's card and switching
+  network runs on, and its Interswitch Payment Gateway offers merchants cards, USSD, bank
+  transfer and QR through one integration. Being the incumbent switch rather than a challenger
+  is its distinguishing characteristic: depth of bank connectivity over product polish.
+
+countries:
+  - Nigeria
+  - Ghana
+  - Kenya
+  - Uganda
+  - Gambia
+
+currencies: [NGN, USD]
+
+methods:
+  - label: Cards
+    icon: card
+    detail: Verve, Visa and Mastercard, local and international
+  - label: USSD
+    icon: ussd
+    detail: Bank shortcodes for customers without a smartphone
+  - label: Bank transfer
+    icon: bank
+    detail: Direct transfer confirmed against the order
+  - label: QR
+    icon: qr
+    detail: Scan-to-pay at checkout
+
+platforms: [woocommerce, whmcs, virtuemart, phoca-cart, j2commerce]
+
+links:
+  website: https://interswitchgroup.com/
+  docs: https://docs.interswitchgroup.com/docs/payment-api
+  pricing: https://interswitchgroup.com/ipg
+
+# What InfyniPay does on the merchant's behalf — keep accurate to the actual
+# implementation, not to the provider's own marketing.
+integration:
+  auth: Client ID and secret exchanged for an access token, held server-side in InfyniPay
+  webhook: Signed transaction notification, validated before an order is released
+  verification: Server-side transaction query against the Interswitch API before fulfilment
+
+faqs:
+  - q: What currency does Interswitch settle in?
+    a: >-
+      Naira is the primary settlement currency, with multi-currency acceptance and USD settlement
+      available for eligible flows. Confirm your own account's currency support with Interswitch
+      rather than assuming it.
+  - q: What is Verve and do I need to accept it?
+    a: >-
+      Verve is Nigeria's domestic card scheme and a large share of Nigerian debit cards carry it.
+      A checkout that only takes Visa and Mastercard will decline a meaningful number of
+      otherwise-good Nigerian cards.
+  - q: Why does bank transfer matter so much in Nigeria?
+    a: >-
+      Card penetration is lower than transfer usage, and card declines are common. A checkout
+      offering a one-time virtual account number (the customer transfers from any bank app and
+      the payment confirms in seconds) will convert materially better than one offering cards
+      alone. It is the single most important local method to enable.
+  - q: Does InfyniPay charge extra on top of Interswitch?
+    a: >-
+      No. InfyniPay adds nothing to what Interswitch charges: no percentage, no per-
+      transaction cut, and no volume threshold where that changes. Interswitch bills you
+      directly for its own processing fees, and you keep that relationship. InfyniPay's only
+      paid plan is Premium at $29 a month, which adds white-label checkout branding and nothing
+      to your transaction cost. See <a href="/pricing.html">InfyniPay pricing</a>.
+
+verification:
+  verified_on: 2026-08-07
+  verified_by: >-
+    Site owner, 2026-08-08. Scope of this sign-off, stated precisely so nobody
+    later reads more into it than is there:
+      - InfyniPay's OWN claims — that the module is free, what it costs, how
+        it authenticates, what it does on the merchant's behalf — are confirmed
+        correct by the site owner.
+      - The provider's coverage, currencies, payment methods and onboarding
+        terms are reproduced from that provider's own published documentation,
+        listed under `sources` below. They remain the provider's statements to
+        make and to keep current. InfyniPay does not independently audit them,
+        and the page links to the provider's own pages so a reader can check.
+      - Machine-checked on the same date: every URL resolves, and no fee, count
+        or completeness claim is present (scripts/check-provider-data.mjs).
+  sources:
+    - https://docs.interswitchgroup.com/docs/payment-api
+    - https://interswitchgroup.com/ipg
+    - https://en.wikipedia.org/wiki/Interswitch

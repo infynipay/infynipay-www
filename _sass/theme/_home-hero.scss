@@ -1,0 +1,406 @@
+// Home hero (index.html #homeHero), 2026-11 rebrand.
+// Pure CSS + inline SVG: an indigo -> violet field with two soft glows and a faint
+// grid, and on the right a decorative diagram of what the product does (checkout ->
+// InfyniPay -> providers, with a failover toast). No image on the LCP path.
+// Lives in the theme, not components.css, because the home page does not load
+// components.css. Class names avoid "bg-" (base.scss styles every [class*='bg-']).
+
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  padding: 150px 0 120px;
+  background:
+    radial-gradient(60% 70% at 88% 8%, rgba(120, 160, 230, .19) 0%, rgba(120, 160, 230, .00) 60%),
+    radial-gradient(50% 60% at 0% 100%, rgba(110, 140, 220, .20) 0%, rgba(110, 140, 220, .00) 60%),
+    linear-gradient(135deg, #0f2557 0%, var(--blue-200) 42%, #24489f 100%);
+}
+
+// Faint grid, faded out towards the edges so it never competes with the text.
+.home-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(70% 70% at 70% 40%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(70% 70% at 70% 40%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+.home-hero .home-hero-title {
+  color: #fff;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-bottom: 1.25rem;
+}
+
+.home-hero-accent {
+  background: linear-gradient(90deg, #b9cdf5 0%, #d6e2fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.home-hero .lead {
+  color: rgba(255, 255, 255, .86);
+  font-size: 1.125rem;
+  max-width: 34rem;
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, .45);
+    text-underline-offset: 3px;
+  }
+}
+
+.home-hero-label {
+  margin: 1.75rem 0 .75rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: .95rem;
+}
+
+// Integration buttons: frosted white pills instead of the old solid blue blocks.
+.home-hero .cpn-btns .vh-btn {
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: none;
+
+  &:hover,
+  &:focus-visible {
+    background: #fff;
+    color: var(--blue-200);
+    border-color: #fff;
+
+    path { fill: var(--blue-200); }
+  }
+}
+
+.home-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.5rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  color: rgba(255, 255, 255, .86);
+  font-size: .9rem;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+
+  svg { color: #86efac; }
+}
+
+// ---- provider logo strip overlapping the hero's foot ----
+// The strip (.over-lg-up) is pulled up over the hero by a negative margin. The
+// hero is positioned, so without a stacking order it paints over the strip, and
+// .partner-box has no fill of its own (the old hero ended in a white wave):
+// the logos ended up on the purple gradient, washed out. Give the strip its own
+// white card and put it above the hero.
+.home-hero + .over-lg-up {
+  position: relative;
+  z-index: 3;
+
+  .partner-box {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 22px 48px -20px rgba(var(--blue-600-rgb), .45);
+  }
+}
+
+// ---- illustration: providers as a global network ----
+// A dotted globe (assets/images/home/globe-dots.svg, generated from Natural Earth
+// land outlines, orthographic, centred on Europe/Africa) with the InfyniPay hub
+// on Amsterdam and arcs out to providers where they operate. Pin positions are
+// the same projection's output, as % of the square box. Decorative only.
+
+.home-hero-visual {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1;
+  margin-left: auto;
+  font-size: clamp(11px, 1.05vw, 14px);
+}
+
+.hhv-globe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hhv-arcs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hhv-arc {
+  fill: none;
+  stroke: rgba(255, 255, 255, .55);
+  stroke-width: .35;
+  stroke-dasharray: 1.2 1.2;
+  stroke-linecap: round;
+  animation: hh-flow 2.5s linear infinite;
+}
+
+.hhv-arc--live {
+  stroke: #6ee7b7;
+  stroke-width: .6;
+  stroke-dasharray: 2 1.4;
+  animation-duration: 1.2s;
+}
+
+.hhv-arc--down {
+  stroke: rgba(252, 165, 165, .75);
+  animation: none;
+}
+
+.hhv-dot {
+  fill: #fff;
+}
+
+// The hub: a small brand tile pinned on Amsterdam. No glow (owner's request).
+.hhv-hub {
+  position: absolute;
+  width: 9%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 26%;
+  background: linear-gradient(135deg, var(--blue-200), #3a63c4);
+  border: 2px solid #fff;
+  box-shadow: 0 8px 18px -6px rgba(8, 20, 60, .55);
+  display: grid;
+  place-items: center;
+
+  svg { width: 74%; height: 74%; }
+}
+
+.hhv-pins {
+  margin: 0;
+  padding: 0;
+}
+
+.hhv-pin {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.hhv-pin-dot {
+  position: absolute;
+  left: -.45em;
+  top: -.45em;
+  width: .9em;
+  height: .9em;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 .3em rgba(255, 255, 255, .22);
+}
+
+.hhv-pin-label {
+  position: absolute;
+  left: .9em;
+  top: 0;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .45em;
+  white-space: nowrap;
+  padding: .35em .7em;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue-600);
+  font-weight: 600;
+  font-size: .95em;
+  box-shadow: 0 8px 18px -8px rgba(8, 20, 60, .5);
+}
+
+// Real provider logos inside the white pills (owner's request). The visual is
+// aria-hidden, so the images carry alt="".
+.hhv-logo {
+  display: block;
+  height: 1.35em;
+  width: auto;
+  // The label is absolutely positioned inside a zero-width pin, so it sizes to
+  // its content; the theme's img { max-width: 100% } would collapse the logo.
+  max-width: none;
+}
+
+.hhv-pin--left .hhv-pin-label {
+  left: auto;
+  right: .9em;
+}
+
+.hhv-pin.is-live .hhv-pin-dot {
+  background: #34d399;
+  box-shadow: 0 0 0 .3em rgba(52, 211, 153, .3);
+  animation: hh-ping 1.6s ease-out infinite;
+}
+
+.hhv-pin.is-live .hhv-pin-label { outline: 2px solid #34d399; }
+
+.hhv-pin.is-down .hhv-pin-dot {
+  background: #f87171;
+  box-shadow: 0 0 0 .3em rgba(248, 113, 113, .3);
+}
+
+.hhv-pin.is-down .hhv-pin-label { opacity: .85; }
+
+.hhv-pin--stripe { left: 14.71%; top: 23.44%; }
+.hhv-pin--adyen { left: 14.87%; top: 76.75%; }
+.hhv-pin--paystack { left: 46.24%; top: 62.49%; }
+.hhv-pin--flutterwave { left: 72.65%; top: 66.4%; }
+.hhv-pin--ozow { left: 64.46%; top: 84.08%; }
+.hhv-pin--razorpay { left: 90.22%; top: 42.82%; }
+.hhv-hub { left: 48.45%; top: 26.22%; }
+
+.hhv-tag {
+  font-size: .75em;
+  font-weight: 600;
+  padding: .1em .5em;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.hhv-tag--down {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.hhv-card {
+  position: absolute;
+  background: #fff;
+  color: var(--blue-600);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -12px rgba(8, 20, 60, .45);
+}
+
+.hhv-checkout {
+  right: 0;
+  top: 2%;
+  width: 30%;
+  padding: .9em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: .15em;
+  animation: hh-float 6s ease-in-out infinite;
+}
+
+.hhv-kicker {
+  font-size: .78em;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--blue-400);
+  font-weight: 600;
+}
+
+.hhv-amount {
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  font-size: 1.45em;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.hhv-method {
+  display: inline-flex;
+  align-items: center;
+  gap: .45em;
+  font-size: .82em;
+  color: var(--blue-400);
+}
+
+.hhv-cardicon {
+  width: 1.6em;
+  height: 1.1em;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--blue-200), #3a63c4);
+}
+
+.hhv-toast {
+  left: 0;
+  bottom: 1%;
+  display: flex;
+  align-items: center;
+  gap: .7em;
+  padding: .8em 1.1em;
+  line-height: 1.3;
+  animation: hh-float 5s ease-in-out infinite reverse;
+
+  strong { font-weight: 700; }
+
+  small {
+    color: var(--blue-400);
+    font-size: .85em;
+  }
+}
+
+.hhv-check {
+  width: 2em;
+  height: 2em;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #10b981 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 60% no-repeat;
+}
+
+@keyframes hh-flow { to { stroke-dashoffset: -4.8; } }
+
+@keyframes hh-ping {
+  70% { box-shadow: 0 0 0 .9em rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+@keyframes hh-float {
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hhv-arc,
+  .hhv-pin.is-live .hhv-pin-dot,
+  .hhv-checkout,
+  .hhv-toast { animation: none; }
+
+  .hhv-dot { display: none; }
+}
+
+@media (max-width: 991px) {
+  .home-hero {
+    padding: 120px 0 110px;
+  }
+
+  .home-hero-trust,
+  .home-hero .cpn-action {
+    justify-content: center;
+  }
+
+  .home-hero .lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-hero-visual {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .home-hero-visual {
+    font-size: 9.5px;
+  }
+
+  .hhv-tag { display: none; }
+}

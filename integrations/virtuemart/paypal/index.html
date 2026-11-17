@@ -1,0 +1,16 @@
+---
+layout: none
+platform: virtuemart
+provider: paypal
+nav_active: integrations
+title: "PayPal Payment Gateway for VirtueMart"
+description: "Accept PayPal payments on VirtueMart with the free InfyniPay plugin. Install in minutes, no gateway code."
+---
+{% include header-secondary.html %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<style>
+#main-content{--pp-accent:#003087;--pp-accent-text:#003087;--pp-accent-rgb:0,48,135;--pp-hero-end:#003087;--pp-blob-rgb:0,48,135}
+</style>
+{% include integration-provider.html platform=page.platform provider=page.provider %}
+{% include footer.html %}

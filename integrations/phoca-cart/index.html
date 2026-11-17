@@ -1,0 +1,22 @@
+---
+layout: none
+slug: phoca-cart
+redirect_from: /phoca-cart/
+nav_active: integrations
+title: Phoca Cart Payment Gateway Plugin
+description: "Accept one-time payments on your Joomla store through Phoca Cart."
+image:
+  path: /assets/images/og/phoca-cart.jpg
+  width: 1200
+  height: 630
+---
+{% include header-secondary.html %}
+{% assign d = site.data.integrations["phoca-cart"] %}{% include software-application.html app=d.software %}
+{% include breadcrumb.html %}
+<link rel="stylesheet" href="{{ '/assets/css/components.css' | relative_url }}">
+<style>
+/* The Phoca Cart logo PNG carries built-in whitespace. */
+.logo-box{padding:28px 32px;min-height:110px}
+</style>
+{% include integration-product.html slug=page.slug %}
+{% include footer.html %}

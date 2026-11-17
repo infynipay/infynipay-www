@@ -1,0 +1,38 @@
+---
+---
+
+// Page stylesheet for /about/ only. The legal/commercial reference rows use the
+// shared .fact-table component from _sass/components/_shared.scss, so the only
+// page-unique pieces here are the card icon and the supplier note.
+
+// ── Feature icon ──────────────────────────────────────────────────────────────
+.about-feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--blue-200);
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+// ── Supplier note ─────────────────────────────────────────────────────────────
+// Deliberately understated. Suppliers are a footnote to the product, not a
+// co-brand, so this reads as a plain bordered note rather than a brand card.
+.about-supplier {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-left: 3px solid var(--blue-100);
+  border-radius: 14px;
+  padding: 1.75rem 2rem;
+
+  p {
+    color: var(--blue-400);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  strong { color: var(--blue-600); }
+}
